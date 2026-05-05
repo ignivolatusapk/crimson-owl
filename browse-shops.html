@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Shops - Ignivolatus Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-image: url('images/background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            z-index: -1;
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #ffffff, #666666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #cccccc;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffffff, #e0e0e0);
+            color: #000000;
+            padding: 0.7rem 1.5rem;
+            border-radius: 0.75rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .shops-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .shops-header h1 {
+            color: white;
+            font-size: 2rem;
+        }
+
+        .search-box {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: white;
+            width: 280px;
+            font-size: 1rem;
+        }
+
+        .search-box::placeholder {
+            color: #888;
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #aaa;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.875rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: white;
+            color: black;
+            border-color: white;
+        }
+
+        .shop-item {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+
+        .shop-item:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateX(5px);
+        }
+
+        .shop-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .shop-link {
+            color: #00ff00;
+            text-decoration: none;
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+
+        .shop-link:hover {
+            text-decoration: underline;
+        }
+
+        .shop-category {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            color: #aaa;
+            margin-right: 0.5rem;
+        }
+
+        .shop-desc {
+            color: #aaaaaa;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 1rem;
+        }
+
+        .empty-state p {
+            color: #aaa;
+            margin-bottom: 1rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: white;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .shops-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            IGNIVOLATUS<span>STORE</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="browse-shops.html" class="nav-link">Browse Shops</a>
+            <a href="apply.html" class="btn-primary">📝 Apply for Shop</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="shops-header">
+        <h1>🛍️ All Shops on Ignivolatus</h1>
+        <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search by name, category, or description...">
+    </div>
+    
+    <div class="category-filter" id="categoryFilter">
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="Fashion & Clothing">👗 Fashion</button>
+        <button class="filter-btn" data-category="Food & Restaurant">🍕 Food</button>
+        <button class="filter-btn" data-category="Electronics">📱 Electronics</button>
+        <button class="filter-btn" data-category="Handicrafts & Art">🎨 Handicrafts</button>
+        <button class="filter-btn" data-category="Home & Living">🏠 Home</button>
+        <button class="filter-btn" data-category="Beauty & Health">💄 Beauty</button>
+    </div>
+    
+    <div id="shopsList">
+        <div class="loading">Loading shops...</div>
+    </div>
+</div>
+
+<div class="footer">
+    <p>© 2024 Ignivolatus Store | Digital Shop Rental Platform</p>
+    <p style="margin-top: 0.5rem;">📧 Contact: ignivolatusapk@gmail.com</p>
+</div>
+
+<script>
+    // GitHub repository URL - CHANGE THIS TO YOUR REPO
+    const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/ignivolatus-store/main/shops.json';
+    
+    let shops = [];
+    let currentCategory = 'all';
+    let currentSearch = '';
+
+    async function loadShopsFromGitHub() {
+        try {
+            const response = await fetch(GITHUB_RAW_URL);
+            if (!response.ok) throw new Error('Failed to load shops');
+            const data = await response.json();
+            shops = data.shops.filter(shop => shop.status === 'active');
+            displayShops();
+        } catch (error) {
+            console.error('Error loading shops:', error);
+            document.getElementById('shopsList').innerHTML = `
+                <div class="empty-state">
+                    <p>⚠️ Unable to load shops</p>
+                    <p>Please check back later</p>
+                </div>
+            `;
+        }
+    }
+
+    function displayShops() {
+        const container = document.getElementById('shopsList');
+        
+        let filteredShops = shops;
+        
+        // Filter by category
+        if (currentCategory !== 'all') {
+            filteredShops = filteredShops.filter(shop => shop.category === currentCategory);
+        }
+        
+        // Filter by search
+        if (currentSearch) {
+            filteredShops = filteredShops.filter(shop => 
+                shop.shopName.toLowerCase().includes(currentSearch) ||
+                shop.category.toLowerCase().includes(currentSearch) ||
+                shop.description.toLowerCase().includes(currentSearch)
+            );
+        }
+        
+        if (filteredShops.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <p>✨ No shops found</p>
+                    <p>${currentSearch ? `No results for "${currentSearch}"` : 'Check back soon for new shops!'}</p>
+                    <a href="apply.html" class="btn-primary" style="margin-top: 1rem;">Be the first to open a shop →</a>
+                </div>
+            `;
+            return;
+        }
+        
+        container.innerHTML = filteredShops.map(shop => `
+            <div class="shop-item">
+                <div class="shop-name">🏪 ${shop.shopName}</div>
+                <div>
+                    <span class="shop-category">${shop.category}</span>
+                </div>
+                <div class="shop-desc">${shop.description}</div>
+                <a href="${shop.shopUrl}" class="shop-link" target="_blank">${shop.shopUrl} →</a>
+                <div style="margin-top: 0.75rem;">
+                    <button class="btn-primary" onclick="window.open('${shop.shopUrl}', '_blank')" style="padding: 0.4rem 1rem; font-size: 0.8rem;">Visit Shop →</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function filterShops() {
+        currentSearch = document.getElementById('searchInput').value.toLowerCase();
+        displayShops();
+    }
+
+    // Category filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentCategory = this.dataset.category;
+            displayShops();
+        });
+    });
+
+    document.getElementById('searchInput').addEventListener('keyup', filterShops);
+    
+    // Load shops
+    loadShopsFromGitHub();
+</script>
+
+</body>
+</html>

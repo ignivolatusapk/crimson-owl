@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ignivolatus Store - Rent Your Digital Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-image: url('images/background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            z-index: -1;
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #ffffff, #666666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .nav-link:hover {
+            color: #cccccc;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffffff, #e0e0e0);
+            color: #000000;
+            padding: 0.7rem 1.5rem;
+            border-radius: 0.75rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ffffff;
+            padding: 0.7rem 1.5rem;
+            border-radius: 0.75rem;
+            border: 2px solid #ffffff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: #aaaaaa;
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #aaaaaa;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            IGNIVOLATUS<span>STORE</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="browse-shops.html" class="nav-link">Browse Shops</a>
+            <a href="apply.html" class="btn-primary">📝 Apply for Shop</a>
+        </div>
+    </div>
+</div>
+
+<div class="hero">
+    <h1>Rent a Digital Shop</h1>
+    <p>Get your own professional online store. Pay monthly rent like a physical shop, but sell worldwide.</p>
+    <a href="apply.html" class="btn-primary">Apply Now →</a>
+</div>
+
+<div class="container">
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-icon">🏪</div>
+            <h3>Your Own Website</h3>
+            <p>Get a professional shop at yourname.ignivolatus.com</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">💰</div>
+            <h3>Pay Monthly Rent</h3>
+            <p>Only 500 ETB/month - cheaper than physical rent!</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">📦</div>
+            <h3>Sell Products</h3>
+            <p>List products, manage orders, reach customers online</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🚀</div>
+            <h3>Ready in 24 Hours</h3>
+            <p>Apply today, get your shop activated within 24 hours</p>
+        </div>
+    </div>
+
+    <div class="stats-grid" id="statsContainer">
+        <div class="stat-card">
+            <div class="stat-number" id="shopCount">0</div>
+            <div class="stat-label">Active Shops</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">500 ETB</div>
+            <div class="stat-label">Monthly Rent</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">24h</div>
+            <div class="stat-label">Setup Time</div>
+        </div>
+    </div>
+
+    <div class="card-grid" style="margin-top: 2rem;">
+        <div class="card">
+            <div class="card-icon">📝</div>
+            <h3>1. Apply</h3>
+            <p>Fill out the application form with your shop details</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">📧</div>
+            <h3>2. Get Approved</h3>
+            <p>We'll review and contact you within 24 hours</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">💳</div>
+            <h3>3. Pay Rent</h3>
+            <p>Pay setup fee + first month rent (1,500 ETB)</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🌐</div>
+            <h3>4. Start Selling</h3>
+            <p>Your shop goes live! Start selling immediately</p>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p>© 2024 Ignivolatus Store | Digital Shop Rental Platform</p>
+    <p style="margin-top: 0.5rem;">📧 Contact: ignivolatusapk@gmail.com</p>
+</div>
+
+<script>
+    // Load shops from localStorage
+    function loadShopCount() {
+        let shops = JSON.parse(localStorage.getItem('ignivolatus_shops') || '[]');
+        const activeShops = shops.filter(s => s.status === 'active').length;
+        document.getElementById('shopCount').innerText = activeShops;
+    }
+    
+    loadShopCount();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Shop - Ignivolatus Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-image: url('images/background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            z-index: -1;
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #ffffff, #666666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #cccccc;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffffff, #e0e0e0);
+            color: #000000;
+            padding: 0.7rem 1.5rem;
+            border-radius: 0.75rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .form-card {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2rem;
+        }
+
+        .form-card h1 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-card > p {
+            color: #aaaaaa;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #cccccc;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.875rem;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 0.75rem;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: white;
+        }
+
+        .info-box {
+            background: #1a1a1a;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+            border: 1px solid #333;
+        }
+
+        .info-box p {
+            color: #cccccc;
+            margin: 0.5rem 0;
+        }
+
+        .info-box strong {
+            color: white;
+        }
+
+        .alert-success {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            color: #00ff00;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+
+            .form-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            IGNIVOLATUS<span>STORE</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="browse-shops.html" class="nav-link">Browse Shops</a>
+            <a href="apply.html" class="btn-primary">📝 Apply for Shop</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="form-card">
+        <h1>📝 Apply for Your Digital Shop</h1>
+        <p>Fill out the form below to get your own professional online store</p>
+        
+        <div id="successMessage" style="display: none;" class="alert-success">
+            ✅ Application submitted! Check your email for confirmation.
+        </div>
+        
+        <form id="applyForm">
+            <div class="form-group">
+                <label>Shop Name *</label>
+                <input type="text" id="shopName" required placeholder="e.g., Buna Coffee Shop">
+            </div>
+            
+            <div class="form-group">
+                <label>Your Full Name *</label>
+                <input type="text" id="ownerName" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Email Address *</label>
+                <input type="email" id="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Phone Number *</label>
+                <input type="tel" id="phone" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Shop Category *</label>
+                <select id="category" required>
+                    <option value="">Select category</option>
+                    <option>Fashion & Clothing</option>
+                    <option>Food & Restaurant</option>
+                    <option>Electronics</option>
+                    <option>Handicrafts & Art</option>
+                    <option>Home & Living</option>
+                    <option>Beauty & Health</option>
+                    <option>Books & Stationery</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Shop Description *</label>
+                <textarea id="description" rows="4" required placeholder="Describe what you sell, your products, and why customers should shop with you"></textarea>
+            </div>
+            
+            <div class="info-box">
+                <p><strong>💰 Pricing:</strong></p>
+                <p>• Setup Fee: 1,000 ETB (one-time)</p>
+                <p>• Monthly Rent: 500 ETB</p>
+                <p>• Total Due Today: 1,500 ETB</p>
+                <hr style="border-color: #333; margin: 0.5rem 0;">
+                <p><strong>✅ What you get:</strong></p>
+                <p>• Your own website (yourname.ignivolatus.com)</p>
+                <p>• Product listing system</p>
+                <p>• Order management dashboard</p>
+                <p>• Customer support</p>
+            </div>
+            
+            <button type="submit" class="btn-primary" style="width: 100%;">Submit Application</button>
+        </form>
+    </div>
+</div>
+
+<div class="footer">
+    <p>© 2024 Ignivolatus Store | Digital Shop Rental Platform</p>
+    <p style="margin-top: 0.5rem;">📧 Contact: ignivolatusapk@gmail.com</p>
+</div>
+
+<script>
+    const ADMIN_EMAIL = "ignivolatusapk@gmail.com";
+    
+    function sendEmail(to, subject, body) {
+        const mailtoLink = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.open(mailtoLink, '_blank');
+    }
+    
+    function sendApplication(data) {
+        // Email to admin
+        const adminSubject = `[NEW SHOP] ${data.shopName}`;
+        const adminBody = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NEW SHOP APPLICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Shop Name: ${data.shopName}
+Category: ${data.category}
+Description: ${data.description}
+
+Owner: ${data.ownerName}
+Email: ${data.email}
+Phone: ${data.phone}
+
+Applied: ${new Date().toLocaleString()}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ACTION REQUIRED:
+1. Review application
+2. Contact owner for payment (1,500 ETB)
+3. Create shop: ${data.shopName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.ignivolatus.com
+4. Add to shops list using addShop() in browser console
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+        
+        sendEmail(ADMIN_EMAIL, adminSubject, adminBody);
+        
+        // Email to applicant
+        const applicantSubject = `Welcome to Ignivolatus Store!`;
+        const applicantBody = `Dear ${data.ownerName},
+
+Thank you for applying to open "${data.shopName}" on Ignivolatus Store!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 APPLICATION RECEIVED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Shop Name: ${data.shopName}
+Status: Under Review
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💰 PAYMENT REQUIRED: 1,500 ETB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Setup Fee: 1,000 ETB (one-time)
+First Month Rent: 500 ETB
+
+Payment Methods:
+• Telebirr: [We'll send after approval]
+• Chapa: Payment link provided
+• Bank Transfer: Commercial Bank of Ethiopia
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌 NEXT STEPS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. We'll review your application within 24 hours
+2. You'll receive payment instructions
+3. After payment, your shop goes live
+4. Your URL: ${data.shopName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.ignivolatus.com
+
+Questions? Reply to this email.
+
+Best regards,
+Ignivolatus Store Team
+${ADMIN_EMAIL}`;
+        
+        sendEmail(data.email, applicantSubject, applicantBody);
+    }
+    
+    document.getElementById('applyForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            shopName: document.getElementById('shopName').value,
+            ownerName: document.getElementById('ownerName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            category: document.getElementById('category').value,
+            description: document.getElementById('description').value
+        };
+        
+        sendApplication(formData);
+        
+        document.getElementById('successMessage').style.display = 'block';
+        document.getElementById('applyForm').reset();
+        
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 3000);
+    });
+</script>
+
+</body>
+</html>

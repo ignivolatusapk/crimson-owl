@@ -1,0 +1,22 @@
+{
+  "shops": [
+    {
+      "id": 1,
+      "shopName": "Habesha Traditional Fashion",
+      "category": "Fashion & Clothing",
+      "description": "Beautiful traditional Ethiopian clothing, habesha kemis, and modern fusion wear.",
+      "shopUrl": "https://habesha-fashion.ignivolatus.com",
+      "status": "active",
+      "addedDate": "2024-01-15"
+    },
+    {
+      "id": 2,
+      "shopName": "Addis Coffee & Spice",
+      "category": "Food & Restaurant",
+      "description": "Fresh Ethiopian coffee beans, organic spices, and traditional coffee sets.",
+      "shopUrl": "https://addis-coffee.ignivolatus.com",
+      "status": "active",
+      "addedDate": "2024-01-20"
+    }
+  ]
+}
