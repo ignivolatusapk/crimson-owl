@@ -35,15 +35,9 @@
             gap: 10px;
         }
 
-        .nav-logo .logo-icon {
-            width: 36px;
+        .nav-logo img {
             height: 36px;
-            background: #8B0000;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
+            width: auto;
         }
 
         .nav-logo span {
@@ -135,12 +129,6 @@
             color: #ff4444;
         }
 
-        .message.info {
-            background: rgba(139, 0, 0, 0.2);
-            border: 1px solid #8B0000;
-            color: #8B0000;
-        }
-
         .shop-item {
             background: #0a0a0a;
             padding: 16px;
@@ -226,7 +214,7 @@
 <div class="navbar">
     <div class="nav-container">
         <div class="nav-logo">
-            <div class="logo-icon">🦉</div>
+            <img src="images/logo.png" alt="Crimson Owl Logo">
             <span>CRIMSON OWL</span>
         </div>
     </div>
@@ -279,14 +267,14 @@
             <input type="text" id="shopUrl" placeholder="Shop URL * (e.g., https://shopname.com)">
             
             <div class="imgbb-helper">
-                📸 <strong>How to get a logo image URL:</strong><br>
+                📸 <strong>Upload shop logo to ImgBB:</strong><br>
                 1. Go to <a href="https://imgbb.com" target="_blank">imgbb.com</a><br>
-                2. Upload your shop logo image<br>
-                3. Copy the "Direct URL" link<br>
-                4. Paste it below
+                2. Click "Start Uploading" - select your logo image<br>
+                3. After upload, copy the <strong>"Direct URL"</strong><br>
+                4. Paste it below 👇
             </div>
             
-            <input type="text" id="shopLogoUrl" placeholder="Logo Image URL (from ImgBB)">
+            <input type="text" id="shopLogoUrl" placeholder="Paste ImgBB Direct URL here (optional)">
             <textarea id="description" rows="3" placeholder="Shop Description *"></textarea>
             
             <button onclick="addShop()">➕ Add Shop to Directory</button>
@@ -304,7 +292,6 @@
     let storedCode = null;
     let verifiedEmail = null;
     
-    // Load shops from localStorage
     function loadShops() {
         const shops = JSON.parse(localStorage.getItem('crimsonowl_shops') || '[]');
         displayShopsList(shops);
@@ -321,7 +308,7 @@
         container.innerHTML = shops.map(shop => `
             <div class="shop-item">
                 <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
-                    ${shop.logoUrl ? 
+                    ${shop.logoUrl && shop.logoUrl !== '' ? 
                         `<img src="${shop.logoUrl}" class="shop-logo-preview" onerror="this.src=''">` : 
                         `<div class="shop-logo-preview" style="display: flex; align-items: center; justify-content: center;">🦉</div>`
                     }
@@ -337,7 +324,6 @@
     
     function saveShops(shops) {
         localStorage.setItem('crimsonowl_shops', JSON.stringify(shops));
-        // Trigger storage event for other tabs
         window.dispatchEvent(new StorageEvent('storage', {
             key: 'crimsonowl_shops',
             newValue: JSON.stringify(shops)
@@ -376,7 +362,6 @@
         
         document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ Shop added successfully! It now appears on the website.</div>';
         
-        // Clear form
         document.getElementById('shopName').value = '';
         document.getElementById('shopUrl').value = '';
         document.getElementById('description').value = '';
@@ -395,7 +380,6 @@
         }
     }
     
-    // Initialize with sample shops if empty
     function initializeSampleShops() {
         const existing = localStorage.getItem('crimsonowl_shops');
         if (!existing || JSON.parse(existing).length === 0) {
@@ -408,7 +392,7 @@
                     shopUrl: "https://habesha-fashion.crimsonowl.com",
                     logoUrl: "",
                     status: "active",
-                    addedDate: "2024-01-15"
+                    addedDate: "2026-01-15"
                 },
                 {
                     id: 2,
@@ -418,7 +402,7 @@
                     shopUrl: "https://addis-coffee.crimsonowl.com",
                     logoUrl: "",
                     status: "active",
-                    addedDate: "2024-01-20"
+                    addedDate: "2026-01-20"
                 }
             ];
             localStorage.setItem('crimsonowl_shops', JSON.stringify(sampleShops));
