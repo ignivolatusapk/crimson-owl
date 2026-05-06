@@ -40,15 +40,9 @@
             gap: 10px;
         }
 
-        .nav-logo .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: #8B0000;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
+        .nav-logo img {
+            height: 36px;
+            width: auto;
         }
 
         .nav-logo span {
@@ -192,7 +186,7 @@
 <div class="navbar">
     <div class="nav-container">
         <div class="nav-logo">
-            <div class="logo-icon">🦉</div>
+            <img src="images/logo.png" alt="Crimson Owl Logo">
             <span>CRIMSON OWL</span>
         </div>
         <a href="index.html" class="back-btn">← Back to Home</a>
@@ -260,7 +254,7 @@
 </div>
 
 <script>
-    const FORMSPREE_ID = 'YOUR_FORMSPREE_ID'; // Get from formspree.io
+    const FORMSPREE_ID = 'YOUR_FORMSPREE_ID';
     
     document.getElementById('applyForm').addEventListener('submit', async function(e) {
         e.preventDefault();
