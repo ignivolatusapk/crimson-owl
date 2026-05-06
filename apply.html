@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open a Shop - Ignivolatus Store</title>
+    <title>Open a Shop - Crimson Owl</title>
     <style>
         * {
             margin: 0;
@@ -14,7 +14,6 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background: #0a0a0a;
-            min-height: 100vh;
         }
 
         .navbar {
@@ -41,9 +40,15 @@
             gap: 10px;
         }
 
-        .nav-logo img {
-            height: 36px;
-            width: auto;
+        .nav-logo .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: #8B0000;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
         }
 
         .nav-logo span {
@@ -112,7 +117,7 @@
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #666;
+            border-color: #8B0000;
         }
 
         .info-box {
@@ -130,13 +135,13 @@
         }
 
         .info-box strong {
-            color: white;
+            color: #8B0000;
         }
 
         .btn-submit {
             width: 100%;
-            background: white;
-            color: black;
+            background: #8B0000;
+            color: white;
             padding: 14px;
             border-radius: 40px;
             border: none;
@@ -146,18 +151,21 @@
         }
 
         .btn-submit:hover {
-            opacity: 0.9;
+            background: #a00000;
         }
 
-        .alert-success {
-            background: rgba(0, 255, 0, 0.1);
-            border: 1px solid #00ff00;
-            color: #00ff00;
-            padding: 14px;
+        .message {
+            padding: 12px;
             border-radius: 12px;
             margin-bottom: 20px;
             text-align: center;
             font-size: 14px;
+        }
+
+        .message.success {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            color: #00ff00;
         }
 
         .footer {
@@ -173,17 +181,9 @@
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 30px 16px;
-            }
-            
-            .form-card {
-                padding: 24px;
-            }
-            
-            .form-card h1 {
-                font-size: 24px;
-            }
+            .container { padding: 30px 16px; }
+            .form-card { padding: 24px; }
+            .form-card h1 { font-size: 24px; }
         }
     </style>
 </head>
@@ -192,8 +192,8 @@
 <div class="navbar">
     <div class="nav-container">
         <div class="nav-logo">
-            <img src="images/your-logo.png" alt="Ignivolatus Logo">
-            <span>IGNIVOLATUS</span>
+            <div class="logo-icon">🦉</div>
+            <span>CRIMSON OWL</span>
         </div>
         <a href="index.html" class="back-btn">← Back to Home</a>
     </div>
@@ -204,40 +204,32 @@
         <h1>Start Your Digital Shop</h1>
         <p>Fill the form. We'll contact you within 24 hours.</p>
         
-        <div id="successMessage" style="display: none;" class="alert-success">
-            ✅ Application sent! We'll contact you soon.
-        </div>
+        <div id="formMessage"></div>
         
-        <form id="applyForm" action="https://formsubmit.co/ignivolatusapk@gmail.com" method="POST">
-            <!-- FormSubmit configuration -->
-            <input type="hidden" name="_subject" value="New Shop Application - Ignivolatus">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" value="https://YOUR_USERNAME.github.io/ignivolatus-store/thankyou.html">
-            
+        <form id="applyForm">
             <div class="form-group">
                 <label>Shop Name</label>
-                <input type="text" name="Shop Name" id="shopName" required placeholder="e.g., Buna Coffee">
+                <input type="text" id="shopName" required placeholder="e.g., Buna Coffee">
             </div>
             
             <div class="form-group">
                 <label>Your Name</label>
-                <input type="text" name="Owner Name" id="ownerName" required>
+                <input type="text" id="ownerName" required>
             </div>
             
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" name="Email" id="email" required>
+                <input type="email" id="email" required>
             </div>
             
             <div class="form-group">
                 <label>Phone</label>
-                <input type="tel" name="Phone" id="phone" required>
+                <input type="tel" id="phone" required>
             </div>
             
             <div class="form-group">
                 <label>Category</label>
-                <select name="Category" id="category">
+                <select id="category">
                     <option>Fashion & Clothing</option>
                     <option>Food & Restaurant</option>
                     <option>Electronics</option>
@@ -249,7 +241,7 @@
             
             <div class="form-group">
                 <label>Description</label>
-                <textarea name="Description" id="description" rows="4" required placeholder="What do you sell? Describe your products..."></textarea>
+                <textarea id="description" rows="4" required placeholder="What do you sell? Describe your products..."></textarea>
             </div>
             
             <div class="info-box">
@@ -264,18 +256,44 @@
 </div>
 
 <div class="footer">
-    <p>© 2024 Ignivolatus Store | Digital Shops Directory</p>
+    <p>© 2024 Crimson Owl | Digital Shops Directory</p>
 </div>
 
 <script>
-    document.getElementById('applyForm').addEventListener('submit', function(e) {
-        // Show success message
-        document.getElementById('successMessage').style.display = 'block';
+    const FORMSPREE_ID = 'YOUR_FORMSPREE_ID'; // Get from formspree.io
+    
+    document.getElementById('applyForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
         
-        // Form will submit normally to FormSubmit
-        setTimeout(() => {
-            document.getElementById('successMessage').style.display = 'none';
-        }, 3000);
+        const formData = new FormData();
+        formData.append('_subject', 'New Shop Application - Crimson Owl');
+        formData.append('_to', 'ignivolatusapk@gmail.com');
+        formData.append('Shop Name', document.getElementById('shopName').value);
+        formData.append('Owner Name', document.getElementById('ownerName').value);
+        formData.append('Email', document.getElementById('email').value);
+        formData.append('Phone', document.getElementById('phone').value);
+        formData.append('Category', document.getElementById('category').value);
+        formData.append('Description', document.getElementById('description').value);
+        
+        try {
+            const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+            
+            if (response.ok) {
+                document.getElementById('formMessage').innerHTML = '<div class="message success">✅ Application sent! We\'ll contact you within 24 hours.</div>';
+                document.getElementById('applyForm').reset();
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 3000);
+            } else {
+                throw new Error();
+            }
+        } catch (error) {
+            document.getElementById('formMessage').innerHTML = '<div class="message error">❌ Failed to send. Please try again.</div>';
+        }
     });
 </script>
 
