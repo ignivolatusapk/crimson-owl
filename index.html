@@ -396,35 +396,46 @@
 </div>
 
 <script>
-    function loadShops() {
-        const shops = JSON.parse(localStorage.getItem('crimsonowl_shops') || '[]');
-        const activeShops = shops.filter(s => s.status === 'active');
-        
-        document.getElementById('shopCount').innerText = activeShops.length;
-        
-        const featured = activeShops.slice(0, 6);
-        const container = document.getElementById('featuredShops');
-        
-        if (featured.length === 0) {
-            container.innerHTML = '<div style="text-align: center; color: #aaa; grid-column: 1/-1; padding: 40px;">No shops yet. Be the first to open one!</div>';
-            return;
-        }
-        
-        container.innerHTML = featured.map(shop => `
-            <div class="shop-card" onclick="window.open('${shop.shopUrl}', '_blank')">
-                <div class="shop-header">
-                    ${shop.logoUrl && shop.logoUrl !== '' ? 
-                        `<img src="${shop.logoUrl}" class="shop-logo-img" alt="${shop.shopName}" onerror="this.src=''">` : 
-                        `<div class="shop-logo-img" style="display: flex; align-items: center; justify-content: center; font-size: 28px; background: #1a1a1a;">🦉</div>`
-                    }
-                    <div>
-                        <div class="shop-name">${shop.shopName}</div>
-                        <div class="shop-category">${shop.category}</div>
+    // GitHub RAW URL for shops.json - CHANGE YOUR_USERNAME
+    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
+    
+    async function loadShops() {
+        try {
+            const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
+            if (!response.ok) throw new Error('Failed to load');
+            const data = await response.json();
+            const activeShops = data.shops.filter(s => s.status === 'active');
+            
+            document.getElementById('shopCount').innerText = activeShops.length;
+            
+            const featured = activeShops.slice(0, 6);
+            const container = document.getElementById('featuredShops');
+            
+            if (featured.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #aaa; grid-column: 1/-1; padding: 40px;">No shops yet. Be the first to open one!</div>';
+                return;
+            }
+            
+            container.innerHTML = featured.map(shop => `
+                <div class="shop-card" onclick="window.open('${shop.shopUrl}', '_blank')">
+                    <div class="shop-header">
+                        ${shop.logoUrl && shop.logoUrl !== '' ? 
+                            `<img src="${shop.logoUrl}" class="shop-logo-img" alt="${shop.shopName}" onerror="this.src=''">` : 
+                            `<div class="shop-logo-img" style="display: flex; align-items: center; justify-content: center; font-size: 28px; background: #1a1a1a;">🦉</div>`
+                        }
+                        <div>
+                            <div class="shop-name">${shop.shopName}</div>
+                            <div class="shop-category">${shop.category}</div>
+                        </div>
                     </div>
+                    <div class="shop-desc">${shop.description.substring(0, 100)}${shop.description.length > 100 ? '...' : ''}</div>
                 </div>
-                <div class="shop-desc">${shop.description.substring(0, 100)}${shop.description.length > 100 ? '...' : ''}</div>
-            </div>
-        `).join('');
+            `).join('');
+        } catch (error) {
+            console.error('Error loading shops:', error);
+            document.getElementById('featuredShops').innerHTML = '<div style="text-align: center; color: #aaa; grid-column: 1/-1; padding: 40px;">Unable to load shops. Please check back later.</div>';
+            document.getElementById('shopCount').innerText = '0';
+        }
     }
 
     function toggleMenu() {
@@ -432,12 +443,6 @@
     }
 
     loadShops();
-    
-    window.addEventListener('storage', function(e) {
-        if (e.key === 'crimsonowl_shops') {
-            loadShops();
-        }
-    });
 </script>
 
 </body>
