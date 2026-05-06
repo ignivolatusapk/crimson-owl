@@ -47,7 +47,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
             padding: 60px 20px;
         }
@@ -79,7 +79,7 @@
             color: white;
             font-size: 14px;
             margin-bottom: 16px;
-            font-family: inherit;
+            font-family: monospace;
         }
 
         input:focus, select:focus, textarea:focus {
@@ -129,6 +129,12 @@
             color: #ff4444;
         }
 
+        .message.info {
+            background: rgba(139, 0, 0, 0.2);
+            border: 1px solid #8B0000;
+            color: #8B0000;
+        }
+
         .shop-item {
             background: #0a0a0a;
             padding: 16px;
@@ -161,14 +167,6 @@
             background: #1a1a1a;
         }
 
-        .delete-btn {
-            background: #ff4444;
-            color: white;
-            padding: 8px 16px;
-            font-size: 12px;
-            width: auto;
-        }
-
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -193,6 +191,30 @@
 
         .imgbb-helper a {
             color: #8B0000;
+        }
+
+        .json-output {
+            background: #0a0a0a;
+            padding: 16px;
+            border-radius: 12px;
+            margin: 16px 0;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            border: 1px solid #333;
+            color: #0f0;
+            max-height: 300px;
+            overflow: auto;
+        }
+
+        .copy-btn {
+            background: #333;
+            margin-top: 8px;
+        }
+
+        .copy-btn:hover {
+            background: #444;
         }
 
         @media (max-width: 768px) {
@@ -248,7 +270,7 @@
     <div id="adminSection" style="display: none;">
         <div class="admin-box">
             <h1>➕ Add New Shop</h1>
-            <p>Add a shop to the directory</p>
+            <p>Fill the form below, then copy the JSON to GitHub</p>
             
             <div id="adminMessage"></div>
             
@@ -277,9 +299,24 @@
             <input type="text" id="shopLogoUrl" placeholder="Paste ImgBB Direct URL here (optional)">
             <textarea id="description" rows="3" placeholder="Shop Description *"></textarea>
             
-            <button onclick="addShop()">➕ Add Shop to Directory</button>
+            <button onclick="generateJSON()">🔧 Generate Shop JSON</button>
             
-            <h3>📋 Current Shops</h3>
+            <div id="jsonOutput" style="display: none;">
+                <h3>📋 Copy this JSON to GitHub:</h3>
+                <div class="json-output" id="jsonCode"></div>
+                <button class="copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+                <div class="imgbb-helper" style="margin-top: 16px;">
+                    📝 <strong>How to add to GitHub:</strong><br>
+                    1. Go to your GitHub repository → <strong>shops.json</strong><br>
+                    2. Click the pencil icon (Edit)<br>
+                    3. Copy the new shop JSON above<br>
+                    4. Paste it inside the "shops" array (add comma after previous shop)<br>
+                    5. Click "Commit changes"<br>
+                    6. Wait 1 minute - shop appears on website!
+                </div>
+            </div>
+            
+            <h3>📋 Current Shops (from GitHub)</h3>
             <div id="shopsList"></div>
             
             <button onclick="logout()" style="background: #333; margin-top: 16px;">Logout</button>
@@ -289,23 +326,34 @@
 
 <script>
     const FORMSPREE_ID = 'mlgzlbak';
+    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
     let storedCode = null;
     let verifiedEmail = null;
+    let currentShops = [];
     
-    function loadShops() {
-        const shops = JSON.parse(localStorage.getItem('crimsonowl_shops') || '[]');
-        displayShopsList(shops);
-        return shops;
+    async function loadShopsFromGitHub() {
+        try {
+            const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
+            if (response.ok) {
+                const data = await response.json();
+                currentShops = data.shops;
+            } else {
+                currentShops = [];
+            }
+        } catch(e) {
+            currentShops = [];
+        }
+        displayShopsList();
     }
     
-    function displayShopsList(shops) {
+    function displayShopsList() {
         const container = document.getElementById('shopsList');
-        if (shops.length === 0) {
+        if (currentShops.length === 0) {
             container.innerHTML = '<p style="color: #888;">No shops yet. Add your first shop above!</p>';
             return;
         }
         
-        container.innerHTML = shops.map(shop => `
+        container.innerHTML = currentShops.map(shop => `
             <div class="shop-item">
                 <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
                     ${shop.logoUrl && shop.logoUrl !== '' ? 
@@ -317,21 +365,11 @@
                         <p>${shop.shopUrl}</p>
                     </div>
                 </div>
-                <button class="delete-btn" onclick="deleteShop(${shop.id})">Delete</button>
             </div>
         `).join('');
     }
     
-    function saveShops(shops) {
-        localStorage.setItem('crimsonowl_shops', JSON.stringify(shops));
-        window.dispatchEvent(new StorageEvent('storage', {
-            key: 'crimsonowl_shops',
-            newValue: JSON.stringify(shops)
-        }));
-        displayShopsList(shops);
-    }
-    
-    function addShop() {
+    function generateJSON() {
         const shopName = document.getElementById('shopName').value;
         const category = document.getElementById('category').value;
         const shopUrl = document.getElementById('shopUrl').value;
@@ -344,8 +382,6 @@
             return;
         }
         
-        const shops = loadShops();
-        
         const newShop = {
             id: Date.now(),
             shopName: shopName,
@@ -357,56 +393,21 @@
             addedDate: new Date().toISOString().split('T')[0]
         };
         
-        shops.push(newShop);
-        saveShops(shops);
+        const jsonString = JSON.stringify(newShop, null, 2);
         
-        document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ Shop added successfully! It now appears on the website.</div>';
+        document.getElementById('jsonCode').innerHTML = jsonString;
+        document.getElementById('jsonOutput').style.display = 'block';
+        document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ JSON generated! Copy it to GitHub shops.json</div>';
         
-        document.getElementById('shopName').value = '';
-        document.getElementById('shopUrl').value = '';
-        document.getElementById('description').value = '';
-        document.getElementById('shopLogoUrl').value = '';
-        
+        // Scroll to JSON
+        document.getElementById('jsonOutput').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    function copyToClipboard() {
+        const jsonText = document.getElementById('jsonCode').innerText;
+        navigator.clipboard.writeText(jsonText);
+        document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ JSON copied to clipboard! Now paste it into shops.json on GitHub</div>';
         setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 3000);
-    }
-    
-    function deleteShop(id) {
-        if (confirm('Delete this shop?')) {
-            let shops = loadShops();
-            shops = shops.filter(s => s.id !== id);
-            saveShops(shops);
-            document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ Shop removed successfully!</div>';
-            setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 3000);
-        }
-    }
-    
-    function initializeSampleShops() {
-        const existing = localStorage.getItem('crimsonowl_shops');
-        if (!existing || JSON.parse(existing).length === 0) {
-            const sampleShops = [
-                {
-                    id: 1,
-                    shopName: "Habesha Fashion",
-                    category: "Fashion & Clothing",
-                    description: "Beautiful traditional Ethiopian clothing, habesha kemis, and modern fusion wear. Quality fabrics and unique designs.",
-                    shopUrl: "https://habesha-fashion.crimsonowl.com",
-                    logoUrl: "",
-                    status: "active",
-                    addedDate: "2026-01-15"
-                },
-                {
-                    id: 2,
-                    shopName: "Addis Coffee",
-                    category: "Food & Restaurant",
-                    description: "Fresh Ethiopian coffee beans, organic spices, and traditional coffee sets. Direct from farmers to you.",
-                    shopUrl: "https://addis-coffee.crimsonowl.com",
-                    logoUrl: "",
-                    status: "active",
-                    addedDate: "2026-01-20"
-                }
-            ];
-            localStorage.setItem('crimsonowl_shops', JSON.stringify(sampleShops));
-        }
     }
     
     async function sendVerificationCode() {
@@ -451,8 +452,7 @@
             verifiedEmail = 'ignivolatusapk@gmail.com';
             document.getElementById('verifySection').style.display = 'none';
             document.getElementById('adminSection').style.display = 'block';
-            initializeSampleShops();
-            loadShops();
+            loadShopsFromGitHub();
         } else {
             document.getElementById('verifyMessage').innerHTML = '<div class="message error">❌ Invalid verification code</div>';
         }
@@ -471,6 +471,7 @@
         document.getElementById('adminSection').style.display = 'none';
         document.getElementById('loginSection').style.display = 'block';
         document.getElementById('adminEmail').value = 'ignivolatusapk@gmail.com';
+        document.getElementById('jsonOutput').style.display = 'none';
     }
 </script>
 
