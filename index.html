@@ -46,16 +46,11 @@
             margin: 0 auto;
         }
 
-        .hero-logo {
+        .hero-logo img {
             width: 120px;
             height: 120px;
-            margin: 0 auto 24px;
-        }
-
-        .hero-logo img {
-            width: 100%;
-            height: 100%;
             object-fit: contain;
+            margin-bottom: 24px;
         }
 
         .hero h1 {
@@ -80,8 +75,6 @@
             font-weight: 600;
             display: inline-block;
             transition: transform 0.3s;
-            border: none;
-            cursor: pointer;
         }
 
         .btn-primary:hover {
@@ -266,15 +259,12 @@
             margin-bottom: 16px;
         }
 
-        .shop-logo {
+        .shop-logo-img {
             width: 56px;
             height: 56px;
-            background: rgba(139, 0, 0, 0.2);
             border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
+            object-fit: cover;
+            background: #1a1a1a;
         }
 
         .shop-name {
@@ -325,7 +315,7 @@
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 32px; }
-            .hero-logo { width: 80px; height: 80px; }
+            .hero-logo img { width: 80px; height: 80px; }
             .section-title { font-size: 26px; }
             .stats-grid { gap: 15px; }
             .stat-number { font-size: 28px; }
@@ -402,52 +392,52 @@
 </div>
 
 <div class="footer">
-    <p>© 2024 Crimson Owl | Digital Shops Directory</p>
+    <p>© 2026 Crimson Owl | Digital Shops Directory</p>
 </div>
 
 <script>
-    const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/crimson-owl/main/shops.json';
-
-    async function loadData() {
-        try {
-            const response = await fetch(GITHUB_RAW_URL + '?t=' + Date.now());
-            if (!response.ok) throw new Error();
-            const data = await response.json();
-            const activeShops = data.shops.filter(s => s.status === 'active');
-            
-            document.getElementById('shopCount').innerText = activeShops.length;
-            
-            const featured = activeShops.slice(0, 6);
-            const container = document.getElementById('featuredShops');
-            
-            if (featured.length === 0) {
-                container.innerHTML = '<div style="text-align: center; color: #aaa; grid-column: 1/-1; padding: 40px;">No shops yet. Be the first to open one!</div>';
-                return;
-            }
-            
-            container.innerHTML = featured.map(shop => `
-                <div class="shop-card" onclick="window.open('${shop.shopUrl}', '_blank')">
-                    <div class="shop-header">
-                        <div class="shop-logo">${shop.logo || '🦉'}</div>
-                        <div>
-                            <div class="shop-name">${shop.shopName}</div>
-                            <div class="shop-category">${shop.category}</div>
-                        </div>
-                    </div>
-                    <div class="shop-desc">${shop.description.substring(0, 100)}${shop.description.length > 100 ? '...' : ''}</div>
-                </div>
-            `).join('');
-        } catch (error) {
-            document.getElementById('featuredShops').innerHTML = '<div style="text-align: center; color: #aaa; grid-column: 1/-1;">Unable to load shops.</div>';
-            document.getElementById('shopCount').innerText = '0';
+    function loadShops() {
+        const shops = JSON.parse(localStorage.getItem('crimsonowl_shops') || '[]');
+        const activeShops = shops.filter(s => s.status === 'active');
+        
+        document.getElementById('shopCount').innerText = activeShops.length;
+        
+        const featured = activeShops.slice(0, 6);
+        const container = document.getElementById('featuredShops');
+        
+        if (featured.length === 0) {
+            container.innerHTML = '<div style="text-align: center; color: #aaa; grid-column: 1/-1; padding: 40px;">No shops yet. Be the first to open one!</div>';
+            return;
         }
+        
+        container.innerHTML = featured.map(shop => `
+            <div class="shop-card" onclick="window.open('${shop.shopUrl}', '_blank')">
+                <div class="shop-header">
+                    ${shop.logoUrl && shop.logoUrl !== '' ? 
+                        `<img src="${shop.logoUrl}" class="shop-logo-img" alt="${shop.shopName}" onerror="this.src=''">` : 
+                        `<div class="shop-logo-img" style="display: flex; align-items: center; justify-content: center; font-size: 28px; background: #1a1a1a;">🦉</div>`
+                    }
+                    <div>
+                        <div class="shop-name">${shop.shopName}</div>
+                        <div class="shop-category">${shop.category}</div>
+                    </div>
+                </div>
+                <div class="shop-desc">${shop.description.substring(0, 100)}${shop.description.length > 100 ? '...' : ''}</div>
+            </div>
+        `).join('');
     }
 
     function toggleMenu() {
         document.getElementById('mobileMenu').classList.toggle('show');
     }
 
-    loadData();
+    loadShops();
+    
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'crimsonowl_shops') {
+            loadShops();
+        }
+    });
 </script>
 
 </body>
