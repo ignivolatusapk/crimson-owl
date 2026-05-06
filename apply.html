@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Apply - Ignivolatus Store</title>
+    <title>Open a Shop - Ignivolatus Store</title>
     <style>
         * {
             margin: 0;
@@ -45,7 +45,7 @@
             margin: 0 auto;
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
         }
 
         .back-btn {
@@ -56,12 +56,12 @@
 
         .logo {
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 600;
             color: white;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 550px;
             margin: 0 auto;
             padding: 40px 20px;
         }
@@ -81,7 +81,7 @@
         }
 
         .form-card > p {
-            color: #aaaaaa;
+            color: #aaa;
             font-size: 14px;
             margin-bottom: 28px;
         }
@@ -92,7 +92,7 @@
 
         .form-group label {
             display: block;
-            color: #cccccc;
+            color: #ccc;
             margin-bottom: 8px;
             font-size: 13px;
             font-weight: 500;
@@ -127,7 +127,7 @@
         }
 
         .info-box p {
-            color: #cccccc;
+            color: #ccc;
             font-size: 13px;
             margin: 6px 0;
         }
@@ -146,7 +146,6 @@
             font-weight: 600;
             font-size: 16px;
             cursor: pointer;
-            transition: opacity 0.3s;
         }
 
         .btn-submit:hover {
@@ -166,14 +165,14 @@
 
         .footer {
             background: rgba(0, 0, 0, 0.95);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             padding: 20px;
             text-align: center;
             margin-top: 40px;
         }
 
         .footer p {
-            color: #666;
+            color: #555;
             font-size: 12px;
         }
 
@@ -197,14 +196,14 @@
 <div class="navbar">
     <div class="nav-container">
         <a href="index.html" class="back-btn">←</a>
-        <div class="logo">Apply for Shop</div>
+        <div class="logo">Open a Shop</div>
     </div>
 </div>
 
 <div class="container">
     <div class="form-card">
-        <h1>📝 Open Your Shop</h1>
-        <p>Fill the form below. We'll contact you within 24 hours.</p>
+        <h1>Start Your Digital Shop</h1>
+        <p>Fill the form. We'll contact you within 24 hours.</p>
         
         <div id="successMessage" style="display: none;" class="alert-success">
             ✅ Application sent! Check your email.
@@ -245,7 +244,7 @@
             
             <div class="form-group">
                 <label>Description</label>
-                <textarea id="description" rows="4" required placeholder="What do you sell? Describe your products..."></textarea>
+                <textarea id="description" rows="4" required placeholder="What do you sell?"></textarea>
             </div>
             
             <div class="info-box">
@@ -260,7 +259,7 @@
 </div>
 
 <div class="footer">
-    <p>📧 ignivolatusapk@gmail.com</p>
+    <p>© 2024 Ignivolatus Store</p>
 </div>
 
 <script>
@@ -282,23 +281,8 @@
             description: document.getElementById('description').value
         };
         
-        const subject = `NEW SHOP: ${data.shopName}`;
-        const body = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-NEW SHOP APPLICATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Shop Name: ${data.shopName}
-Owner: ${data.ownerName}
-Email: ${data.email}
-Phone: ${data.phone}
-Category: ${data.category}
-
-Description:
-${data.description}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Action Required: Review and contact applicant
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+        const subject = `New Shop: ${data.shopName}`;
+        const body = `New application!\n\nShop: ${data.shopName}\nOwner: ${data.ownerName}\nEmail: ${data.email}\nPhone: ${data.phone}\nCategory: ${data.category}\n\nDescription:\n${data.description}`;
         
         sendEmail(ADMIN_EMAIL, subject, body);
         
