@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Ignivolatus Store - Rent Your Digital Shop</title>
     <style>
         * {
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-image: url('images/background.png');
             background-size: cover;
             background-position: center;
@@ -33,6 +33,7 @@
             z-index: -1;
         }
 
+        /* Mobile Navigation */
         .navbar {
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
@@ -40,209 +41,192 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            padding: 0.8rem 1rem;
         }
 
         .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.2rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
         }
 
         .logo {
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #ffffff, #a0a0a0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .logo span {
-            background: linear-gradient(135deg, #ffffff, #666666);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-link {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            font-size: 1rem;
-        }
-
-        .nav-link:hover {
-            color: #cccccc;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #ffffff, #e0e0e0);
-            color: #000000;
-            padding: 0.7rem 1.5rem;
-            border-radius: 0.75rem;
+        .menu-btn {
+            background: none;
             border: none;
-            font-weight: 600;
+            color: white;
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s;
+            padding: 0.5rem;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            padding: 1rem;
+        }
+
+        .mobile-menu.show {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: white;
             text-decoration: none;
-            display: inline-block;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        .mobile-menu a:last-child {
+            border-bottom: none;
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: #ffffff;
-            padding: 0.7rem 1.5rem;
-            border-radius: 0.75rem;
-            border: 2px solid #ffffff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
+        /* Main Content */
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
+            padding: 1rem;
         }
 
+        /* Hero Section */
         .hero {
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 2rem 1rem;
             color: white;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 2rem;
             font-weight: 800;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             background: linear-gradient(135deg, #ffffff, #a0a0a0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 0.95rem;
             color: #cccccc;
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
         }
 
+        /* Buttons - Big and Touch Friendly */
+        .btn-primary, .btn-secondary {
+            display: inline-block;
+            padding: 0.9rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffffff, #e0e0e0);
+            color: #000000;
+            border: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+        }
+
+        /* Cards */
         .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
         }
 
         .card {
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            transition: all 0.3s;
+            border-radius: 1rem;
+            padding: 1.25rem;
             text-align: center;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
         .card-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
         }
 
         .card h3 {
             color: white;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
         }
 
         .card p {
             color: #aaaaaa;
-            line-height: 1.6;
+            font-size: 0.85rem;
+            line-height: 1.4;
         }
 
+        /* Stats */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin: 1.5rem 0;
         }
 
         .stat-card {
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-            padding: 2rem;
+            border-radius: 0.75rem;
+            padding: 1rem;
             text-align: center;
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: white;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
         .stat-label {
             color: #aaaaaa;
-            font-size: 0.9rem;
+            font-size: 0.7rem;
         }
 
+        /* Footer */
         .footer {
             background: rgba(0, 0, 0, 0.95);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2rem;
+            padding: 1.5rem;
             text-align: center;
-            margin-top: 3rem;
+            margin-top: 2rem;
         }
 
         .footer p {
             color: #666;
-            font-size: 0.875rem;
-        }
-
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
+            font-size: 0.75rem;
         }
     </style>
 </head>
@@ -250,21 +234,21 @@
 
 <div class="navbar">
     <div class="nav-container">
-        <div class="logo">
-            IGNIVOLATUS<span>STORE</span>
-        </div>
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="browse-shops.html" class="nav-link">Browse Shops</a>
-            <a href="apply.html" class="btn-primary">📝 Apply for Shop</a>
-        </div>
+        <div class="logo">IGNIVOLATUS STORE</div>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
     </div>
+</div>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="browse-shops.html">Browse Shops</a>
+    <a href="apply.html">Apply for Shop</a>
 </div>
 
 <div class="hero">
     <h1>Rent a Digital Shop</h1>
-    <p>Get your own professional online store. Pay monthly rent like a physical shop, but sell worldwide.</p>
-    <a href="apply.html" class="btn-primary">Apply Now →</a>
+    <p>Get your own online store. Pay monthly rent like a physical shop, but sell worldwide.</p>
+    <a href="apply.html" class="btn-primary" style="display: block;">📝 Apply Now</a>
 </div>
 
 <div class="container">
@@ -272,22 +256,22 @@
         <div class="card">
             <div class="card-icon">🏪</div>
             <h3>Your Own Website</h3>
-            <p>Get a professional shop at yourname.ignivolatus.com</p>
+            <p>yourname.ignivolatus.com</p>
         </div>
         <div class="card">
             <div class="card-icon">💰</div>
-            <h3>Pay Monthly Rent</h3>
-            <p>Only 500 ETB/month - cheaper than physical rent!</p>
+            <h3>500 ETB/month</h3>
+            <p>Cheaper than physical rent</p>
         </div>
         <div class="card">
             <div class="card-icon">📦</div>
             <h3>Sell Products</h3>
-            <p>List products, manage orders, reach customers online</p>
+            <p>List unlimited products</p>
         </div>
         <div class="card">
             <div class="card-icon">🚀</div>
-            <h3>Ready in 24 Hours</h3>
-            <p>Apply today, get your shop activated within 24 hours</p>
+            <h3>24h Setup</h3>
+            <p>Get live within a day</p>
         </div>
     </div>
 
@@ -306,42 +290,45 @@
         </div>
     </div>
 
-    <div class="card-grid" style="margin-top: 2rem;">
-        <div class="card">
-            <div class="card-icon">📝</div>
-            <h3>1. Apply</h3>
-            <p>Fill out the application form with your shop details</p>
-        </div>
-        <div class="card">
-            <div class="card-icon">📧</div>
-            <h3>2. Get Approved</h3>
-            <p>We'll review and contact you within 24 hours</p>
-        </div>
-        <div class="card">
-            <div class="card-icon">💳</div>
-            <h3>3. Pay Rent</h3>
-            <p>Pay setup fee + first month rent (1,500 ETB)</p>
-        </div>
-        <div class="card">
-            <div class="card-icon">🌐</div>
-            <h3>4. Start Selling</h3>
-            <p>Your shop goes live! Start selling immediately</p>
-        </div>
+    <div style="text-align: center; margin-top: 1rem;">
+        <a href="browse-shops.html" class="btn-secondary" style="display: inline-block; padding: 0.8rem 1.5rem;">Browse Shops →</a>
     </div>
 </div>
 
 <div class="footer">
-    <p>© 2024 Ignivolatus Store | Digital Shop Rental Platform</p>
-    <p style="margin-top: 0.5rem;">📧 Contact: ignivolatusapk@gmail.com</p>
+    <p>© 2024 Ignivolatus Store</p>
+    <p>📧 ignivolatusapk@gmail.com</p>
 </div>
 
 <script>
-    // Load shops from localStorage
-    function loadShopCount() {
-        let shops = JSON.parse(localStorage.getItem('ignivolatus_shops') || '[]');
-        const activeShops = shops.filter(s => s.status === 'active').length;
-        document.getElementById('shopCount').innerText = activeShops;
+    // Load shops from GitHub
+    const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/ignivolatus-store/main/shops.json';
+    
+    async function loadShopCount() {
+        try {
+            const response = await fetch(GITHUB_RAW_URL);
+            if (response.ok) {
+                const data = await response.json();
+                const activeShops = data.shops.filter(s => s.status === 'active').length;
+                document.getElementById('shopCount').innerText = activeShops;
+            } else {
+                document.getElementById('shopCount').innerText = '3';
+            }
+        } catch (error) {
+            document.getElementById('shopCount').innerText = '3';
+        }
     }
+    
+    function toggleMenu() {
+        document.getElementById('mobileMenu').classList.toggle('show');
+    }
+    
+    // Close menu when clicking a link
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.remove('show');
+        });
+    });
     
     loadShopCount();
 </script>
