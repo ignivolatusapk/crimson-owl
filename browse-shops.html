@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Shops - Ignivolatus Store</title>
     <style>
         * {
@@ -13,80 +13,123 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-image: url('images/background.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            position: relative;
-            min-height: 100vh;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: -1;
+            background: #0a0a0a;
         }
 
         .navbar {
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
-            padding: 12px 20px;
+            padding: 16px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 16px;
         }
 
-        .back-btn {
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-logo img {
+            height: 36px;
+            width: auto;
+        }
+
+        .nav-logo span {
             color: white;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        .logo {
+            font-weight: 700;
             font-size: 18px;
-            font-weight: 600;
-            color: white;
-            flex: 1;
         }
 
-        .apply-small {
-            background: white;
-            color: black;
-            padding: 6px 16px;
-            border-radius: 30px;
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
             text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .apply-nav {
+            background: white;
+            color: black !important;
+            padding: 8px 20px;
+            border-radius: 30px;
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 999;
+            padding: 16px;
+        }
+
+        .mobile-menu.show {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 30px 20px;
+            padding: 40px 24px;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #aaa;
+            font-size: 15px;
         }
 
         .search-box {
             width: 100%;
             max-width: 350px;
             padding: 12px 18px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 30px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 40px;
             color: white;
             font-size: 14px;
             margin-bottom: 24px;
@@ -94,12 +137,12 @@
 
         .search-box:focus {
             outline: none;
-            border-color: rgba(255, 255, 255, 0.4);
+            border-color: #666;
         }
 
         .category-filter {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             overflow-x: auto;
             padding: 8px 0 20px 0;
             margin-bottom: 8px;
@@ -111,11 +154,11 @@
         }
 
         .filter-btn {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #1a1a1a;
+            border: 1px solid #333;
             color: #aaa;
-            padding: 7px 16px;
-            border-radius: 30px;
+            padding: 8px 20px;
+            border-radius: 40px;
             cursor: pointer;
             font-size: 13px;
             white-space: nowrap;
@@ -129,98 +172,106 @@
 
         .shops-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
         }
 
         .shop-card {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 20px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 20px;
+            padding: 24px;
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .shop-card:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            transform: translateY(-4px);
+            border-color: #444;
         }
 
-        .shop-icon {
-            font-size: 32px;
-            margin-bottom: 12px;
+        .shop-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .shop-logo {
+            width: 56px;
+            height: 56px;
+            background: #0a0a0a;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
         }
 
         .shop-name {
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 600;
             color: white;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .shop-category {
             font-size: 12px;
             color: #888;
-            margin-bottom: 10px;
         }
 
         .shop-desc {
             font-size: 13px;
             color: #aaa;
-            line-height: 1.45;
+            line-height: 1.5;
             margin-bottom: 16px;
         }
 
         .shop-url {
-            font-size: 11px;
-            color: #00cc00;
-            word-break: break-all;
+            font-size: 12px;
+            color: #00cc66;
         }
 
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
-            background: rgba(0, 0, 0, 0.3);
+            padding: 60px;
+            background: #1a1a1a;
             border-radius: 20px;
         }
 
         .empty-state p {
             color: #aaa;
-            margin-bottom: 20px;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 60px;
-            color: white;
         }
 
         .footer {
             background: rgba(0, 0, 0, 0.95);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 20px;
+            padding: 24px;
             text-align: center;
-            margin-top: 50px;
+            margin-top: 40px;
         }
 
         .footer p {
-            color: #555;
+            color: #666;
             font-size: 12px;
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 20px 16px;
+                padding: 24px 16px;
             }
             
             .shops-grid {
-                gap: 14px;
+                grid-template-columns: 1fr;
+                gap: 16px;
             }
             
-            .shop-card {
-                padding: 16px;
+            .nav-links {
+                display: none;
+            }
+            
+            .menu-btn {
+                display: block;
             }
         }
     </style>
@@ -229,13 +280,31 @@
 
 <div class="navbar">
     <div class="nav-container">
-        <a href="index.html" class="back-btn">←</a>
-        <div class="logo">All Shops</div>
-        <a href="apply.html" class="apply-small">Open a Shop</a>
+        <div class="nav-logo">
+            <img src="images/your-logo.png" alt="Ignivolatus Logo">
+            <span>IGNIVOLATUS</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="browse-shops.html">Shops</a>
+            <a href="apply.html" class="apply-nav">Open a Shop</a>
+        </div>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
     </div>
 </div>
 
+<div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="browse-shops.html">Browse Shops</a>
+    <a href="apply.html">Open a Shop</a>
+</div>
+
 <div class="container">
+    <div class="page-header">
+        <h1>All Shops</h1>
+        <p>Browse online stores from Ethiopia</p>
+    </div>
+
     <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search shops...">
     
     <div class="category-filter" id="categoryFilter">
@@ -249,33 +318,31 @@
     </div>
     
     <div id="shopsList">
-        <div class="loading">Loading shops...</div>
+        <div style="text-align: center; padding: 40px; color: #aaa;">Loading shops...</div>
     </div>
 </div>
 
 <div class="footer">
-    <p>© 2024 Ignivolatus Store</p>
+    <p>© 2024 Ignivolatus Store | Digital Shops Directory</p>
 </div>
 
 <script>
     const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/ignivolatus-store/main/shops.json';
-    
     let shops = [];
     let currentCategory = 'all';
     let currentSearch = '';
 
     async function loadShops() {
         try {
-            const response = await fetch(GITHUB_RAW_URL);
+            const response = await fetch(GITHUB_RAW_URL + '?t=' + Date.now());
             if (!response.ok) throw new Error();
             const data = await response.json();
-            shops = data.shops.filter(shop => shop.status === 'active');
+            shops = data.shops.filter(s => s.status === 'active');
             displayShops();
         } catch (error) {
             document.getElementById('shopsList').innerHTML = `
                 <div class="empty-state">
-                    <p>⚠️ Unable to load shops</p>
-                    <p>Please check back later</p>
+                    <p>⚠️ Unable to load shops. Please check back later.</p>
                 </div>
             `;
         }
@@ -302,7 +369,6 @@
             container.innerHTML = `
                 <div class="empty-state">
                     <p>✨ No shops found</p>
-                    <a href="apply.html" style="color: white;">Open a shop →</a>
                 </div>
             `;
             return;
@@ -312,11 +378,15 @@
             <div class="shops-grid">
                 ${filtered.map(shop => `
                     <div class="shop-card" onclick="window.open('${shop.shopUrl}', '_blank')">
-                        <div class="shop-icon">🏪</div>
-                        <div class="shop-name">${shop.shopName}</div>
-                        <div class="shop-category">${shop.category}</div>
-                        <div class="shop-desc">${shop.description.substring(0, 100)}${shop.description.length > 100 ? '...' : ''}</div>
-                        <div class="shop-url">${shop.shopUrl.replace('https://', '')}</div>
+                        <div class="shop-header">
+                            <div class="shop-logo">${shop.logo || '🏪'}</div>
+                            <div>
+                                <div class="shop-name">${shop.shopName}</div>
+                                <div class="shop-category">${shop.category}</div>
+                            </div>
+                        </div>
+                        <div class="shop-desc">${shop.description.substring(0, 120)}${shop.description.length > 120 ? '...' : ''}</div>
+                        <div class="shop-url">${shop.shopUrl.replace('https://', '').replace('http://', '')}</div>
                     </div>
                 `).join('')}
             </div>
@@ -338,6 +408,10 @@
     });
 
     document.getElementById('searchInput').addEventListener('keyup', filterShops);
+    
+    function toggleMenu() {
+        document.getElementById('mobileMenu').classList.toggle('show');
+    }
     
     loadShops();
 </script>
