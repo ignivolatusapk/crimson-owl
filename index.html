@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ignivolatus Store - Digital Shops Directory</title>
+    <title>Crimson Owl - Digital Shops Directory</title>
     <style>
         * {
             margin: 0;
@@ -16,7 +16,6 @@
             background: #0a0a0a;
         }
 
-        /* Hero Section with Background Image */
         .hero {
             background-image: url('images/hero-bg.jpg');
             background-size: cover;
@@ -36,7 +35,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.65);
+            background: rgba(0, 0, 0, 0.7);
         }
 
         .hero-content {
@@ -48,9 +47,15 @@
         }
 
         .hero-logo {
-            width: 120px;
-            height: auto;
-            margin-bottom: 24px;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            background: #8B0000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
         }
 
         .hero h1 {
@@ -64,23 +69,24 @@
             font-size: 18px;
             color: #ddd;
             margin-bottom: 32px;
-            line-height: 1.5;
         }
 
         .btn-primary {
-            background: white;
-            color: black;
+            background: #8B0000;
+            color: white;
             padding: 14px 32px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 16px;
             display: inline-block;
             transition: transform 0.3s;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
+            background: #a00000;
         }
 
         .btn-outline {
@@ -91,17 +97,14 @@
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 16px;
             display: inline-block;
             margin-left: 12px;
-            transition: all 0.3s;
         }
 
         .btn-outline:hover {
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Navigation */
         .navbar {
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
@@ -126,9 +129,15 @@
             gap: 10px;
         }
 
-        .nav-logo img {
-            height: 36px;
-            width: auto;
+        .nav-logo .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: #8B0000;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
         }
 
         .nav-logo span {
@@ -147,16 +156,11 @@
             color: white;
             text-decoration: none;
             font-size: 14px;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover {
-            opacity: 0.7;
         }
 
         .apply-nav {
-            background: white;
-            color: black !important;
+            background: #8B0000;
+            color: white !important;
             padding: 8px 20px;
             border-radius: 30px;
         }
@@ -177,7 +181,6 @@
             left: 0;
             right: 0;
             background: rgba(0, 0, 0, 0.98);
-            backdrop-filter: blur(10px);
             z-index: 999;
             padding: 16px;
         }
@@ -191,11 +194,9 @@
             color: white;
             text-decoration: none;
             padding: 14px;
-            font-size: 16px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Main Content */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -217,13 +218,12 @@
             margin-bottom: 48px;
         }
 
-        /* Stats */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             max-width: 800px;
-            margin: 0 auto 60px auto;
+            margin: 0 auto 60px;
         }
 
         .stat-card {
@@ -231,13 +231,12 @@
             padding: 24px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
-            backdrop-filter: blur(10px);
         }
 
         .stat-number {
             font-size: 40px;
             font-weight: 800;
-            color: white;
+            color: #8B0000;
         }
 
         .stat-label {
@@ -246,28 +245,24 @@
             margin-top: 8px;
         }
 
-        /* Shop Grid */
         .shops-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 24px;
-            margin-top: 20px;
         }
 
         .shop-card {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             padding: 24px;
-            transition: all 0.3s;
             cursor: pointer;
+            transition: all 0.3s;
         }
 
         .shop-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.08);
+            border-color: #8B0000;
         }
 
         .shop-header {
@@ -280,16 +275,12 @@
         .shop-logo {
             width: 56px;
             height: 56px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(139, 0, 0, 0.2);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
-        }
-
-        .shop-info {
-            flex: 1;
         }
 
         .shop-name {
@@ -311,23 +302,6 @@
             margin-bottom: 16px;
         }
 
-        .shop-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .shop-link {
-            font-size: 12px;
-            color: #00cc66;
-            text-decoration: none;
-        }
-
-        .visit-icon {
-            color: white;
-            font-size: 20px;
-        }
-
         .view-all {
             text-align: center;
             margin-top: 48px;
@@ -340,12 +314,7 @@
             padding: 12px 32px;
             border-radius: 40px;
             text-decoration: none;
-            font-size: 14px;
             display: inline-block;
-        }
-
-        .view-all-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
         }
 
         .footer {
@@ -361,51 +330,14 @@
         }
 
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 32px;
-            }
-
-            .hero p {
-                font-size: 15px;
-            }
-
-            .hero-logo {
-                width: 80px;
-            }
-
-            .btn-primary, .btn-outline {
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-
-            .section-title {
-                font-size: 26px;
-            }
-
-            .stats-grid {
-                gap: 15px;
-            }
-
-            .stat-number {
-                font-size: 28px;
-            }
-
-            .shops-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .menu-btn {
-                display: block;
-            }
-
-            .container {
-                padding: 40px 16px;
-            }
+            .hero h1 { font-size: 32px; }
+            .section-title { font-size: 26px; }
+            .stats-grid { gap: 15px; }
+            .stat-number { font-size: 28px; }
+            .nav-links { display: none; }
+            .menu-btn { display: block; }
+            .container { padding: 40px 16px; }
+            .shops-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -414,8 +346,8 @@
 <div class="navbar">
     <div class="nav-container">
         <div class="nav-logo">
-            <img src="images/your-logo.png" alt="Ignivolatus Logo">
-            <span>IGNIVOLATUS</span>
+            <div class="logo-icon">🦉</div>
+            <span>CRIMSON OWL</span>
         </div>
         <div class="nav-links">
             <a href="index.html">Home</a>
@@ -436,9 +368,9 @@
 
 <div class="hero">
     <div class="hero-content">
-        <img src="images/your-logo.png" alt="Ignivolatus Store" class="hero-logo">
-        <h1>Digital Shops Directory</h1>
-        <p>Discover online stores from Ethiopia. Shop locally, support small businesses.</p>
+        <div class="hero-logo">🦉</div>
+        <h1>Crimson Owl</h1>
+        <p>Digital Shops Directory - Discover online stores from Ethiopia</p>
         <div>
             <a href="browse-shops.html" class="btn-primary">Browse Shops</a>
             <a href="apply.html" class="btn-outline">Open a Shop</a>
@@ -447,7 +379,7 @@
 </div>
 
 <div class="container">
-    <div class="stats-grid" id="statsGrid">
+    <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-number" id="shopCount">--</div>
             <div class="stat-label">Active Shops</div>
@@ -473,12 +405,11 @@
 </div>
 
 <div class="footer">
-    <p>© 2024 Ignivolatus Store | Digital Shops Directory</p>
+    <p>© 2024 Crimson Owl | Digital Shops Directory</p>
 </div>
 
 <script>
-    // Direct email sending using FormSubmit.co (free, no mail client)
-    const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/ignivolatus-store/main/shops.json';
+    const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/crimson-owl/main/shops.json';
 
     async function loadData() {
         try {
@@ -500,17 +431,13 @@
             container.innerHTML = featured.map(shop => `
                 <div class="shop-card" onclick="window.open('${shop.shopUrl}', '_blank')">
                     <div class="shop-header">
-                        <div class="shop-logo">${shop.logo || '🏪'}</div>
-                        <div class="shop-info">
+                        <div class="shop-logo">${shop.logo || '🦉'}</div>
+                        <div>
                             <div class="shop-name">${shop.shopName}</div>
                             <div class="shop-category">${shop.category}</div>
                         </div>
                     </div>
                     <div class="shop-desc">${shop.description.substring(0, 100)}${shop.description.length > 100 ? '...' : ''}</div>
-                    <div class="shop-footer">
-                        <span class="shop-link">${shop.shopUrl.replace('https://', '').replace('http://', '')}</span>
-                        <span class="visit-icon">→</span>
-                    </div>
                 </div>
             `).join('');
         } catch (error) {
@@ -523,14 +450,7 @@
         document.getElementById('mobileMenu').classList.toggle('show');
     }
 
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.menu-btn') && !e.target.closest('.mobile-menu')) {
-            document.getElementById('mobileMenu').classList.remove('show');
-        }
-    });
-
     loadData();
-    setInterval(loadData, 60000);
 </script>
 
 </body>
