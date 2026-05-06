@@ -47,9 +47,9 @@
         }
 
         .container {
-            max-width: 500px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 60px 20px;
         }
 
         .login-box, .admin-box {
@@ -70,7 +70,7 @@
             margin-bottom: 24px;
         }
 
-        input {
+        input, select, textarea {
             width: 100%;
             padding: 14px;
             background: #0a0a0a;
@@ -79,9 +79,10 @@
             color: white;
             font-size: 14px;
             margin-bottom: 16px;
+            font-family: inherit;
         }
 
-        input:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #8B0000;
         }
@@ -169,12 +170,28 @@
             font-size: 18px;
         }
 
+        code {
+            background: #000;
+            padding: 12px;
+            display: block;
+            font-size: 12px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            border-radius: 8px;
+            margin-top: 8px;
+        }
+
         @media (max-width: 768px) {
             .form-row {
                 grid-template-columns: 1fr;
+                gap: 0;
             }
             .login-box, .admin-box {
                 padding: 24px;
+            }
+            .container {
+                padding: 30px 16px;
             }
         }
     </style>
@@ -249,7 +266,7 @@
 </div>
 
 <script>
-    const FORMSPREE_ID = 'YOUR_FORMSPREE_ID';
+    const FORMSPREE_ID = 'mlgzlbak';
     let storedCode = null;
     let verifiedEmail = null;
     
@@ -266,7 +283,6 @@
         
         const formData = new FormData();
         formData.append('_subject', 'Crimson Owl - Admin Verification Code');
-        formData.append('_to', email);
         formData.append('Code', code);
         formData.append('Message', `Your verification code is: ${code}\n\nEnter this code to access the admin panel.\n\nThis code expires in 10 minutes.`);
         
@@ -374,9 +390,7 @@
                 <strong>To make it live:</strong><br>
                 1. Go to GitHub → shops.json<br>
                 2. Copy this shop and paste into the array:<br><br>
-                <code style="background: #000; padding: 8px; display: block; font-size: 12px; word-break: break-all;">
-${JSON.stringify(newShop, null, 2)}
-                </code>
+                <code>${JSON.stringify(newShop, null, 2)}</code>
             </div>
         `;
         
@@ -402,6 +416,7 @@ ${JSON.stringify(newShop, null, 2)}
         storedCode = null;
         document.getElementById('adminSection').style.display = 'none';
         document.getElementById('loginSection').style.display = 'block';
+        document.getElementById('adminEmail').value = 'ignivolatusapk@gmail.com';
     }
 </script>
 
