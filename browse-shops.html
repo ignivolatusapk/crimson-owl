@@ -40,9 +40,15 @@
             gap: 10px;
         }
 
-        .nav-logo img {
+        .nav-logo .logo-icon {
+            width: 36px;
             height: 36px;
-            width: auto;
+            background: #8B0000;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
         }
 
         .nav-logo span {
@@ -196,15 +202,12 @@
             margin-bottom: 16px;
         }
 
-        .shop-logo {
+        .shop-logo-img {
             width: 56px;
             height: 56px;
-            background: rgba(139, 0, 0, 0.2);
             border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
+            object-fit: cover;
+            background: #0a0a0a;
         }
 
         .shop-name {
@@ -263,7 +266,7 @@
 <div class="navbar">
     <div class="nav-container">
         <div class="nav-logo">
-            <img src="images/logo.png" alt="Crimson Owl Logo">
+            <div class="logo-icon">🦉</div>
             <span>CRIMSON OWL</span>
         </div>
         <div class="nav-links">
@@ -309,21 +312,14 @@
 </div>
 
 <script>
-    const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/crimson-owl/main/shops.json';
     let shops = [];
     let currentCategory = 'all';
     let currentSearch = '';
 
-    async function loadShops() {
-        try {
-            const response = await fetch(GITHUB_RAW_URL + '?t=' + Date.now());
-            if (!response.ok) throw new Error();
-            const data = await response.json();
-            shops = data.shops.filter(s => s.status === 'active');
-            displayShops();
-        } catch (error) {
-            document.getElementById('shopsList').innerHTML = '<div class="empty-state"><p>⚠️ Unable to load shops. Please check back later.</p></div>';
-        }
+    function loadShops() {
+        shops = JSON.parse(localStorage.getItem('crimsonowl_shops') || '[]');
+        shops = shops.filter(s => s.status === 'active');
+        displayShops();
     }
 
     function displayShops() {
@@ -353,7 +349,11 @@
                 ${filtered.map(shop => `
                     <div class="shop-card" onclick="window.open('${shop.shopUrl}', '_blank')">
                         <div class="shop-header">
-                            <div class="shop-logo">${shop.logo || '🦉'}</div>
+                            ${shop.logoUrl && shop.logoUrl !== '' ? 
+                                `<img src="${shop.logoUrl}" class="shop-logo-img" alt="${shop.shopName}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="shop-logo-img" style="display: none; align-items: center; justify-content: center; font-size: 28px;">🦉</div>` : 
+                                `<div class="shop-logo-img" style="display: flex; align-items: center; justify-content: center; font-size: 28px;">🦉</div>`
+                            }
                             <div>
                                 <div class="shop-name">${shop.shopName}</div>
                                 <div class="shop-category">${shop.category}</div>
@@ -387,6 +387,13 @@
     }
     
     loadShops();
+    
+    // Listen for storage changes
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'crimsonowl_shops') {
+            loadShops();
+        }
+    });
 </script>
 
 </body>
