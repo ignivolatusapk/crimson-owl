@@ -6,9 +6,9 @@
       "category": "Fashion & Clothing",
       "description": "Beautiful traditional Ethiopian clothing, habesha kemis, and modern fusion wear. Quality fabrics and unique designs.",
       "shopUrl": "https://habesha-fashion.crimsonowl.com",
-      "logo": "👗",
+      "logoUrl": "",
       "status": "active",
-      "addedDate": "2024-01-15"
+      "addedDate": "2026-01-15"
     },
     {
       "id": 2,
@@ -16,19 +16,9 @@
       "category": "Food & Restaurant",
       "description": "Fresh Ethiopian coffee beans, organic spices, and traditional coffee sets. Direct from farmers to you.",
       "shopUrl": "https://addis-coffee.crimsonowl.com",
-      "logo": "☕",
+      "logoUrl": "",
       "status": "active",
-      "addedDate": "2024-01-20"
-    },
-    {
-      "id": 3,
-      "shopName": "Ethio Electronics",
-      "category": "Electronics",
-      "description": "Latest smartphones, laptops, and gadgets with warranty. Best prices in Addis Ababa.",
-      "shopUrl": "https://ethio-electronics.crimsonowl.com",
-      "logo": "📱",
-      "status": "active",
-      "addedDate": "2024-02-01"
+      "addedDate": "2026-01-20"
     }
   ]
 }
