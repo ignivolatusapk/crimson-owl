@@ -4,8 +4,8 @@
       "id": 1,
       "shopName": "Habesha Fashion",
       "category": "Fashion & Clothing",
-      "description": "Beautiful traditional Ethiopian clothing, habesha kemis, and modern fusion wear. Quality fabrics and unique designs.",
-      "shopUrl": "https://habesha-fashion.ignivolatus.com",
+      "description": "Beautiful traditional Ethiopian clothing, habesha kemis, and modern fusion wear.",
+      "shopUrl": "https://habesha-fashion.crimsonowl.com",
       "logo": "👗",
       "status": "active",
       "addedDate": "2024-01-15"
@@ -14,8 +14,8 @@
       "id": 2,
       "shopName": "Addis Coffee",
       "category": "Food & Restaurant",
-      "description": "Fresh Ethiopian coffee beans, organic spices, and traditional coffee sets. Direct from farmers to you.",
-      "shopUrl": "https://addis-coffee.ignivolatus.com",
+      "description": "Fresh Ethiopian coffee beans, organic spices, and traditional coffee sets.",
+      "shopUrl": "https://addis-coffee.crimsonowl.com",
       "logo": "☕",
       "status": "active",
       "addedDate": "2024-01-20"
@@ -24,8 +24,8 @@
       "id": 3,
       "shopName": "Ethio Electronics",
       "category": "Electronics",
-      "description": "Latest smartphones, laptops, and gadgets with warranty. Best prices in Addis Ababa.",
-      "shopUrl": "https://ethio-electronics.ignivolatus.com",
+      "description": "Latest smartphones, laptops, and gadgets with warranty.",
+      "shopUrl": "https://ethio-electronics.crimsonowl.com",
       "logo": "📱",
       "status": "active",
       "addedDate": "2024-02-01"
