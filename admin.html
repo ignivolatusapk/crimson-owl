@@ -17,6 +17,35 @@
             min-height: 100vh;
         }
 
+        .navbar {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-logo img {
+            height: 36px;
+            width: auto;
+        }
+
+        .nav-logo span {
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
         .container {
             max-width: 500px;
             margin: 0 auto;
@@ -99,12 +128,6 @@
             color: #ff4444;
         }
 
-        .message.info {
-            background: rgba(139, 0, 0, 0.2);
-            border: 1px solid #8B0000;
-            color: #8B0000;
-        }
-
         .shop-item {
             background: #0a0a0a;
             padding: 16px;
@@ -157,225 +180,230 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Login Section -->
-        <div id="loginSection">
-            <div class="login-box">
-                <h1>🔐 Admin Access</h1>
-                <p>Enter your email to receive a verification code</p>
-                <div id="loginMessage"></div>
-                <input type="email" id="adminEmail" placeholder="Your Email Address">
-                <button onclick="sendVerificationCode()">Send Verification Code</button>
-            </div>
-        </div>
 
-        <!-- Verification Section -->
-        <div id="verifySection" style="display: none;">
-            <div class="login-box">
-                <h1>📧 Verification Code</h1>
-                <p>Enter the 6-digit code sent to your email</p>
-                <div id="verifyMessage"></div>
-                <input type="text" id="verificationCode" class="code-input" placeholder="000000" maxlength="6">
-                <button onclick="verifyCode()">Verify & Login</button>
-                <button onclick="backToLogin()" style="background: #333; margin-top: 12px;">Back</button>
-            </div>
+<div class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <img src="images/logo.png" alt="Crimson Owl Logo">
+            <span>CRIMSON OWL</span>
         </div>
+    </div>
+</div>
 
-        <!-- Admin Panel -->
-        <div id="adminSection" style="display: none;">
-            <div class="admin-box">
-                <h1>➕ Add New Shop</h1>
-                <p>Add a shop to the directory</p>
-                
-                <div id="adminMessage"></div>
-                
-                <div class="form-row">
-                    <input type="text" id="shopName" placeholder="Shop Name *">
-                    <select id="category">
-                        <option>Fashion & Clothing</option>
-                        <option>Food & Restaurant</option>
-                        <option>Electronics</option>
-                        <option>Handicrafts & Art</option>
-                        <option>Home & Living</option>
-                        <option>Beauty & Health</option>
-                    </select>
-                </div>
-                
-                <input type="text" id="shopUrl" placeholder="Shop URL * (e.g., https://shopname.com)">
-                <input type="text" id="shopLogo" placeholder="Shop Logo (emoji) - leave blank for 🦉">
-                <textarea id="description" rows="3" placeholder="Shop Description *"></textarea>
-                
-                <button onclick="addShop()">➕ Add Shop to Directory</button>
-                
-                <h3>📋 Current Shops</h3>
-                <div id="shopsList"></div>
-                
-                <button onclick="logout()" style="background: #333; margin-top: 16px;">Logout</button>
-            </div>
+<div class="container">
+    <!-- Login Section -->
+    <div id="loginSection">
+        <div class="login-box">
+            <h1>🔐 Admin Access</h1>
+            <p>Enter your email to receive a verification code</p>
+            <div id="loginMessage"></div>
+            <input type="email" id="adminEmail" placeholder="Your Email Address" value="ignivolatusapk@gmail.com">
+            <button onclick="sendVerificationCode()">Send Verification Code</button>
         </div>
     </div>
 
-    <script>
-        // Store verification code temporarily (in real world, this is sent via email)
-        let storedCode = null;
-        let verifiedEmail = null;
+    <!-- Verification Section -->
+    <div id="verifySection" style="display: none;">
+        <div class="login-box">
+            <h1>📧 Verification Code</h1>
+            <p>Enter the 6-digit code sent to your email</p>
+            <div id="verifyMessage"></div>
+            <input type="text" id="verificationCode" class="code-input" placeholder="000000" maxlength="6">
+            <button onclick="verifyCode()">Verify & Login</button>
+            <button onclick="backToLogin()" style="background: #333; margin-top: 12px;">Back</button>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminSection" style="display: none;">
+        <div class="admin-box">
+            <h1>➕ Add New Shop</h1>
+            <p>Add a shop to the directory</p>
+            
+            <div id="adminMessage"></div>
+            
+            <div class="form-row">
+                <input type="text" id="shopName" placeholder="Shop Name *">
+                <select id="category">
+                    <option>Fashion & Clothing</option>
+                    <option>Food & Restaurant</option>
+                    <option>Electronics</option>
+                    <option>Handicrafts & Art</option>
+                    <option>Home & Living</option>
+                    <option>Beauty & Health</option>
+                </select>
+            </div>
+            
+            <input type="text" id="shopUrl" placeholder="Shop URL * (e.g., https://shopname.com)">
+            <input type="text" id="shopLogo" placeholder="Shop Logo (emoji) - leave blank for 🦉">
+            <textarea id="description" rows="3" placeholder="Shop Description *"></textarea>
+            
+            <button onclick="addShop()">➕ Add Shop to Directory</button>
+            
+            <h3>📋 Current Shops</h3>
+            <div id="shopsList"></div>
+            
+            <button onclick="logout()" style="background: #333; margin-top: 16px;">Logout</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const FORMSPREE_ID = 'YOUR_FORMSPREE_ID';
+    let storedCode = null;
+    let verifiedEmail = null;
+    
+    async function sendVerificationCode() {
+        const email = document.getElementById('adminEmail').value;
         
-        // Function to send verification code via Formspree
-        async function sendVerificationCode() {
-            const email = document.getElementById('adminEmail').value;
-            
-            if (!email || email !== 'ignivolatusapk@gmail.com') {
-                document.getElementById('loginMessage').innerHTML = '<div class="message error">❌ Only authorized email can access admin panel</div>';
-                return;
-            }
-            
-            // Generate 6-digit code
-            const code = Math.floor(100000 + Math.random() * 900000).toString();
-            storedCode = code;
-            
-            // Send email via Formspree
-            const formData = new FormData();
-            formData.append('_subject', 'Crimson Owl - Admin Verification Code');
-            formData.append('_to', email);
-            formData.append('Code', code);
-            formData.append('Message', `Your verification code is: ${code}\n\nEnter this code to access the admin panel.\n\nThis code expires in 10 minutes.`);
-            
-            try {
-                await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
-                
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('verifySection').style.display = 'block';
-                document.getElementById('verifyMessage').innerHTML = '<div class="message success">✅ Code sent to your email!</div>';
-                
-                // Auto-expire after 10 minutes
-                setTimeout(() => {
-                    storedCode = null;
-                }, 600000);
-            } catch (error) {
-                document.getElementById('loginMessage').innerHTML = '<div class="message error">❌ Failed to send code. Please try again.</div>';
-            }
+        if (!email || email !== 'ignivolatusapk@gmail.com') {
+            document.getElementById('loginMessage').innerHTML = '<div class="message error">❌ Only authorized email can access admin panel</div>';
+            return;
         }
         
-        function verifyCode() {
-            const enteredCode = document.getElementById('verificationCode').value;
-            
-            if (enteredCode === storedCode) {
-                verifiedEmail = 'ignivolatusapk@gmail.com';
-                document.getElementById('verifySection').style.display = 'none';
-                document.getElementById('adminSection').style.display = 'block';
-                loadShops();
-            } else {
-                document.getElementById('verifyMessage').innerHTML = '<div class="message error">❌ Invalid verification code</div>';
-            }
-        }
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+        storedCode = code;
         
-        function backToLogin() {
+        const formData = new FormData();
+        formData.append('_subject', 'Crimson Owl - Admin Verification Code');
+        formData.append('_to', email);
+        formData.append('Code', code);
+        formData.append('Message', `Your verification code is: ${code}\n\nEnter this code to access the admin panel.\n\nThis code expires in 10 minutes.`);
+        
+        try {
+            await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+            
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('verifySection').style.display = 'block';
+            document.getElementById('verifyMessage').innerHTML = '<div class="message success">✅ Code sent to your email!</div>';
+            
+            setTimeout(() => {
+                storedCode = null;
+            }, 600000);
+        } catch (error) {
+            document.getElementById('loginMessage').innerHTML = '<div class="message error">❌ Failed to send code. Please try again.</div>';
+        }
+    }
+    
+    function verifyCode() {
+        const enteredCode = document.getElementById('verificationCode').value;
+        
+        if (enteredCode === storedCode) {
+            verifiedEmail = 'ignivolatusapk@gmail.com';
             document.getElementById('verifySection').style.display = 'none';
-            document.getElementById('loginSection').style.display = 'block';
-            document.getElementById('verificationCode').value = '';
-            document.getElementById('adminEmail').value = '';
-            storedCode = null;
+            document.getElementById('adminSection').style.display = 'block';
+            loadShops();
+        } else {
+            document.getElementById('verifyMessage').innerHTML = '<div class="message error">❌ Invalid verification code</div>';
+        }
+    }
+    
+    function backToLogin() {
+        document.getElementById('verifySection').style.display = 'none';
+        document.getElementById('loginSection').style.display = 'block';
+        document.getElementById('verificationCode').value = '';
+        storedCode = null;
+    }
+    
+    let shops = [];
+    
+    async function loadShops() {
+        try {
+            const response = await fetch('https://raw.githubusercontent.com/YOUR_USERNAME/crimson-owl/main/shops.json?t=' + Date.now());
+            if (response.ok) {
+                const data = await response.json();
+                shops = data.shops;
+            }
+        } catch(e) {
+            shops = [];
+        }
+        displayShopsList();
+    }
+    
+    function displayShopsList() {
+        const container = document.getElementById('shopsList');
+        if (shops.length === 0) {
+            container.innerHTML = '<p style="color: #888;">No shops yet.</p>';
+            return;
         }
         
-        let shops = [];
-        
-        async function loadShops() {
-            try {
-                const response = await fetch('https://raw.githubusercontent.com/YOUR_USERNAME/crimson-owl/main/shops.json?t=' + Date.now());
-                if (response.ok) {
-                    const data = await response.json();
-                    shops = data.shops;
-                }
-            } catch(e) {
-                shops = [];
-            }
-            displayShopsList();
-        }
-        
-        function displayShopsList() {
-            const container = document.getElementById('shopsList');
-            if (shops.length === 0) {
-                container.innerHTML = '<p style="color: #888;">No shops yet.</p>';
-                return;
-            }
-            
-            container.innerHTML = shops.map(shop => `
-                <div class="shop-item">
-                    <div class="shop-info">
-                        <h4>${shop.shopName}</h4>
-                        <p>${shop.shopUrl}</p>
-                    </div>
-                    <button class="delete-btn" onclick="deleteShop(${shop.id})">Delete</button>
+        container.innerHTML = shops.map(shop => `
+            <div class="shop-item">
+                <div class="shop-info">
+                    <h4>${shop.shopName}</h4>
+                    <p>${shop.shopUrl}</p>
                 </div>
-            `).join('');
+                <button class="delete-btn" onclick="deleteShop(${shop.id})">Delete</button>
+            </div>
+        `).join('');
+    }
+    
+    function addShop() {
+        const shopName = document.getElementById('shopName').value;
+        const category = document.getElementById('category').value;
+        const shopUrl = document.getElementById('shopUrl').value;
+        const description = document.getElementById('description').value;
+        const logo = document.getElementById('shopLogo').value || '🦉';
+        
+        if (!shopName || !shopUrl || !description) {
+            document.getElementById('adminMessage').innerHTML = '<div class="message error">Please fill all required fields</div>';
+            setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 3000);
+            return;
         }
         
-        function addShop() {
-            const shopName = document.getElementById('shopName').value;
-            const category = document.getElementById('category').value;
-            const shopUrl = document.getElementById('shopUrl').value;
-            const description = document.getElementById('description').value;
-            const logo = document.getElementById('shopLogo').value || '🦉';
-            
-            if (!shopName || !shopUrl || !description) {
-                document.getElementById('adminMessage').innerHTML = '<div class="message error">Please fill all required fields</div>';
-                setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 3000);
-                return;
-            }
-            
-            const newShop = {
-                id: Date.now(),
-                shopName: shopName,
-                category: category,
-                description: description,
-                shopUrl: shopUrl,
-                logo: logo,
-                status: "active",
-                addedDate: new Date().toISOString().split('T')[0]
-            };
-            
-            shops.push(newShop);
-            
-            document.getElementById('adminMessage').innerHTML = `
-                <div class="message success">
-                    ✅ Shop ready!<br><br>
-                    <strong>To make it live:</strong><br>
-                    1. Go to GitHub → shops.json<br>
-                    2. Copy this shop and paste into the array:<br><br>
-                    <code style="background: #000; padding: 8px; display: block; font-size: 12px; word-break: break-all;">
+        const newShop = {
+            id: Date.now(),
+            shopName: shopName,
+            category: category,
+            description: description,
+            shopUrl: shopUrl,
+            logo: logo,
+            status: "active",
+            addedDate: new Date().toISOString().split('T')[0]
+        };
+        
+        shops.push(newShop);
+        
+        document.getElementById('adminMessage').innerHTML = `
+            <div class="message success">
+                ✅ Shop ready!<br><br>
+                <strong>To make it live:</strong><br>
+                1. Go to GitHub → shops.json<br>
+                2. Copy this shop and paste into the array:<br><br>
+                <code style="background: #000; padding: 8px; display: block; font-size: 12px; word-break: break-all;">
 ${JSON.stringify(newShop, null, 2)}
-                    </code>
-                </div>
-            `;
-            
-            document.getElementById('shopName').value = '';
-            document.getElementById('shopUrl').value = '';
-            document.getElementById('description').value = '';
-            document.getElementById('shopLogo').value = '';
-            
+                </code>
+            </div>
+        `;
+        
+        document.getElementById('shopName').value = '';
+        document.getElementById('shopUrl').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('shopLogo').value = '';
+        
+        displayShopsList();
+    }
+    
+    function deleteShop(id) {
+        if (confirm('Delete this shop?')) {
+            shops = shops.filter(s => s.id !== id);
             displayShopsList();
+            document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ Shop removed. Update shops.json on GitHub to make permanent.</div>';
+            setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 3000);
         }
-        
-        function deleteShop(id) {
-            if (confirm('Delete this shop?')) {
-                shops = shops.filter(s => s.id !== id);
-                displayShopsList();
-                document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ Shop removed. Update shops.json on GitHub to make permanent.</div>';
-                setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 3000);
-            }
-        }
-        
-        function logout() {
-            verifiedEmail = null;
-            storedCode = null;
-            document.getElementById('adminSection').style.display = 'none';
-            document.getElementById('loginSection').style.display = 'block';
-            document.getElementById('adminEmail').value = '';
-        }
-    </script>
+    }
+    
+    function logout() {
+        verifiedEmail = null;
+        storedCode = null;
+        document.getElementById('adminSection').style.display = 'none';
+        document.getElementById('loginSection').style.display = 'block';
+    }
+</script>
+
 </body>
 </html>
