@@ -162,6 +162,12 @@
             color: #00ff00;
         }
 
+        .message.error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+
         .footer {
             background: rgba(0, 0, 0, 0.95);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -254,14 +260,14 @@
 </div>
 
 <script>
-    const FORMSPREE_ID = 'YOUR_FORMSPREE_ID';
+    // Your Formspree ID
+    const FORMSPREE_ID = 'mlgzlbak';
     
     document.getElementById('applyForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const formData = new FormData();
         formData.append('_subject', 'New Shop Application - Crimson Owl');
-        formData.append('_to', 'ignivolatusapk@gmail.com');
         formData.append('Shop Name', document.getElementById('shopName').value);
         formData.append('Owner Name', document.getElementById('ownerName').value);
         formData.append('Email', document.getElementById('email').value);
