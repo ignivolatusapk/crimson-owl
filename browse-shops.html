@@ -306,14 +306,21 @@
 </div>
 
 <script>
+    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
     let shops = [];
     let currentCategory = 'all';
     let currentSearch = '';
 
-    function loadShops() {
-        shops = JSON.parse(localStorage.getItem('crimsonowl_shops') || '[]');
-        shops = shops.filter(s => s.status === 'active');
-        displayShops();
+    async function loadShops() {
+        try {
+            const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
+            if (!response.ok) throw new Error();
+            const data = await response.json();
+            shops = data.shops.filter(s => s.status === 'active');
+            displayShops();
+        } catch (error) {
+            document.getElementById('shopsList').innerHTML = '<div class="empty-state"><p>⚠️ Unable to load shops. Please check back later.</p></div>';
+        }
     }
 
     function displayShops() {
@@ -380,12 +387,6 @@
     }
     
     loadShops();
-    
-    window.addEventListener('storage', function(e) {
-        if (e.key === 'crimsonowl_shops') {
-            loadShops();
-        }
-    });
 </script>
 
 </body>
