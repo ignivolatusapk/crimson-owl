@@ -396,8 +396,11 @@
 </div>
 
 <script>
-    // GitHub RAW URL for shops.json - CHANGE YOUR_USERNAME
-    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
+    // Your GitHub username
+    const GITHUB_USERNAME = 'ignivolatusapk';
+    const GITHUB_SHOPS_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/crimson-owl/main/shops.json`;
+    
+    console.log('Loading shops from:', GITHUB_SHOPS_URL);
     
     async function loadShops() {
         try {
@@ -433,7 +436,11 @@
             `).join('');
         } catch (error) {
             console.error('Error loading shops:', error);
-            document.getElementById('featuredShops').innerHTML = '<div style="text-align: center; color: #aaa; grid-column: 1/-1; padding: 40px;">Unable to load shops. Please check back later.</div>';
+            document.getElementById('featuredShops').innerHTML = `
+                <div style="text-align: center; color: #aaa; grid-column: 1/-1; padding: 40px;">
+                    <p>⚠️ Unable to load shops.</p>
+                    <p style="font-size: 12px; margin-top: 10px;">Make sure shops.json exists in your GitHub repository.</p>
+                </div>`;
             document.getElementById('shopCount').innerText = '0';
         }
     }
