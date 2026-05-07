@@ -47,26 +47,25 @@
         }
 
         .container {
-            max-width: 650px;
+            max-width: 600px;
             margin: 0 auto;
             padding: 60px 20px;
         }
 
-        .login-box, .admin-box, .token-box {
+        .login-box, .admin-box {
             background: #1a1a1a;
             border-radius: 24px;
             padding: 40px;
             border: 1px solid #333;
-            margin-bottom: 20px;
         }
 
-        .login-box h1, .admin-box h1, .token-box h1 {
+        .login-box h1, .admin-box h1 {
             color: white;
             font-size: 28px;
             margin-bottom: 8px;
         }
 
-        .login-box p, .admin-box p, .token-box p {
+        .login-box p, .admin-box p {
             color: #aaa;
             margin-bottom: 24px;
         }
@@ -80,7 +79,6 @@
             color: white;
             font-size: 14px;
             margin-bottom: 16px;
-            font-family: monospace;
         }
 
         input:focus, select:focus, textarea:focus {
@@ -102,11 +100,6 @@
 
         button:hover {
             background: #a00000;
-        }
-
-        button:disabled {
-            background: #555;
-            cursor: not-allowed;
         }
 
         .code-input {
@@ -162,15 +155,6 @@
             color: #888;
             font-size: 12px;
             margin: 0;
-            word-break: break-all;
-        }
-
-        .shop-logo-preview {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            object-fit: cover;
-            background: #1a1a1a;
         }
 
         .form-row {
@@ -199,20 +183,19 @@
             color: #8B0000;
         }
 
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid white;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .json-output {
+            background: #0a0a0a;
+            padding: 16px;
+            border-radius: 12px;
+            margin: 16px 0;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            border: 1px solid #333;
+            color: #0f0;
+            max-height: 300px;
+            overflow: auto;
         }
 
         @media (max-width: 768px) {
@@ -220,11 +203,8 @@
                 grid-template-columns: 1fr;
                 gap: 0;
             }
-            .login-box, .admin-box, .token-box {
+            .login-box, .admin-box {
                 padding: 24px;
-            }
-            .container {
-                padding: 30px 16px;
             }
         }
     </style>
@@ -241,26 +221,8 @@
 </div>
 
 <div class="container">
-    <!-- GitHub Token Setup (First Time Only) -->
-    <div id="tokenSection">
-        <div class="token-box">
-            <h1>🔑 GitHub Setup</h1>
-            <p>Enter your GitHub Personal Access Token to enable auto-saving</p>
-            <div id="tokenMessage"></div>
-            <input type="password" id="githubToken" placeholder="Paste your GitHub token here">
-            <button onclick="saveToken()">Save Token</button>
-            <div class="imgbb-helper" style="margin-top: 16px;">
-                📝 <strong>How to get a GitHub token:</strong><br>
-                1. Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)<br>
-                2. Generate new token<br>
-                3. Select scopes: <strong>repo</strong> and <strong>workflow</strong><br>
-                4. Copy the token and paste above
-            </div>
-        </div>
-    </div>
-
     <!-- Login Section -->
-    <div id="loginSection" style="display: none;">
+    <div id="loginSection">
         <div class="login-box">
             <h1>🔐 Admin Access</h1>
             <p>Enter your email to receive a verification code</p>
@@ -286,7 +248,7 @@
     <div id="adminSection" style="display: none;">
         <div class="admin-box">
             <h1>➕ Add New Shop</h1>
-            <p>Fill the form below - shop saves automatically to GitHub!</p>
+            <p>Fill the form below, then copy the JSON to GitHub</p>
             
             <div id="adminMessage"></div>
             
@@ -307,17 +269,30 @@
             <div class="imgbb-helper">
                 📸 <strong>Upload shop logo to ImgBB:</strong><br>
                 1. Go to <a href="https://imgbb.com" target="_blank">imgbb.com</a><br>
-                2. Click "Start Uploading" - select your logo image<br>
-                3. After upload, copy the <strong>"Direct URL"</strong><br>
-                4. Paste it below 👇
+                2. Upload your logo → copy "Direct URL"<br>
+                3. Paste it below 👇
             </div>
             
             <input type="text" id="shopLogoUrl" placeholder="Paste ImgBB Direct URL here (optional)">
             <textarea id="description" rows="3" placeholder="Shop Description *"></textarea>
             
-            <button id="saveShopBtn" onclick="saveShopToGitHub()">💾 Save Shop to GitHub</button>
+            <button onclick="generateJSON()">🔧 Generate Shop JSON</button>
             
-            <h3>📋 Current Shops</h3>
+            <div id="jsonOutput" style="display: none;">
+                <h3>📋 Copy this JSON to GitHub:</h3>
+                <div class="json-output" id="jsonCode"></div>
+                <button class="copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+                <div class="imgbb-helper" style="margin-top: 16px;">
+                    📝 <strong>How to add to GitHub:</strong><br>
+                    1. Go to <strong>shops.json</strong> in your GitHub repository<br>
+                    2. Click the pencil icon (Edit)<br>
+                    3. Paste the new shop inside the "shops" array<br>
+                    4. Click "Commit changes"<br>
+                    5. Website updates in 1-2 minutes!
+                </div>
+            </div>
+            
+            <h3>📋 Current Shops (from GitHub)</h3>
             <div id="shopsList"></div>
             
             <button onclick="logout()" style="background: #333; margin-top: 16px;">Logout</button>
@@ -326,72 +301,24 @@
 </div>
 
 <script>
-    // CHANGE THIS - Get your new Formspree ID from https://formspree.io
-    const FORMSPREE_ID = 'mlgzlbak';  // ← REPLACE WITH YOUR NEW FORMSPREE ID
-    
-    const GITHUB_USERNAME = 'ignivolatusapk';
-    const GITHUB_REPO = 'crimson-owl';
-    const GITHUB_FILE_PATH = 'shops.json';
-    const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
+    const FORMSPREE_ID = 'mlgzlbak';
+    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
     
     let storedCode = null;
     let verifiedEmail = null;
-    let githubToken = localStorage.getItem('github_token');
     let currentShops = [];
-    let currentFileSha = null;
-
-    // Check if token exists
-    function checkToken() {
-        if (!githubToken) {
-            document.getElementById('tokenSection').style.display = 'block';
-            document.getElementById('loginSection').style.display = 'none';
-            return false;
-        } else {
-            document.getElementById('tokenSection').style.display = 'none';
-            document.getElementById('loginSection').style.display = 'block';
-            return true;
-        }
-    }
-
-    function saveToken() {
-        const token = document.getElementById('githubToken').value;
-        if (token && token.length > 10) {
-            localStorage.setItem('github_token', token);
-            githubToken = token;
-            document.getElementById('tokenMessage').innerHTML = '<div class="message success">✅ Token saved! You can now login.</div>';
-            setTimeout(() => {
-                document.getElementById('tokenSection').style.display = 'none';
-                document.getElementById('loginSection').style.display = 'block';
-            }, 1500);
-        } else {
-            document.getElementById('tokenMessage').innerHTML = '<div class="message error">❌ Please enter a valid token</div>';
-        }
-    }
 
     async function loadShopsFromGitHub() {
         try {
-            const response = await fetch(GITHUB_API_URL, {
-                headers: {
-                    'Authorization': `token ${githubToken}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                }
-            });
-            
+            const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
             if (response.ok) {
                 const data = await response.json();
-                currentFileSha = data.sha;
-                const content = atob(data.content);
-                const jsonData = JSON.parse(content);
-                currentShops = jsonData.shops || [];
-            } else if (response.status === 404) {
-                currentShops = [];
-                currentFileSha = null;
+                currentShops = data.shops || [];
             } else {
-                throw new Error('Failed to load');
+                currentShops = [];
             }
         } catch(e) {
             currentShops = [];
-            currentFileSha = null;
         }
         displayShopsList();
     }
@@ -407,8 +334,8 @@
             <div class="shop-item">
                 <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
                     ${shop.logoUrl && shop.logoUrl !== '' ? 
-                        `<img src="${shop.logoUrl}" class="shop-logo-preview" onerror="this.src=''">` : 
-                        `<div class="shop-logo-preview" style="display: flex; align-items: center; justify-content: center;">🦉</div>`
+                        `<img src="${shop.logoUrl}" style="width: 40px; height: 40px; border-radius: 8px; object-fit: cover;">` : 
+                        `<div style="width: 40px; height: 40px; border-radius: 8px; background: #1a1a1a; display: flex; align-items: center; justify-content: center;">🦉</div>`
                     }
                     <div class="shop-info">
                         <h4>${shop.shopName}</h4>
@@ -419,7 +346,7 @@
         `).join('');
     }
 
-    async function saveShopToGitHub() {
+    function generateJSON() {
         const shopName = document.getElementById('shopName').value;
         const category = document.getElementById('category').value;
         const shopUrl = document.getElementById('shopUrl').value;
@@ -443,76 +370,20 @@
             addedDate: new Date().toISOString().split('T')[0]
         };
         
-        currentShops.push(newShop);
+        const jsonString = JSON.stringify(newShop, null, 2);
         
-        const updatedData = {
-            shops: currentShops
-        };
+        document.getElementById('jsonCode').innerHTML = jsonString;
+        document.getElementById('jsonOutput').style.display = 'block';
+        document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ JSON generated! Copy it to GitHub shops.json</div>';
         
-        const content = btoa(unescape(encodeURIComponent(JSON.stringify(updatedData, null, 2))));
-        
-        const btn = document.getElementById('saveShopBtn');
-        const originalText = btn.innerText;
-        btn.innerHTML = 'Saving to GitHub... <span class="loading-spinner"></span>';
-        btn.disabled = true;
-        
-        try {
-            let response;
-            if (currentFileSha) {
-                response = await fetch(GITHUB_API_URL, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${githubToken}`,
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/vnd.github.v3+json'
-                    },
-                    body: JSON.stringify({
-                        message: `Add shop: ${shopName}`,
-                        content: content,
-                        sha: currentFileSha
-                    })
-                });
-            } else {
-                response = await fetch(GITHUB_API_URL, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${githubToken}`,
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/vnd.github.v3+json'
-                    },
-                    body: JSON.stringify({
-                        message: `Create shops.json with ${shopName}`,
-                        content: content
-                    })
-                });
-            }
-            
-            if (response.ok) {
-                const result = await response.json();
-                currentFileSha = result.content.sha;
-                
-                document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ Shop saved to GitHub successfully! It will appear on the website in 1 minute.</div>';
-                
-                document.getElementById('shopName').value = '';
-                document.getElementById('shopUrl').value = '';
-                document.getElementById('description').value = '';
-                document.getElementById('shopLogoUrl').value = '';
-                
-                displayShopsList();
-                
-                setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 4000);
-            } else {
-                const error = await response.json();
-                throw new Error(error.message);
-            }
-        } catch (error) {
-            document.getElementById('adminMessage').innerHTML = `<div class="message error">❌ Failed to save: ${error.message}</div>`;
-            setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 4000);
-            currentShops = currentShops.filter(s => s.id !== newShop.id);
-        } finally {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }
+        document.getElementById('jsonOutput').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function copyToClipboard() {
+        const jsonText = document.getElementById('jsonCode').innerText;
+        navigator.clipboard.writeText(jsonText);
+        document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ JSON copied! Now paste it into shops.json on GitHub</div>';
+        setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 3000);
     }
 
     async function sendVerificationCode() {
@@ -526,29 +397,15 @@
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         storedCode = code;
         
-        // Method 1: Try Formspree
+        // Also show code in console for testing
+        console.log('Verification code:', code);
+        
         const formData = new FormData();
-        formData.append('_subject', '🔐 Crimson Owl Admin Verification Code');
-        formData.append('_replyto', email);
+        formData.append('_subject', '🔐 Crimson Owl - Admin Verification Code');
         formData.append('Code', code);
-        formData.append('Message', `
-╔════════════════════════════════════════╗
-║     CRIMSON OWL ADMIN LOGIN            ║
-╚════════════════════════════════════════╝
-
-Your verification code is: ${code}
-
-Enter this code to access the admin panel.
-
-This code expires in 10 minutes.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-If you didn't request this, ignore this email.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        `);
+        formData.append('Message', `Your verification code is: ${code}\n\nEnter this code to access the admin panel.\n\nThis code expires in 10 minutes.`);
         
         try {
-            // Send via Formspree
             const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
                 method: 'POST',
                 body: formData,
@@ -558,39 +415,30 @@ If you didn't request this, ignore this email.
             if (response.ok) {
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('verifySection').style.display = 'block';
-                document.getElementById('verifyMessage').innerHTML = '<div class="message success">✅ Verification code sent to ignivolatusapk@gmail.com! Check your inbox.</div>';
-                
-                // Also show the code in console for testing
-                console.log('Verification code (for testing):', code);
+                document.getElementById('verifyMessage').innerHTML = '<div class="message success">✅ Code sent to ignivolatusapk@gmail.com! Check your inbox.</div>';
                 
                 setTimeout(() => {
                     storedCode = null;
                 }, 600000);
             } else {
-                throw new Error('Formspree error');
+                throw new Error();
             }
         } catch (error) {
-            console.error('Email send error:', error);
-            // Fallback: Show code in console and alert
+            // Fallback - show code on screen
             document.getElementById('loginMessage').innerHTML = `
-                <div class="message warning">
-                    ⚠️ Email couldn't be sent. 
-                    <br>For testing, use code: <strong style="font-size: 24px;">${code}</strong>
-                    <br><br>Check your Formspree setup at https://formspree.io
+                <div class="message info">
+                    📝 Email sending failed. Use this code: <strong style="font-size: 24px;">${code}</strong>
                 </div>
             `;
-            
-            // Still show verification section with the code visible for testing
             setTimeout(() => {
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('verifySection').style.display = 'block';
                 document.getElementById('verifyMessage').innerHTML = `
                     <div class="message info">
-                        📝 Test mode - Use code: <strong style="font-size: 28px;">${code}</strong>
-                        <br><br>To fix email: Go to https://formspree.io and set up your form properly.
+                        🔐 Use code: <strong style="font-size: 28px;">${code}</strong>
                     </div>
                 `;
-            }, 1000);
+            }, 1500);
         }
     }
     
@@ -619,11 +467,7 @@ If you didn't request this, ignore this email.
         storedCode = null;
         document.getElementById('adminSection').style.display = 'none';
         document.getElementById('loginSection').style.display = 'block';
-        document.getElementById('adminEmail').value = 'ignivolatusapk@gmail.com';
     }
-    
-    // Initialize
-    checkToken();
 </script>
 
 </body>
