@@ -306,7 +306,10 @@
 </div>
 
 <script>
-    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
+    // Your GitHub username
+    const GITHUB_USERNAME = 'ignivolatusapk';
+    const GITHUB_SHOPS_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/crimson-owl/main/shops.json`;
+    
     let shops = [];
     let currentCategory = 'all';
     let currentSearch = '';
@@ -319,7 +322,7 @@
             shops = data.shops.filter(s => s.status === 'active');
             displayShops();
         } catch (error) {
-            document.getElementById('shopsList').innerHTML = '<div class="empty-state"><p>⚠️ Unable to load shops. Please check back later.</p></div>';
+            document.getElementById('shopsList').innerHTML = '<div class="empty-state"><p>⚠️ Unable to load shops. Make sure shops.json exists in your GitHub repository.</p></div>';
         }
     }
 
