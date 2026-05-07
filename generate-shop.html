@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate Shop Code - Crimson Owl</title>
+    <title>Add Shop - Crimson Owl</title>
     <style>
         * {
             margin: 0;
@@ -93,7 +93,6 @@
             border-radius: 12px;
             margin: 20px 0;
             border: 1px solid #333;
-            position: relative;
         }
 
         .json-output pre {
@@ -112,38 +111,6 @@
 
         .copy-btn:hover {
             background: #444;
-        }
-
-        .preview {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px;
-            background: #0a0a0a;
-            border-radius: 12px;
-            margin-top: 16px;
-        }
-
-        .preview-logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            background: #1a1a1a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-        }
-
-        .preview-info h4 {
-            color: white;
-            margin-bottom: 4px;
-        }
-
-        .preview-info p {
-            color: #888;
-            font-size: 12px;
-            margin: 0;
         }
 
         .helper {
@@ -165,36 +132,39 @@
             margin: 20px 0;
         }
 
-        @media (max-width: 768px) {
-            .card {
-                padding: 24px;
-            }
-            h1 {
-                font-size: 24px;
-            }
+        .success {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="card">
-            <h1>➕ Generate Shop Code</h1>
-            <p>Fill in the details below to get your shop JSON code</p>
+            <h1>➕ Add New Shop</h1>
+            <p>Fill in the details below to get your shop code</p>
+
+            <div id="message"></div>
 
             <div class="form-group">
                 <label>🏪 Shop Name *</label>
-                <input type="text" id="shopName" placeholder="e.g., Buna Coffee, Habesha Fashion">
+                <input type="text" id="shopName" placeholder="e.g., Buna Coffee">
             </div>
 
             <div class="form-group">
                 <label>📂 Category *</label>
                 <select id="category">
-                    <option value="Fashion & Clothing">👗 Fashion & Clothing</option>
-                    <option value="Food & Restaurant">🍕 Food & Restaurant</option>
-                    <option value="Electronics">📱 Electronics</option>
-                    <option value="Handicrafts & Art">🎨 Handicrafts & Art</option>
-                    <option value="Home & Living">🏠 Home & Living</option>
-                    <option value="Beauty & Health">💄 Beauty & Health</option>
+                    <option>Fashion & Clothing</option>
+                    <option>Food & Restaurant</option>
+                    <option>Electronics</option>
+                    <option>Handicrafts & Art</option>
+                    <option>Home & Living</option>
+                    <option>Beauty & Health</option>
                 </select>
             </div>
 
@@ -204,10 +174,10 @@
             </div>
 
             <div class="form-group">
-                <label>🖼️ Logo Image URL (optional)</label>
-                <input type="text" id="logoUrl" placeholder="Paste ImgBB direct URL here">
+                <label>🖼️ Logo Image URL (from ImgBB)</label>
+                <input type="text" id="logoUrl" placeholder="https://i.ibb.co/xxx/logo.jpg">
                 <div class="helper" style="margin-top: 8px;">
-                    📸 Get logo URL from <a href="https://imgbb.com" target="_blank">imgbb.com</a> → Upload → Copy "Direct URL"
+                    📸 Get URL from <a href="https://imgbb.com" target="_blank">imgbb.com</a> → Upload → Copy "Direct URL"
                 </div>
             </div>
 
@@ -216,40 +186,33 @@
                 <textarea id="description" rows="4" placeholder="Describe what the shop sells..."></textarea>
             </div>
 
-            <button onclick="generateCode()">🔧 Generate Shop Code</button>
+            <button onclick="generateAndShow()">🔧 Generate Shop Code</button>
 
-            <div id="result" style="display: none;">
+            <div id="result" style="display: none; margin-top: 24px;">
                 <hr>
-                <h3 style="color: white; margin-bottom: 16px;">📋 Copy this code:</h3>
+                <h3 style="color: white; margin-bottom: 16px;">📋 Copy this EXACT code:</h3>
                 <div class="json-output">
                     <pre id="jsonCode"></pre>
                 </div>
                 <button class="copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
 
                 <div class="helper">
-                    <strong>📝 How to add to GitHub:</strong><br>
-                    1. Go to your GitHub repository → <strong>shops.json</strong><br>
-                    2. Click the pencil icon (Edit)<br>
-                    3. Add a comma <strong>,</strong> after the previous shop's <strong>}</strong><br>
-                    4. Paste the new shop code<br>
-                    5. Click "Commit changes"<br>
-                    6. Wait 1-2 minutes → Shop appears on website!
-                </div>
-
-                <h3 style="color: white; margin: 24px 0 16px;">👁️ Preview:</h3>
-                <div class="preview" id="preview">
-                    <div class="preview-logo">🦉</div>
-                    <div class="preview-info">
-                        <h4 id="previewName">Shop Name</h4>
-                        <p id="previewCategory">Category</p>
-                    </div>
+                    <strong>📝 STEP-BY-STEP TO ADD TO GITHUB:</strong><br><br>
+                    1. Go to: <strong>https://github.com/ignivolatusapk/crimson-owl/blob/main/shops.json</strong><br>
+                    2. Click the <strong>✏️ pencil icon</strong> (Edit)<br>
+                    3. Find the <strong>last shop</strong> in the list<br>
+                    4. Add a <strong>comma ,</strong> after its closing <strong>}</strong><br>
+                    5. Press <strong>Enter</strong> to go to a new line<br>
+                    6. <strong>Paste</strong> the code above<br>
+                    7. Click <strong>"Commit changes"</strong><br>
+                    8. Wait <strong>1-2 minutes</strong> → Shop appears on website!
                 </div>
             </div>
         </div>
 
         <div class="card">
-            <h3 style="color: white; margin-bottom: 16px;">📋 Current shops.json structure</h3>
-            <div class="json-output" style="max-height: 200px;">
+            <h3 style="color: white; margin-bottom: 16px;">📋 Current shops.json (copy this format)</h3>
+            <div class="json-output">
                 <pre style="color: #ffaa00;">{
   "shops": [
     {
@@ -261,8 +224,12 @@
       "logoUrl": "",
       "status": "active",
       "addedDate": "2026-01-15"
-    },
-    <span style="color: #0f0;">← PASTE NEW SHOP HERE WITH A COMMA AFTER PREVIOUS SHOP</span>
+    }<span style="color: #0f0;">,  ← ADD COMMA HERE BEFORE PASTING NEW SHOP</span>
+    <span style="color: #0f0;">{
+      "id": 2,
+      "shopName": "YOUR NEW SHOP",
+      ...
+    }</span>
   ]
 }</pre>
             </div>
@@ -270,7 +237,7 @@
     </div>
 
     <script>
-        function generateCode() {
+        function generateAndShow() {
             const shopName = document.getElementById('shopName').value;
             const category = document.getElementById('category').value;
             const shopUrl = document.getElementById('shopUrl').value;
@@ -278,12 +245,15 @@
             const logoUrl = document.getElementById('logoUrl').value;
 
             if (!shopName || !shopUrl || !description) {
-                alert('❌ Please fill all required fields (Shop Name, URL, and Description)');
+                document.getElementById('message').innerHTML = '<div class="success" style="background: rgba(255,0,0,0.1); border-color: #ff4444; color: #ff4444;">❌ Please fill Shop Name, URL, and Description</div>';
+                setTimeout(() => document.getElementById('message').innerHTML = '', 3000);
                 return;
             }
 
-            const today = new Date().toISOString().split('T')[0];
+            // Get current highest ID from existing shops (we'll use timestamp for unique ID)
             const newId = Date.now();
+
+            const today = new Date().toISOString().split('T')[0];
 
             const shopObject = {
                 id: newId,
@@ -300,35 +270,19 @@
             
             document.getElementById('jsonCode').innerText = jsonString;
             document.getElementById('result').style.display = 'block';
+            document.getElementById('message').innerHTML = '<div class="success">✅ Code generated! Copy it to shops.json on GitHub.</div>';
             
-            // Update preview
-            document.getElementById('previewName').innerText = shopName;
-            document.getElementById('previewCategory').innerText = category;
+            setTimeout(() => document.getElementById('message').innerHTML = '', 3000);
             
-            const previewLogo = document.querySelector('.preview-logo');
-            if (logoUrl) {
-                previewLogo.innerHTML = `<img src="${logoUrl}" style="width: 50px; height: 50px; border-radius: 12px; object-fit: cover;">`;
-            } else {
-                previewLogo.innerHTML = '🦉';
-            }
-            
-            // Scroll to result
             document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         }
 
         function copyToClipboard() {
             const jsonText = document.getElementById('jsonCode').innerText;
             navigator.clipboard.writeText(jsonText);
-            alert('✅ Code copied to clipboard! Now paste it into shops.json on GitHub.');
+            document.getElementById('message').innerHTML = '<div class="success">✅ Code copied! Now paste it into shops.json on GitHub.</div>';
+            setTimeout(() => document.getElementById('message').innerHTML = '', 3000);
         }
-
-        // Auto-update preview on input
-        document.getElementById('shopName').addEventListener('input', function() {
-            document.getElementById('previewName').innerText = this.value || 'Shop Name';
-        });
-        document.getElementById('category').addEventListener('change', function() {
-            document.getElementById('previewCategory').innerText = this.value;
-        });
     </script>
 </body>
 </html>
