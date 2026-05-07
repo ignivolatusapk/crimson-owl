@@ -20,5 +20,15 @@
       "status": "active",
       "addedDate": "2026-01-20"
     }
-  ]
+    {
+  "id": 1778167476236,
+  "shopName": "exodus clothing",
+  "category": "Fashion & Clothing",
+  "description": "clothing brand",
+  "shopUrl": "https://exodus-clothing.onrender.com/",
+  "logoUrl": "https://i.ibb.co/WvkVtTkt/exoduss.png",
+  "status": "active",
+  "addedDate": "2026-05-07"
+    }
+      ]
 }
