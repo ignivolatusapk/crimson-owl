@@ -52,20 +52,21 @@
             padding: 60px 20px;
         }
 
-        .login-box, .admin-box {
+        .login-box, .admin-box, .token-box {
             background: #1a1a1a;
             border-radius: 24px;
             padding: 40px;
             border: 1px solid #333;
+            margin-bottom: 20px;
         }
 
-        .login-box h1, .admin-box h1 {
+        .login-box h1, .admin-box h1, .token-box h1 {
             color: white;
             font-size: 28px;
             margin-bottom: 8px;
         }
 
-        .login-box p, .admin-box p {
+        .login-box p, .admin-box p, .token-box p {
             color: #aaa;
             margin-bottom: 24px;
         }
@@ -103,6 +104,11 @@
             background: #a00000;
         }
 
+        button:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+
         .code-input {
             letter-spacing: 4px;
             font-size: 20px;
@@ -133,6 +139,12 @@
             background: rgba(139, 0, 0, 0.2);
             border: 1px solid #8B0000;
             color: #8B0000;
+        }
+
+        .message.warning {
+            background: rgba(255, 255, 0, 0.1);
+            border: 1px solid #ffaa00;
+            color: #ffaa00;
         }
 
         .shop-item {
@@ -193,28 +205,20 @@
             color: #8B0000;
         }
 
-        .json-output {
-            background: #0a0a0a;
-            padding: 16px;
-            border-radius: 12px;
-            margin: 16px 0;
-            font-family: monospace;
-            font-size: 12px;
-            white-space: pre-wrap;
-            word-break: break-all;
-            border: 1px solid #333;
-            color: #0f0;
-            max-height: 300px;
-            overflow: auto;
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
         }
 
-        .copy-btn {
-            background: #333;
-            margin-top: 8px;
-        }
-
-        .copy-btn:hover {
-            background: #444;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         @media (max-width: 768px) {
@@ -222,7 +226,7 @@
                 grid-template-columns: 1fr;
                 gap: 0;
             }
-            .login-box, .admin-box {
+            .login-box, .admin-box, .token-box {
                 padding: 24px;
             }
             .container {
@@ -243,8 +247,26 @@
 </div>
 
 <div class="container">
+    <!-- GitHub Token Setup (First Time Only) -->
+    <div id="tokenSection">
+        <div class="token-box">
+            <h1>🔑 GitHub Setup</h1>
+            <p>Enter your GitHub Personal Access Token to enable auto-saving</p>
+            <div id="tokenMessage"></div>
+            <input type="password" id="githubToken" placeholder="Paste your GitHub token here">
+            <button onclick="saveToken()">Save Token</button>
+            <div class="imgbb-helper" style="margin-top: 16px;">
+                📝 <strong>How to get a GitHub token:</strong><br>
+                1. Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)<br>
+                2. Generate new token<br>
+                3. Select scopes: <strong>repo</strong> and <strong>workflow</strong><br>
+                4. Copy the token and paste above
+            </div>
+        </div>
+    </div>
+
     <!-- Login Section -->
-    <div id="loginSection">
+    <div id="loginSection" style="display: none;">
         <div class="login-box">
             <h1>🔐 Admin Access</h1>
             <p>Enter your email to receive a verification code</p>
@@ -270,7 +292,7 @@
     <div id="adminSection" style="display: none;">
         <div class="admin-box">
             <h1>➕ Add New Shop</h1>
-            <p>Fill the form below, then copy the JSON to GitHub</p>
+            <p>Fill the form below - shop saves automatically to GitHub!</p>
             
             <div id="adminMessage"></div>
             
@@ -299,24 +321,9 @@
             <input type="text" id="shopLogoUrl" placeholder="Paste ImgBB Direct URL here (optional)">
             <textarea id="description" rows="3" placeholder="Shop Description *"></textarea>
             
-            <button onclick="generateJSON()">🔧 Generate Shop JSON</button>
+            <button id="saveShopBtn" onclick="saveShopToGitHub()">💾 Save Shop to GitHub</button>
             
-            <div id="jsonOutput" style="display: none;">
-                <h3>📋 Copy this JSON to GitHub:</h3>
-                <div class="json-output" id="jsonCode"></div>
-                <button class="copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
-                <div class="imgbb-helper" style="margin-top: 16px;">
-                    📝 <strong>How to add to GitHub:</strong><br>
-                    1. Go to your GitHub repository → <strong>shops.json</strong><br>
-                    2. Click the pencil icon (Edit)<br>
-                    3. Copy the new shop JSON above<br>
-                    4. Paste it inside the "shops" array (add comma after previous shop)<br>
-                    5. Click "Commit changes"<br>
-                    6. Wait 1 minute - shop appears on website!
-                </div>
-            </div>
-            
-            <h3>📋 Current Shops (from GitHub)</h3>
+            <h3>📋 Current Shops</h3>
             <div id="shopsList"></div>
             
             <button onclick="logout()" style="background: #333; margin-top: 16px;">Logout</button>
@@ -326,26 +333,74 @@
 
 <script>
     const FORMSPREE_ID = 'mlgzlbak';
-    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
+    const GITHUB_USERNAME = 'ignivolatusapk';
+    const GITHUB_REPO = 'crimson-owl';
+    const GITHUB_FILE_PATH = 'shops.json';
+    const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
+    
     let storedCode = null;
     let verifiedEmail = null;
+    let githubToken = localStorage.getItem('github_token');
     let currentShops = [];
-    
+    let currentFileSha = null;
+
+    // Check if token exists
+    function checkToken() {
+        if (!githubToken) {
+            document.getElementById('tokenSection').style.display = 'block';
+            document.getElementById('loginSection').style.display = 'none';
+            return false;
+        } else {
+            document.getElementById('tokenSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+            return true;
+        }
+    }
+
+    function saveToken() {
+        const token = document.getElementById('githubToken').value;
+        if (token && token.length > 10) {
+            localStorage.setItem('github_token', token);
+            githubToken = token;
+            document.getElementById('tokenMessage').innerHTML = '<div class="message success">✅ Token saved! You can now login.</div>';
+            setTimeout(() => {
+                document.getElementById('tokenSection').style.display = 'none';
+                document.getElementById('loginSection').style.display = 'block';
+            }, 1500);
+        } else {
+            document.getElementById('tokenMessage').innerHTML = '<div class="message error">❌ Please enter a valid token</div>';
+        }
+    }
+
     async function loadShopsFromGitHub() {
         try {
-            const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
+            const response = await fetch(GITHUB_API_URL, {
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+            
             if (response.ok) {
                 const data = await response.json();
-                currentShops = data.shops;
-            } else {
+                currentFileSha = data.sha;
+                const content = atob(data.content);
+                const jsonData = JSON.parse(content);
+                currentShops = jsonData.shops || [];
+            } else if (response.status === 404) {
+                // File doesn't exist, create default
                 currentShops = [];
+                currentFileSha = null;
+            } else {
+                throw new Error('Failed to load');
             }
         } catch(e) {
             currentShops = [];
+            currentFileSha = null;
         }
         displayShopsList();
     }
-    
+
     function displayShopsList() {
         const container = document.getElementById('shopsList');
         if (currentShops.length === 0) {
@@ -368,8 +423,8 @@
             </div>
         `).join('');
     }
-    
-    function generateJSON() {
+
+    async function saveShopToGitHub() {
         const shopName = document.getElementById('shopName').value;
         const category = document.getElementById('category').value;
         const shopUrl = document.getElementById('shopUrl').value;
@@ -393,23 +448,82 @@
             addedDate: new Date().toISOString().split('T')[0]
         };
         
-        const jsonString = JSON.stringify(newShop, null, 2);
+        currentShops.push(newShop);
         
-        document.getElementById('jsonCode').innerHTML = jsonString;
-        document.getElementById('jsonOutput').style.display = 'block';
-        document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ JSON generated! Copy it to GitHub shops.json</div>';
+        const updatedData = {
+            shops: currentShops
+        };
         
-        // Scroll to JSON
-        document.getElementById('jsonOutput').scrollIntoView({ behavior: 'smooth' });
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(updatedData, null, 2))));
+        
+        const btn = document.getElementById('saveShopBtn');
+        const originalText = btn.innerText;
+        btn.innerHTML = 'Saving to GitHub... <span class="loading-spinner"></span>';
+        btn.disabled = true;
+        
+        try {
+            let response;
+            if (currentFileSha) {
+                // Update existing file
+                response = await fetch(GITHUB_API_URL, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${githubToken}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/vnd.github.v3+json'
+                    },
+                    body: JSON.stringify({
+                        message: `Add shop: ${shopName}`,
+                        content: content,
+                        sha: currentFileSha
+                    })
+                });
+            } else {
+                // Create new file
+                response = await fetch(GITHUB_API_URL, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${githubToken}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/vnd.github.v3+json'
+                    },
+                    body: JSON.stringify({
+                        message: `Create shops.json with ${shopName}`,
+                        content: content
+                    })
+                });
+            }
+            
+            if (response.ok) {
+                const result = await response.json();
+                currentFileSha = result.content.sha;
+                
+                document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ Shop saved to GitHub successfully! It will appear on the website in 1 minute.</div>';
+                
+                // Clear form
+                document.getElementById('shopName').value = '';
+                document.getElementById('shopUrl').value = '';
+                document.getElementById('description').value = '';
+                document.getElementById('shopLogoUrl').value = '';
+                
+                displayShopsList();
+                
+                setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 4000);
+            } else {
+                const error = await response.json();
+                throw new Error(error.message);
+            }
+        } catch (error) {
+            document.getElementById('adminMessage').innerHTML = `<div class="message error">❌ Failed to save: ${error.message}</div>`;
+            setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 4000);
+            // Remove the shop from local array if save failed
+            currentShops = currentShops.filter(s => s.id !== newShop.id);
+        } finally {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
     }
-    
-    function copyToClipboard() {
-        const jsonText = document.getElementById('jsonCode').innerText;
-        navigator.clipboard.writeText(jsonText);
-        document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ JSON copied to clipboard! Now paste it into shops.json on GitHub</div>';
-        setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 3000);
-    }
-    
+
     async function sendVerificationCode() {
         const email = document.getElementById('adminEmail').value;
         
@@ -471,8 +585,10 @@
         document.getElementById('adminSection').style.display = 'none';
         document.getElementById('loginSection').style.display = 'block';
         document.getElementById('adminEmail').value = 'ignivolatusapk@gmail.com';
-        document.getElementById('jsonOutput').style.display = 'none';
     }
+    
+    // Initialize
+    checkToken();
 </script>
 
 </body>
