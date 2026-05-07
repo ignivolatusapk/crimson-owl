@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Shop Code - Crimson Owl</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #1a1a1a;
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid #333;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #ccc;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 14px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #8B0000;
+        }
+
+        button {
+            background: #8B0000;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #a00000;
+        }
+
+        .json-output {
+            background: #0a0a0a;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid #333;
+            position: relative;
+        }
+
+        .json-output pre {
+            color: #0f0;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin: 0;
+        }
+
+        .copy-btn {
+            background: #333;
+            margin-top: 12px;
+        }
+
+        .copy-btn:hover {
+            background: #444;
+        }
+
+        .preview {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: #0a0a0a;
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .preview-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .preview-info h4 {
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .preview-info p {
+            color: #888;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .helper {
+            background: #0a0a0a;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #888;
+            border-left: 3px solid #8B0000;
+        }
+
+        .helper a {
+            color: #8B0000;
+        }
+
+        hr {
+            border-color: #333;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 24px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>➕ Generate Shop Code</h1>
+            <p>Fill in the details below to get your shop JSON code</p>
+
+            <div class="form-group">
+                <label>🏪 Shop Name *</label>
+                <input type="text" id="shopName" placeholder="e.g., Buna Coffee, Habesha Fashion">
+            </div>
+
+            <div class="form-group">
+                <label>📂 Category *</label>
+                <select id="category">
+                    <option value="Fashion & Clothing">👗 Fashion & Clothing</option>
+                    <option value="Food & Restaurant">🍕 Food & Restaurant</option>
+                    <option value="Electronics">📱 Electronics</option>
+                    <option value="Handicrafts & Art">🎨 Handicrafts & Art</option>
+                    <option value="Home & Living">🏠 Home & Living</option>
+                    <option value="Beauty & Health">💄 Beauty & Health</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>🔗 Shop URL *</label>
+                <input type="text" id="shopUrl" placeholder="https://yourshop.com">
+            </div>
+
+            <div class="form-group">
+                <label>🖼️ Logo Image URL (optional)</label>
+                <input type="text" id="logoUrl" placeholder="Paste ImgBB direct URL here">
+                <div class="helper" style="margin-top: 8px;">
+                    📸 Get logo URL from <a href="https://imgbb.com" target="_blank">imgbb.com</a> → Upload → Copy "Direct URL"
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>📝 Description *</label>
+                <textarea id="description" rows="4" placeholder="Describe what the shop sells..."></textarea>
+            </div>
+
+            <button onclick="generateCode()">🔧 Generate Shop Code</button>
+
+            <div id="result" style="display: none;">
+                <hr>
+                <h3 style="color: white; margin-bottom: 16px;">📋 Copy this code:</h3>
+                <div class="json-output">
+                    <pre id="jsonCode"></pre>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+
+                <div class="helper">
+                    <strong>📝 How to add to GitHub:</strong><br>
+                    1. Go to your GitHub repository → <strong>shops.json</strong><br>
+                    2. Click the pencil icon (Edit)<br>
+                    3. Add a comma <strong>,</strong> after the previous shop's <strong>}</strong><br>
+                    4. Paste the new shop code<br>
+                    5. Click "Commit changes"<br>
+                    6. Wait 1-2 minutes → Shop appears on website!
+                </div>
+
+                <h3 style="color: white; margin: 24px 0 16px;">👁️ Preview:</h3>
+                <div class="preview" id="preview">
+                    <div class="preview-logo">🦉</div>
+                    <div class="preview-info">
+                        <h4 id="previewName">Shop Name</h4>
+                        <p id="previewCategory">Category</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="color: white; margin-bottom: 16px;">📋 Current shops.json structure</h3>
+            <div class="json-output" style="max-height: 200px;">
+                <pre style="color: #ffaa00;">{
+  "shops": [
+    {
+      "id": 1,
+      "shopName": "Habesha Fashion",
+      "category": "Fashion & Clothing",
+      "description": "Beautiful traditional Ethiopian clothing...",
+      "shopUrl": "https://habesha-fashion.crimsonowl.com",
+      "logoUrl": "",
+      "status": "active",
+      "addedDate": "2026-01-15"
+    },
+    <span style="color: #0f0;">← PASTE NEW SHOP HERE WITH A COMMA AFTER PREVIOUS SHOP</span>
+  ]
+}</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateCode() {
+            const shopName = document.getElementById('shopName').value;
+            const category = document.getElementById('category').value;
+            const shopUrl = document.getElementById('shopUrl').value;
+            const description = document.getElementById('description').value;
+            const logoUrl = document.getElementById('logoUrl').value;
+
+            if (!shopName || !shopUrl || !description) {
+                alert('❌ Please fill all required fields (Shop Name, URL, and Description)');
+                return;
+            }
+
+            const today = new Date().toISOString().split('T')[0];
+            const newId = Date.now();
+
+            const shopObject = {
+                id: newId,
+                shopName: shopName,
+                category: category,
+                description: description,
+                shopUrl: shopUrl,
+                logoUrl: logoUrl || '',
+                status: "active",
+                addedDate: today
+            };
+
+            const jsonString = JSON.stringify(shopObject, null, 2);
+            
+            document.getElementById('jsonCode').innerText = jsonString;
+            document.getElementById('result').style.display = 'block';
+            
+            // Update preview
+            document.getElementById('previewName').innerText = shopName;
+            document.getElementById('previewCategory').innerText = category;
+            
+            const previewLogo = document.querySelector('.preview-logo');
+            if (logoUrl) {
+                previewLogo.innerHTML = `<img src="${logoUrl}" style="width: 50px; height: 50px; border-radius: 12px; object-fit: cover;">`;
+            } else {
+                previewLogo.innerHTML = '🦉';
+            }
+            
+            // Scroll to result
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyToClipboard() {
+            const jsonText = document.getElementById('jsonCode').innerText;
+            navigator.clipboard.writeText(jsonText);
+            alert('✅ Code copied to clipboard! Now paste it into shops.json on GitHub.');
+        }
+
+        // Auto-update preview on input
+        document.getElementById('shopName').addEventListener('input', function() {
+            document.getElementById('previewName').innerText = this.value || 'Shop Name';
+        });
+        document.getElementById('category').addEventListener('change', function() {
+            document.getElementById('previewCategory').innerText = this.value;
+        });
+    </script>
+</body>
+</html>
