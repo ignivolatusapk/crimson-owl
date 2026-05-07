@@ -1,14 +1,14 @@
 {
   "shops": [
     {
-      "id": 1,
-      "shopName": "Habesha Fashion",
-      "category": "Fashion & Clothing",
-      "description": "Beautiful traditional Ethiopian clothing, habesha kemis, and modern fusion wear. Quality fabrics and unique designs.",
-      "shopUrl": "https://habesha-fashion.crimsonowl.com",
-      "logoUrl": "",
-      "status": "active",
-      "addedDate": "2026-01-15"
+  "id": 1778173395054,
+  "shopName": "exodus",
+  "category": "Fashion & Clothing",
+  "description": "Ethiopian clothing brand",
+  "shopUrl": "odus-clothing.onrender.com",
+  "logoUrl": "https://i.ibb.co/WvkVtTkt/exoduss.png",
+  "status": "active",
+  "addedDate": "2026-05-07"
     }
   ]
 }
