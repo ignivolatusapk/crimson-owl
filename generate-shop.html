@@ -141,52 +141,111 @@
             margin-bottom: 20px;
             text-align: center;
         }
+
+        .category-group {
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="card">
-            <h1>➕ Add New Shop</h1>
-            <p>Fill in the details below to get your shop code</p>
+            <h1>➕ Add New Business/Shop</h1>
+            <p>Add any business - hotel, cafe, travel agency, government office, private company, restaurant, etc.</p>
 
             <div id="message"></div>
 
             <div class="form-group">
-                <label>🏪 Shop Name *</label>
-                <input type="text" id="shopName" placeholder="e.g., Buna Coffee">
+                <label>🏢 Business/Shop Name *</label>
+                <input type="text" id="shopName" placeholder="e.g., Sheraton Addis, Ethiopian Airlines, Tomoca Coffee">
             </div>
 
             <div class="form-group">
-                <label>📂 Category *</label>
+                <label>📂 Business Category *</label>
                 <select id="category">
-                    <option>Fashion & Clothing</option>
-                    <option>Food & Restaurant</option>
-                    <option>Electronics</option>
-                    <option>Handicrafts & Art</option>
-                    <option>Home & Living</option>
-                    <option>Beauty & Health</option>
+                    <optgroup label="🏨 Hospitality">
+                        <option>🏨 Hotel & Resort</option>
+                        <option>☕ Cafe & Coffee Shop</option>
+                        <option>🍽️ Restaurant & Dining</option>
+                        <option>🍺 Bar & Lounge</option>
+                        <option>🍕 Fast Food & Takeaway</option>
+                    </optgroup>
+                    <optgroup label="✈️ Travel & Transportation">
+                        <option>✈️ Airline Company</option>
+                        <option>🚗 Travel Agency</option>
+                        <option>🚌 Bus & Transport</option>
+                        <option>🚕 Taxi & Ride Share</option>
+                        <option>🏖️ Tour Operator</option>
+                    </optgroup>
+                    <optgroup label="🏛️ Government & Public Services">
+                        <option>🏛️ Government Office</option>
+                        <option>📜 Embassy & Consulate</option>
+                        <option>🏥 Public Hospital</option>
+                        <option>📚 Public Library</option>
+                        <option>⚖️ Court & Legal Services</option>
+                    </optgroup>
+                    <optgroup label="💼 Private Companies">
+                        <option>💼 Corporate Company</option>
+                        <option>🏦 Bank & Financial</option>
+                        <option>📞 Telecom & Internet</option>
+                        <option>⚡ Energy & Utilities</option>
+                        <option>🏗️ Construction & Real Estate</option>
+                    </optgroup>
+                    <optgroup label="🛍️ Retail & Shopping">
+                        <option>👗 Fashion & Clothing</option>
+                        <option>📱 Electronics & Gadgets</option>
+                        <option>🛒 Supermarket & Grocery</option>
+                        <option>💍 Jewelry & Accessories</option>
+                        <option>📚 Bookstore & Stationery</option>
+                    </optgroup>
+                    <optgroup label="🏥 Health & Wellness">
+                        <option>🏥 Private Hospital & Clinic</option>
+                        <option>💊 Pharmacy & Drug Store</option>
+                        <option>🏋️ Gym & Fitness Center</option>
+                        <option>🧘 Spa & Wellness</option>
+                        <option>🦷 Dental Clinic</option>
+                    </optgroup>
+                    <optgroup label="🎓 Education & Training">
+                        <option>🏫 University & College</option>
+                        <option>📖 Private School</option>
+                        <option>💻 Training Center</option>
+                        <option>🎓 Online Learning</option>
+                    </optgroup>
+                    <optgroup label="🎨 Arts & Entertainment">
+                        <option>🎬 Cinema & Theater</option>
+                        <option>🖼️ Art Gallery</option>
+                        <option>🎵 Music Venue</option>
+                        <option>🎪 Event & Conference Center</option>
+                    </optgroup>
+                    <optgroup label="🔧 Services">
+                        <option>🔧 Repair & Maintenance</option>
+                        <option>💇 Salon & Barber</option>
+                        <option>📸 Photography Studio</option>
+                        <option>⚖️ Legal & Law Firm</option>
+                        <option>📊 Accounting & Consulting</option>
+                    </optgroup>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>🔗 Shop URL *</label>
-                <input type="text" id="shopUrl" placeholder="https://yourshop.com">
+                <label>🔗 Business Website URL *</label>
+                <input type="text" id="shopUrl" placeholder="https://www.example.com">
             </div>
 
             <div class="form-group">
                 <label>🖼️ Logo Image URL (from ImgBB)</label>
                 <input type="text" id="logoUrl" placeholder="https://i.ibb.co/xxx/logo.jpg">
                 <div class="helper" style="margin-top: 8px;">
-                    📸 Get URL from <a href="https://imgbb.com" target="_blank">imgbb.com</a> → Upload → Copy "Direct URL"
+                    📸 Get URL from <a href="https://imgbb.com" target="_blank">imgbb.com</a> → Upload business logo → Copy "Direct URL"
                 </div>
             </div>
 
             <div class="form-group">
-                <label>📝 Description *</label>
-                <textarea id="description" rows="4" placeholder="Describe what the shop sells..."></textarea>
+                <label>📝 Business Description *</label>
+                <textarea id="description" rows="4" placeholder="Describe what this business does, what they offer, their products/services..."></textarea>
             </div>
 
-            <button onclick="generateAndShow()">🔧 Generate Shop Code</button>
+            <button onclick="generateAndShow()">🔧 Generate Business Code</button>
 
             <div id="result" style="display: none; margin-top: 24px;">
                 <hr>
@@ -200,38 +259,53 @@
                     <strong>📝 STEP-BY-STEP TO ADD TO GITHUB:</strong><br><br>
                     1. Go to: <strong>https://github.com/ignivolatusapk/crimson-owl/blob/main/shops.json</strong><br>
                     2. Click the <strong>✏️ pencil icon</strong> (Edit)<br>
-                    3. Find the <strong>last shop</strong> in the list<br>
+                    3. Find the <strong>last business</strong> in the list<br>
                     4. Add a <strong>comma ,</strong> after its closing <strong>}</strong><br>
                     5. Press <strong>Enter</strong> to go to a new line<br>
                     6. <strong>Paste</strong> the code above<br>
                     7. Click <strong>"Commit changes"</strong><br>
-                    8. Wait <strong>1-2 minutes</strong> → Shop appears on website!
+                    8. Wait <strong>1-2 minutes</strong> → Business appears on website!
                 </div>
             </div>
         </div>
 
         <div class="card">
-            <h3 style="color: white; margin-bottom: 16px;">📋 Current shops.json (copy this format)</h3>
+            <h3 style="color: white; margin-bottom: 16px;">📋 Example businesses.json format</h3>
             <div class="json-output">
                 <pre style="color: #ffaa00;">{
   "shops": [
     {
       "id": 1,
-      "shopName": "Habesha Fashion",
-      "category": "Fashion & Clothing",
-      "description": "Beautiful traditional Ethiopian clothing...",
-      "shopUrl": "https://habesha-fashion.crimsonowl.com",
+      "shopName": "Sheraton Addis Hotel",
+      "category": "🏨 Hotel & Resort",
+      "description": "Luxury 5-star hotel in the heart of Addis Ababa...",
+      "shopUrl": "https://sheratonaddis.com",
       "logoUrl": "",
       "status": "active",
       "addedDate": "2026-01-15"
-    }<span style="color: #0f0;">,  ← ADD COMMA HERE BEFORE PASTING NEW SHOP</span>
+    }<span style="color: #0f0;">,  ← ADD COMMA HERE</span>
     <span style="color: #0f0;">{
       "id": 2,
-      "shopName": "YOUR NEW SHOP",
+      "shopName": "Ethiopian Airlines",
+      "category": "✈️ Airline Company",
       ...
     }</span>
   ]
 }</pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="color: white; margin-bottom: 16px;">📋 Business Examples You Can Add</h3>
+            <div class="helper" style="margin-top: 0;">
+                <strong>🏨 Hotels:</strong> Sheraton, Hilton, Hyatt, Marriott, Jupiter, Ramada<br>
+                <strong>☕ Cafes:</strong> Tomoca, Kaldi's, Mokarara, Lime Tree, Mamma's Kitchen<br>
+                <strong>✈️ Travel:</strong> Ethiopian Airlines, Nile Travel, Abyssinia Tours, Sky Travel<br>
+                <strong>🏛️ Government:</strong> Ministry of Tourism, Ethiopian Passport Office, Customs Authority<br>
+                <strong>💼 Private:</strong> Dashen Bank, Ethio Telecom, Sheger FM, Heineken Ethiopia<br>
+                <strong>🍽️ Restaurants:</strong> Yod Abyssinia, 2000 Habesha, Sishu, Castelli, Makush Art Gallery<br>
+                <strong>🏥 Health:</strong> Kadisco Hospital, St. Paul's, Hayat Hospital, Clinics<br>
+                <strong>🎓 Education:</strong> Addis Ababa University, Unity University, Ethiopian Skylight
             </div>
         </div>
     </div>
@@ -245,32 +319,36 @@
             const logoUrl = document.getElementById('logoUrl').value;
 
             if (!shopName || !shopUrl || !description) {
-                document.getElementById('message').innerHTML = '<div class="success" style="background: rgba(255,0,0,0.1); border-color: #ff4444; color: #ff4444;">❌ Please fill Shop Name, URL, and Description</div>';
+                document.getElementById('message').innerHTML = '<div class="success" style="background: rgba(255,0,0,0.1); border-color: #ff4444; color: #ff4444;">❌ Please fill Business Name, URL, and Description</div>';
                 setTimeout(() => document.getElementById('message').innerHTML = '', 3000);
                 return;
             }
 
-            // Get current highest ID from existing shops (we'll use timestamp for unique ID)
-            const newId = Date.now();
+            // Add https:// if missing
+            let finalUrl = shopUrl;
+            if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
+                finalUrl = 'https://' + finalUrl;
+            }
 
+            const newId = Date.now();
             const today = new Date().toISOString().split('T')[0];
 
-            const shopObject = {
+            const businessObject = {
                 id: newId,
                 shopName: shopName,
                 category: category,
                 description: description,
-                shopUrl: shopUrl,
+                shopUrl: finalUrl,
                 logoUrl: logoUrl || '',
                 status: "active",
                 addedDate: today
             };
 
-            const jsonString = JSON.stringify(shopObject, null, 2);
+            const jsonString = JSON.stringify(businessObject, null, 2);
             
             document.getElementById('jsonCode').innerText = jsonString;
             document.getElementById('result').style.display = 'block';
-            document.getElementById('message').innerHTML = '<div class="success">✅ Code generated! Copy it to shops.json on GitHub.</div>';
+            document.getElementById('message').innerHTML = '<div class="success">✅ Business code generated! Copy it to shops.json on GitHub.</div>';
             
             setTimeout(() => document.getElementById('message').innerHTML = '', 3000);
             
