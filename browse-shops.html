@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Shops - Crimson Owl</title>
+    <title>All Businesses - Crimson Owl</title>
     <style>
         * {
             margin: 0;
@@ -265,8 +265,8 @@
         </div>
         <div class="nav-links">
             <a href="index.html">Home</a>
-            <a href="browse-shops.html">Shops</a>
-            <a href="apply.html" class="apply-nav">Open a Shop</a>
+            <a href="browse-shops.html">Businesses</a>
+            <a href="apply.html" class="apply-nav">List Your Business</a>
         </div>
         <button class="menu-btn" onclick="toggleMenu()">☰</button>
     </div>
@@ -274,42 +274,46 @@
 
 <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Home</a>
-    <a href="browse-shops.html">Browse Shops</a>
-    <a href="apply.html">Open a Shop</a>
+    <a href="browse-shops.html">Businesses</a>
+    <a href="apply.html">List Your Business</a>
 </div>
 
 <div class="container">
     <div class="page-header">
-        <h1>All Shops</h1>
-        <p>Browse online stores from Ethiopia</p>
+        <h1>All Businesses</h1>
+        <p>Browse companies, hotels, cafes, government services, and more in Ethiopia</p>
     </div>
 
-    <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search shops...">
-    
+    <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search businesses...">
+
     <div class="category-filter" id="categoryFilter">
         <button class="filter-btn active" data-category="all">All</button>
-        <button class="filter-btn" data-category="Fashion & Clothing">Fashion</button>
-        <button class="filter-btn" data-category="Food & Restaurant">Food</button>
-        <button class="filter-btn" data-category="Electronics">Electronics</button>
-        <button class="filter-btn" data-category="Handicrafts & Art">Crafts</button>
-        <button class="filter-btn" data-category="Home & Living">Home</button>
-        <button class="filter-btn" data-category="Beauty & Health">Beauty</button>
+        <button class="filter-btn" data-category="🏨 Hotel & Resort">🏨 Hotels & Resorts</button>
+        <button class="filter-btn" data-category="☕ Cafe & Coffee Shop">☕ Cafes & Coffee</button>
+        <button class="filter-btn" data-category="🍽️ Restaurant & Dining">🍽️ Restaurants</button>
+        <button class="filter-btn" data-category="✈️ Airline Company">✈️ Airlines</button>
+        <button class="filter-btn" data-category="🚗 Travel Agency">🚗 Travel Agencies</button>
+        <button class="filter-btn" data-category="🏛️ Government Office">🏛️ Government</button>
+        <button class="filter-btn" data-category="💼 Corporate Company">💼 Corporations</button>
+        <button class="filter-btn" data-category="🏦 Bank & Financial">🏦 Banks & Finance</button>
+        <button class="filter-btn" data-category="📞 Telecom & Internet">📞 Telecom & ISPs</button>
+        <button class="filter-btn" data-category="🏥 Private Hospital & Clinic">🏥 Hospitals & Clinics</button>
+        <button class="filter-btn" data-category="🏫 University & College">🏫 Universities</button>
+        <button class="filter-btn" data-category="🛒 Supermarket & Grocery">🛒 Supermarkets</button>
+        <button class="filter-btn" data-category="👗 Fashion & Clothing">👗 Fashion</button>
     </div>
-    
+
     <div id="shopsList">
-        <div style="text-align: center; padding: 40px; color: #aaa;">Loading shops...</div>
+        <div style="text-align: center; padding: 40px; color: #aaa;">Loading businesses...</div>
     </div>
 </div>
 
 <div class="footer">
-    <p>© 2026 Crimson Owl | Digital Shops Directory</p>
+    <p>© 2026 Crimson Owl | Ethiopian Business Directory</p>
 </div>
 
 <script>
-    // Your GitHub username
-    const GITHUB_USERNAME = 'ignivolatusapk';
-    const GITHUB_SHOPS_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/crimson-owl/main/shops.json`;
-    
+    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
     let shops = [];
     let currentCategory = 'all';
     let currentSearch = '';
@@ -322,40 +326,40 @@
             shops = data.shops.filter(s => s.status === 'active');
             displayShops();
         } catch (error) {
-            document.getElementById('shopsList').innerHTML = '<div class="empty-state"><p>⚠️ Unable to load shops. Make sure shops.json exists in your GitHub repository.</p></div>';
+            document.getElementById('shopsList').innerHTML = '<div class="empty-state"><p>⚠️ Unable to load businesses. Please check back later.</p></div>';
         }
     }
 
     function displayShops() {
         let filtered = shops;
-        
+
         if (currentCategory !== 'all') {
             filtered = filtered.filter(shop => shop.category === currentCategory);
         }
-        
+
         if (currentSearch) {
-            filtered = filtered.filter(shop => 
+            filtered = filtered.filter(shop =>
                 shop.shopName.toLowerCase().includes(currentSearch) ||
                 shop.category.toLowerCase().includes(currentSearch) ||
                 shop.description.toLowerCase().includes(currentSearch)
             );
         }
-        
+
         const container = document.getElementById('shopsList');
-        
+
         if (filtered.length === 0) {
-            container.innerHTML = '<div class="empty-state"><p>✨ No shops found</p></div>';
+            container.innerHTML = '<div class="empty-state"><p>✨ No businesses found</p></div>';
             return;
         }
-        
+
         container.innerHTML = `
             <div class="shops-grid">
                 ${filtered.map(shop => `
                     <div class="shop-card" onclick="window.open('${shop.shopUrl}', '_blank')">
                         <div class="shop-header">
-                            ${shop.logoUrl && shop.logoUrl !== '' ? 
-                                `<img src="${shop.logoUrl}" class="shop-logo-img" alt="${shop.shopName}" onerror="this.src=''">` : 
-                                `<div class="shop-logo-img" style="display: flex; align-items: center; justify-content: center; font-size: 28px; background: #1a1a1a;">🦉</div>`
+                            ${shop.logoUrl && shop.logoUrl !== '' ?
+                                `<img src="${shop.logoUrl}" class="shop-logo-img" alt="${shop.shopName}" onerror="this.src=''">` :
+                                `<div class="shop-logo-img" style="display: flex; align-items: center; justify-content: center; font-size: 28px; background: #1a1a1a;">🏢</div>`
                             }
                             <div>
                                 <div class="shop-name">${shop.shopName}</div>
@@ -384,11 +388,11 @@
     });
 
     document.getElementById('searchInput').addEventListener('keyup', filterShops);
-    
+
     function toggleMenu() {
         document.getElementById('mobileMenu').classList.toggle('show');
     }
-    
+
     loadShops();
 </script>
 
