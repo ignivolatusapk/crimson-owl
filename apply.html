@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open a Shop - Crimson Owl</title>
+    <title>List Your Business - Crimson Owl</title>
     <style>
         * {
             margin: 0;
@@ -58,7 +58,7 @@
         }
 
         .container {
-            max-width: 550px;
+            max-width: 600px;
             margin: 0 auto;
             padding: 60px 20px;
         }
@@ -80,6 +80,50 @@
             color: #aaa;
             font-size: 14px;
             margin-bottom: 28px;
+        }
+
+        .pricing-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .pricing-option {
+            background: #0a0a0a;
+            border: 2px solid #333;
+            border-radius: 16px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .pricing-option.selected {
+            border-color: #8B0000;
+            background: rgba(139, 0, 0, 0.2);
+        }
+
+        .pricing-option:hover {
+            border-color: #8B0000;
+        }
+
+        .pricing-title {
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .pricing-price {
+            color: #8B0000;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .pricing-price small {
+            font-size: 11px;
+            color: #aaa;
         }
 
         .form-group {
@@ -184,6 +228,7 @@
             .container { padding: 30px 16px; }
             .form-card { padding: 24px; }
             .form-card h1 { font-size: 24px; }
+            .pricing-options { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -201,53 +246,89 @@
 
 <div class="container">
     <div class="form-card">
-        <h1>Start Your Digital Shop</h1>
-        <p>Fill the form. We'll contact you within 24 hours.</p>
+        <h1>List Your Business</h1>
+        <p>Fill the form below. We'll contact you within 24 hours.</p>
         
         <div id="formMessage"></div>
         
         <form id="applyForm">
             <div class="form-group">
-                <label>Shop Name</label>
-                <input type="text" id="shopName" required placeholder="e.g., Buna Coffee">
+                <label>Business Name *</label>
+                <input type="text" id="businessName" required placeholder="e.g., Tomoca Coffee">
             </div>
             
             <div class="form-group">
-                <label>Your Name</label>
+                <label>Your Name *</label>
                 <input type="text" id="ownerName" required>
             </div>
             
             <div class="form-group">
-                <label>Email</label>
+                <label>Email *</label>
                 <input type="email" id="email" required>
             </div>
             
             <div class="form-group">
-                <label>Phone</label>
+                <label>Phone *</label>
                 <input type="tel" id="phone" required>
             </div>
             
             <div class="form-group">
-                <label>Category</label>
+                <label>Business Category *</label>
                 <select id="category">
-                    <option>Fashion & Clothing</option>
-                    <option>Food & Restaurant</option>
-                    <option>Electronics</option>
-                    <option>Handicrafts & Art</option>
-                    <option>Home & Living</option>
-                    <option>Beauty & Health</option>
+                    <option>🏨 Hotel & Resort</option>
+                    <option>☕ Cafe & Coffee Shop</option>
+                    <option>🍽️ Restaurant & Dining</option>
+                    <option>✈️ Airline Company</option>
+                    <option>🚗 Travel Agency</option>
+                    <option>🏛️ Government Office</option>
+                    <option>💼 Corporate Company</option>
+                    <option>🏦 Bank & Financial</option>
+                    <option>📞 Telecom & Internet</option>
+                    <option>🏥 Private Hospital & Clinic</option>
+                    <option>🏫 University & College</option>
+                    <option>🛒 Supermarket & Grocery</option>
+                    <option>👗 Fashion & Clothing</option>
+                    <option>🏋️ Gym & Fitness Center</option>
+                    <option>💇 Salon & Barber</option>
+                    <option>🔧 Repair & Maintenance</option>
+                    <option>📸 Photography Studio</option>
                 </select>
             </div>
             
             <div class="form-group">
-                <label>Description</label>
-                <textarea id="description" rows="4" required placeholder="What do you sell? Describe your products..."></textarea>
+                <label>Choose a Plan *</label>
+                <div class="pricing-options">
+                    <div class="pricing-option" data-plan="Monthly - 1,500 ETB">
+                        <div class="pricing-title">Monthly</div>
+                        <div class="pricing-price">1,500 ETB <small>/month</small></div>
+                    </div>
+                    <div class="pricing-option" data-plan="Yearly - 17,000 ETB">
+                        <div class="pricing-title">Yearly</div>
+                        <div class="pricing-price">17,000 ETB <small>/year</small></div>
+                    </div>
+                    <div class="pricing-option" data-plan="Yearly + Domain - 17,000 + Domain Cost">
+                        <div class="pricing-title">Yearly + Domain</div>
+                        <div class="pricing-price">17,000 + Domain</div>
+                    </div>
+                    <div class="pricing-option" data-plan="Custom Website - One-time (Contact for quote)">
+                        <div class="pricing-title">Custom Website</div>
+                        <div class="pricing-price">One-time</div>
+                    </div>
+                </div>
+                <input type="hidden" id="selectedPlan" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Business Description *</label>
+                <textarea id="description" rows="4" required placeholder="Describe what your business does, what you offer, your products/services..."></textarea>
             </div>
             
             <div class="info-box">
-                <p><strong>💰 Total: 1,500 ETB</strong></p>
-                <p>Setup Fee: 1,000 ETB (one-time)</p>
-                <p>Monthly Rent: 500 ETB</p>
+                <p><strong>💡 What happens next?</strong></p>
+                <p>1. We'll review your application within 24 hours</p>
+                <p>2. We'll contact you to confirm your chosen plan</p>
+                <p>3. Your business website will be set up within 48 hours after payment</p>
+                <p>4. You'll get your own business page at yourbusiness.crimsonowl.com</p>
             </div>
             
             <button type="submit" class="btn-submit">Submit Application</button>
@@ -256,23 +337,40 @@
 </div>
 
 <div class="footer">
-    <p>© 2026 Crimson Owl | Digital Shops Directory</p>
+    <p>© 2026 Crimson Owl | Ethiopian Business Directory</p>
 </div>
 
 <script>
     const FORMSPREE_ID = 'mlgzlbak';
     
+    // Plan selection
+    document.querySelectorAll('.pricing-option').forEach(option => {
+        option.addEventListener('click', function() {
+            document.querySelectorAll('.pricing-option').forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            document.getElementById('selectedPlan').value = this.dataset.plan;
+        });
+    });
+    
     document.getElementById('applyForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
+        const selectedPlan = document.getElementById('selectedPlan').value;
+        if (!selectedPlan) {
+            document.getElementById('formMessage').innerHTML = '<div class="message error">❌ Please select a pricing plan</div>';
+            setTimeout(() => document.getElementById('formMessage').innerHTML = '', 3000);
+            return;
+        }
+        
         const formData = new FormData();
-        formData.append('_subject', 'New Shop Application - Crimson Owl');
-        formData.append('Shop Name', document.getElementById('shopName').value);
+        formData.append('_subject', 'New Business Application - Crimson Owl');
+        formData.append('Business Name', document.getElementById('businessName').value);
         formData.append('Owner Name', document.getElementById('ownerName').value);
         formData.append('Email', document.getElementById('email').value);
         formData.append('Phone', document.getElementById('phone').value);
         formData.append('Category', document.getElementById('category').value);
-        formData.append('Description', document.getElementById('description').value);
+        formData.append('Selected Plan', selectedPlan);
+        formData.append('Business Description', document.getElementById('description').value);
         
         try {
             const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
@@ -284,6 +382,7 @@
             if (response.ok) {
                 document.getElementById('formMessage').innerHTML = '<div class="message success">✅ Application sent! We\'ll contact you within 24 hours.</div>';
                 document.getElementById('applyForm').reset();
+                document.querySelectorAll('.pricing-option').forEach(opt => opt.classList.remove('selected'));
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 3000);
