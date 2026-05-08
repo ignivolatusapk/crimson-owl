@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>All Businesses - Crimson Owl</title>
     <style>
         * {
@@ -140,33 +140,74 @@
             border-color: #8B0000;
         }
 
+        /* FIXED: Horizontal Scrolling Categories */
+        .category-wrapper {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
         .category-filter {
             display: flex;
             gap: 10px;
             overflow-x: auto;
-            padding: 8px 0 20px 0;
+            overflow-y: hidden;
+            padding: 8px 4px 20px 4px;
+            margin: 0 -4px;
             -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #8B0000 #333;
         }
 
         .category-filter::-webkit-scrollbar {
-            display: none;
+            height: 4px;
+        }
+
+        .category-filter::-webkit-scrollbar-track {
+            background: #333;
+            border-radius: 10px;
+        }
+
+        .category-filter::-webkit-scrollbar-thumb {
+            background: #8B0000;
+            border-radius: 10px;
         }
 
         .filter-btn {
             background: #1a1a1a;
             border: 1px solid #333;
             color: #aaa;
-            padding: 8px 20px;
+            padding: 8px 18px;
             border-radius: 40px;
             cursor: pointer;
             font-size: 13px;
             white-space: nowrap;
+            flex-shrink: 0;
+            transition: all 0.2s;
         }
 
         .filter-btn.active {
             background: #8B0000;
             color: white;
             border-color: #8B0000;
+        }
+
+        .filter-btn:hover {
+            background: #333;
+        }
+
+        /* Scroll hint */
+        .scroll-hint {
+            text-align: center;
+            color: #666;
+            font-size: 11px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .scroll-hint {
+                display: block;
+            }
         }
 
         .shops-grid {
@@ -248,10 +289,12 @@
         }
 
         @media (max-width: 768px) {
-            .container { padding: 24px 16px; }
-            .shops-grid { grid-template-columns: 1fr; }
+            .container { padding: 20px 16px; }
+            .shops-grid { grid-template-columns: 1fr; gap: 16px; }
             .nav-links { display: none; }
             .menu-btn { display: block; }
+            .page-header h1 { font-size: 24px; }
+            .category-filter { padding-bottom: 16px; }
         }
     </style>
 </head>
@@ -286,21 +329,28 @@
 
     <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search businesses...">
 
-    <div class="category-filter" id="categoryFilter">
-        <button class="filter-btn active" data-category="all">All</button>
-        <button class="filter-btn" data-category="🏨 Hotel & Resort">🏨 Hotels & Resorts</button>
-        <button class="filter-btn" data-category="☕ Cafe & Coffee Shop">☕ Cafes & Coffee</button>
-        <button class="filter-btn" data-category="🍽️ Restaurant & Dining">🍽️ Restaurants</button>
-        <button class="filter-btn" data-category="✈️ Airline Company">✈️ Airlines</button>
-        <button class="filter-btn" data-category="🚗 Travel Agency">🚗 Travel Agencies</button>
-        <button class="filter-btn" data-category="🏛️ Government Office">🏛️ Government</button>
-        <button class="filter-btn" data-category="💼 Corporate Company">💼 Corporations</button>
-        <button class="filter-btn" data-category="🏦 Bank & Financial">🏦 Banks & Finance</button>
-        <button class="filter-btn" data-category="📞 Telecom & Internet">📞 Telecom & ISPs</button>
-        <button class="filter-btn" data-category="🏥 Private Hospital & Clinic">🏥 Hospitals & Clinics</button>
-        <button class="filter-btn" data-category="🏫 University & College">🏫 Universities</button>
-        <button class="filter-btn" data-category="🛒 Supermarket & Grocery">🛒 Supermarkets</button>
-        <button class="filter-btn" data-category="👗 Fashion & Clothing">👗 Fashion</button>
+    <div class="category-wrapper">
+        <div class="category-filter" id="categoryFilter">
+            <button class="filter-btn active" data-category="all">All</button>
+            <button class="filter-btn" data-category="🏨 Hotel & Resort">🏨 Hotels</button>
+            <button class="filter-btn" data-category="☕ Cafe & Coffee Shop">☕ Cafes</button>
+            <button class="filter-btn" data-category="🍽️ Restaurant & Dining">🍽️ Restaurants</button>
+            <button class="filter-btn" data-category="✈️ Airline Company">✈️ Airlines</button>
+            <button class="filter-btn" data-category="🚗 Travel Agency">🚗 Travel</button>
+            <button class="filter-btn" data-category="🏛️ Government Office">🏛️ Government</button>
+            <button class="filter-btn" data-category="💼 Corporate Company">💼 Corporate</button>
+            <button class="filter-btn" data-category="🏦 Bank & Financial">🏦 Banks</button>
+            <button class="filter-btn" data-category="📞 Telecom & Internet">📞 Telecom</button>
+            <button class="filter-btn" data-category="🏥 Private Hospital & Clinic">🏥 Hospitals</button>
+            <button class="filter-btn" data-category="🏫 University & College">🏫 Universities</button>
+            <button class="filter-btn" data-category="🛒 Supermarket & Grocery">🛒 Supermarkets</button>
+            <button class="filter-btn" data-category="👗 Fashion & Clothing">👗 Fashion</button>
+            <button class="filter-btn" data-category="🏋️ Gym & Fitness Center">🏋️ Gyms</button>
+            <button class="filter-btn" data-category="💇 Salon & Barber">💇 Salons</button>
+            <button class="filter-btn" data-category="🔧 Repair & Maintenance">🔧 Repair</button>
+            <button class="filter-btn" data-category="📸 Photography Studio">📸 Photography</button>
+        </div>
+        <div class="scroll-hint">← swipe left to see more categories →</div>
     </div>
 
     <div id="shopsList">
@@ -327,6 +377,7 @@
             displayShops();
         } catch (error) {
             document.getElementById('shopsList').innerHTML = '<div class="empty-state"><p>⚠️ Unable to load businesses. Please check back later.</p></div>';
+            console.error('Error loading shops:', error);
         }
     }
 
@@ -348,7 +399,7 @@
         const container = document.getElementById('shopsList');
 
         if (filtered.length === 0) {
-            container.innerHTML = '<div class="empty-state"><p>✨ No businesses found</p></div>';
+            container.innerHTML = '<div class="empty-state"><p>✨ No businesses found</p><p style="font-size: 12px; margin-top: 8px;">Try a different category or search term</p></div>';
             return;
         }
 
@@ -358,8 +409,9 @@
                     <div class="shop-card" onclick="window.open('${shop.shopUrl}', '_blank')">
                         <div class="shop-header">
                             ${shop.logoUrl && shop.logoUrl !== '' ?
-                                `<img src="${shop.logoUrl}" class="shop-logo-img" alt="${shop.shopName}" onerror="this.src=''">` :
-                                `<div class="shop-logo-img" style="display: flex; align-items: center; justify-content: center; font-size: 28px; background: #1a1a1a;">🏢</div>`
+                                `<img src="${shop.logoUrl}" class="shop-logo-img" alt="${shop.shopName}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <div class="shop-logo-img" style="display: none; align-items: center; justify-content: center; font-size: 28px;">🏢</div>` :
+                                `<div class="shop-logo-img" style="display: flex; align-items: center; justify-content: center; font-size: 28px;">🏢</div>`
                             }
                             <div>
                                 <div class="shop-name">${shop.shopName}</div>
@@ -378,6 +430,7 @@
         displayShops();
     }
 
+    // Category filter setup
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -392,6 +445,15 @@
     function toggleMenu() {
         document.getElementById('mobileMenu').classList.toggle('show');
     }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('mobileMenu');
+        const menuBtn = document.querySelector('.menu-btn');
+        if (menu.classList.contains('show') && !menu.contains(e.target) && !menuBtn.contains(e.target)) {
+            menu.classList.remove('show');
+        }
+    });
 
     loadShops();
 </script>
