@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crimson Owl - Digital Shops Directory</title>
+    <title>Crimson Owl - Ethiopian Business Directory</title>
     <style>
         * {
             margin: 0;
@@ -205,6 +205,95 @@
             margin-bottom: 48px;
         }
 
+        /* Pricing Cards */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: #8B0000;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid #8B0000;
+            background: rgba(139, 0, 0, 0.1);
+        }
+
+        .plan-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .plan-price {
+            font-size: 42px;
+            font-weight: 800;
+            color: #8B0000;
+            margin-bottom: 8px;
+        }
+
+        .plan-price small {
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .plan-desc {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .plan-features li {
+            color: #ccc;
+            font-size: 13px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .plan-btn {
+            background: #8B0000;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .plan-btn-outline {
+            background: transparent;
+            border: 2px solid #8B0000;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+            width: 100%;
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -323,6 +412,8 @@
             .menu-btn { display: block; }
             .container { padding: 40px 16px; }
             .shops-grid { grid-template-columns: 1fr; }
+            .pricing-grid { gap: 20px; }
+            .plan-price { font-size: 32px; }
         }
     </style>
 </head>
@@ -336,8 +427,8 @@
         </div>
         <div class="nav-links">
             <a href="index.html">Home</a>
-            <a href="browse-shops.html">Shops</a>
-            <a href="apply.html" class="apply-nav">Open a Shop</a>
+            <a href="browse-shops.html">Businesses</a>
+            <a href="apply.html" class="apply-nav">List Your Business</a>
             <a href="admin.html" style="opacity: 0.5;">Admin</a>
         </div>
         <button class="menu-btn" onclick="toggleMenu()">☰</button>
@@ -346,8 +437,8 @@
 
 <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Home</a>
-    <a href="browse-shops.html">Browse Shops</a>
-    <a href="apply.html">Open a Shop</a>
+    <a href="browse-shops.html">Businesses</a>
+    <a href="apply.html">List Your Business</a>
     <a href="admin.html">Admin</a>
 </div>
 
@@ -357,10 +448,10 @@
             <img src="images/logo.png" alt="Crimson Owl Logo">
         </div>
         <h1>Crimson Owl</h1>
-        <p>Digital Shops Directory - Discover online stores from Ethiopia</p>
+        <p>Ethiopian Business Directory - Get your business online today</p>
         <div>
-            <a href="browse-shops.html" class="btn-primary">Browse Shops</a>
-            <a href="apply.html" class="btn-outline">Open a Shop</a>
+            <a href="browse-shops.html" class="btn-primary">Browse Businesses</a>
+            <a href="apply.html" class="btn-outline">List Your Business</a>
         </div>
     </div>
 </div>
@@ -369,10 +460,10 @@
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-number" id="shopCount">--</div>
-            <div class="stat-label">Active Shops</div>
+            <div class="stat-label">Listed Businesses</div>
         </div>
         <div class="stat-card">
-            <div class="stat-number">500 ETB</div>
+            <div class="stat-number">1,500 ETB</div>
             <div class="stat-label">Monthly Rent</div>
         </div>
         <div class="stat-card">
@@ -381,27 +472,85 @@
         </div>
     </div>
 
-    <h2 class="section-title">Featured Shops</h2>
-    <p class="section-subtitle">Hand-picked online stores you'll love</p>
+    <h2 class="section-title">Pricing Plans</h2>
+    <p class="section-subtitle">Choose the plan that works for your business</p>
+
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <div class="plan-name">Monthly</div>
+            <div class="plan-price">1,500 ETB <small>/month</small></div>
+            <div class="plan-desc">Perfect for seasonal businesses</div>
+            <ul class="plan-features">
+                <li>✓ Your own website</li>
+                <li>✓ Product/Service listing</li>
+                <li>✓ Order management</li>
+                <li>✓ Customer support</li>
+                <li>✓ Cancel anytime</li>
+            </ul>
+            <a href="apply.html" class="plan-btn">Get Started</a>
+        </div>
+
+        <div class="pricing-card featured">
+            <div class="plan-name">Yearly</div>
+            <div class="plan-price">17,000 ETB <small>/year</small></div>
+            <div class="plan-desc">Save 1,000 ETB - Best value!</div>
+            <ul class="plan-features">
+                <li>✓ Everything in Monthly</li>
+                <li>✓ 2 months free!</li>
+                <li>✓ Priority support</li>
+                <li>✓ Free setup</li>
+                <li>✓ 24/7 monitoring</li>
+            </ul>
+            <a href="apply.html" class="plan-btn">Get Started</a>
+        </div>
+
+        <div class="pricing-card">
+            <div class="plan-name">Yearly + Domain</div>
+            <div class="plan-price">17,000 + Domain</div>
+            <div class="plan-desc">Your own custom domain name</div>
+            <ul class="plan-features">
+                <li>✓ Everything in Yearly</li>
+                <li>✓ Custom domain (yourbusiness.com)</li>
+                <li>✓ Professional email</li>
+                <li>✓ SEO optimization</li>
+                <li>✓ Domain management</li>
+            </ul>
+            <a href="apply.html" class="plan-btn">Get Started</a>
+        </div>
+
+        <div class="pricing-card">
+            <div class="plan-name">Custom Website</div>
+            <div class="plan-price">One-time</div>
+            <div class="plan-desc">Own it forever, no monthly fee</div>
+            <ul class="plan-features">
+                <li>✓ Fully custom design</li>
+                <li>✓ One-time payment</li>
+                <li>✓ Full ownership</li>
+                <li>✓ No monthly fees</li>
+                <li>✓ Contact for quote</li>
+            </ul>
+            <a href="mailto:ignivolatusapk@gmail.com?subject=Custom%20Website%20Inquiry" class="plan-btn-outline">Contact Us</a>
+        </div>
+    </div>
+
+    <h2 class="section-title">Featured Businesses</h2>
+    <p class="section-subtitle">Discover top businesses in Ethiopia</p>
 
     <div id="featuredShops" class="shops-grid"></div>
 
     <div class="view-all">
-        <a href="browse-shops.html" class="view-all-btn">View All Shops →</a>
+        <a href="browse-shops.html" class="view-all-btn">View All Businesses →</a>
     </div>
 </div>
 
 <div class="footer">
-    <p>© 2026 Crimson Owl | Digital Shops Directory</p>
+    <p>© 2026 Crimson Owl | Ethiopian Business Directory</p>
+    <p style="margin-top: 8px;">📧 For custom websites: ignivolatusapk@gmail.com</p>
 </div>
 
 <script>
-    // Your GitHub username
-    const GITHUB_USERNAME = 'ignivolatusapk';
-    const GITHUB_SHOPS_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/crimson-owl/main/shops.json`;
-    
-    console.log('Loading shops from:', GITHUB_SHOPS_URL);
-    
+    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
+
     async function loadShops() {
         try {
             const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
@@ -415,7 +564,7 @@
             const container = document.getElementById('featuredShops');
             
             if (featured.length === 0) {
-                container.innerHTML = '<div style="text-align: center; color: #aaa; grid-column: 1/-1; padding: 40px;">No shops yet. Be the first to open one!</div>';
+                container.innerHTML = '<div style="text-align: center; color: #aaa; grid-column: 1/-1; padding: 40px;">No businesses yet. Be the first to list yours!</div>';
                 return;
             }
             
@@ -424,7 +573,7 @@
                     <div class="shop-header">
                         ${shop.logoUrl && shop.logoUrl !== '' ? 
                             `<img src="${shop.logoUrl}" class="shop-logo-img" alt="${shop.shopName}" onerror="this.src=''">` : 
-                            `<div class="shop-logo-img" style="display: flex; align-items: center; justify-content: center; font-size: 28px; background: #1a1a1a;">🦉</div>`
+                            `<div class="shop-logo-img" style="display: flex; align-items: center; justify-content: center; font-size: 28px;">🏢</div>`
                         }
                         <div>
                             <div class="shop-name">${shop.shopName}</div>
@@ -436,11 +585,7 @@
             `).join('');
         } catch (error) {
             console.error('Error loading shops:', error);
-            document.getElementById('featuredShops').innerHTML = `
-                <div style="text-align: center; color: #aaa; grid-column: 1/-1; padding: 40px;">
-                    <p>⚠️ Unable to load shops.</p>
-                    <p style="font-size: 12px; margin-top: 10px;">Make sure shops.json exists in your GitHub repository.</p>
-                </div>`;
+            document.getElementById('featuredShops').innerHTML = '<div style="text-align: center; color: #aaa; grid-column: 1/-1; padding: 40px;">Unable to load businesses.</div>';
             document.getElementById('shopCount').innerText = '0';
         }
     }
