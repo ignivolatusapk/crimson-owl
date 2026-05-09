@@ -205,7 +205,7 @@
             margin-bottom: 48px;
         }
 
-        /* Premium Card from Uiverse */
+        /* Premium Card */
         .premium-card {
             width: 200px;
             height: 250px;
@@ -251,19 +251,7 @@
             box-shadow: 0 5px 10px rgba(0,0,0,0.23);
         }
 
-        .premium-card span::after {
-            content: '';
-            position: absolute;
-            width: 10px;
-            bottom: 0;
-            left: 0;
-            height: 10px;
-            z-index: -1;
-            box-shadow: 140px -140px #cc3f47;
-            background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
-        }
-
-        /* Social Media Cards */
+        /* Social Cards */
         .social-grid {
             display: flex;
             justify-content: center;
@@ -292,7 +280,6 @@
         .social-card:nth-child(4) { border-radius: 5px 5px 90px 5px; }
 
         .social-card:hover { scale: 1.1; }
-        .social-card:hover .instagram { fill: white; }
         .social-card:nth-child(1):hover { background-color: #cc39a4; }
         .social-card:nth-child(2):hover { background-color: #03A9F4; }
         .social-card:nth-child(3):hover { background-color: black; }
@@ -355,40 +342,225 @@
             cursor: pointer;
         }
 
-        /* Feedback Section */
+        /* Wallet Payment Section */
+        .wallet-section {
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-radius: 30px;
+            border: 1px solid rgba(139, 0, 0, 0.3);
+        }
+
+        .wallet-title {
+            text-align: center;
+            color: white;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .wallet-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .wallet {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            transition: transform 0.4s ease;
+        }
+
+        .wallet:hover {
+            transform: translateY(-5px);
+        }
+
+        .wallet-back {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 220px;
+            background: #1e341e;
+            border-radius: 22px 22px 60px 60px;
+            z-index: 5;
+            box-shadow: inset 0 25px 35px rgba(0, 0, 0, 0.4), inset 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-item {
+            position: absolute;
+            width: 92%;
+            height: 160px;
+            left: 4%;
+            border-radius: 16px;
+            padding: 18px;
+            color: white;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: slideIntoPocket 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+        }
+
+        @keyframes slideIntoPocket {
+            0% { transform: translateY(-100px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .card-stripe {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            bottom: 100px;
+            z-index: 10;
+            animation-delay: 0.1s;
+        }
+
+        .card-wise {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            bottom: 70px;
+            z-index: 20;
+            animation-delay: 0.2s;
+        }
+
+        .card-paypal {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            bottom: 40px;
+            z-index: 30;
+            animation-delay: 0.3s;
+        }
+
+        .card-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .chip {
+            width: 32px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .label {
+            font-size: 8px;
+            opacity: 0.7;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+            display: block;
+        }
+
+        .value {
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .pocket {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 220px;
+            z-index: 40;
+            filter: drop-shadow(0 15px 25px rgba(20, 40, 20, 0.4));
+        }
+
+        .pocket-content {
+            position: absolute;
+            top: 50px;
+            width: 100%;
+            text-align: center;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .balance-stars {
+            color: #839e7b;
+            font-size: 24px;
+            letter-spacing: 4px;
+            transition: 0.3s;
+        }
+
+        .balance-real {
+            color: #a7c59e;
+            font-size: 22px;
+            font-weight: 600;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, 10px);
+            transition: 0.3s;
+        }
+
+        .wallet:hover .card-stripe { transform: translateY(-75px) rotate(-3deg); }
+        .wallet:hover .card-wise { transform: translateY(-45px) rotate(2deg); }
+        .wallet:hover .card-paypal { transform: translateY(-10px); }
+        .wallet:hover .balance-stars { opacity: 0; }
+        .wallet:hover .balance-real { opacity: 1; transform: translate(-50%, 0); }
+
+        /* Black Feedback Section */
         .feedback-section {
-            background: rgba(255, 255, 255, 0.05);
+            background: #000000;
             border-radius: 24px;
             padding: 32px;
             margin-top: 60px;
+            border: 1px solid #222;
+        }
+
+        .feedback-section h3 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
         }
 
         .feedback-grid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 0.5rem;
-            background: white;
+            background: #0a0a0a;
             border-radius: 1rem;
             padding: 0.5rem;
         }
 
         .feedback-textarea {
             grid-column: span 6;
-            background: #f1f5f9;
-            color: #1e293b;
+            background: #111;
+            color: white;
             height: 7rem;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #333;
             border-radius: 0.5rem;
             padding: 0.5rem;
             resize: none;
             outline: none;
         }
 
-        .feedback-textarea:focus { border-color: #8B0000; }
+        .feedback-textarea:focus {
+            border-color: #8B0000;
+        }
 
         .feedback-btn {
-            background: #f1f5f9;
-            border: 1px solid #e2e8f0;
+            background: #111;
+            border: 1px solid #333;
             border-radius: 0.5rem;
             padding: 0.5rem;
             cursor: pointer;
@@ -398,13 +570,19 @@
             transition: all 0.3s;
         }
 
-        .feedback-btn:hover { border-color: #8B0000; background: #8B0000; }
-        .feedback-btn:hover svg { fill: white; }
+        .feedback-btn:hover {
+            border-color: #8B0000;
+            background: #8B0000;
+        }
+
+        .feedback-btn:hover svg {
+            fill: white;
+        }
 
         .send-btn {
             grid-column: span 2;
-            background: #f1f5f9;
-            border: 1px solid #e2e8f0;
+            background: #111;
+            border: 1px solid #333;
             border-radius: 0.5rem;
             padding: 0.5rem;
             cursor: pointer;
@@ -412,28 +590,13 @@
             justify-content: center;
             gap: 8px;
             align-items: center;
-        }
-
-        /* Loading Animation */
-        .loader-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.2rem;
-            font-size: 1.6em;
-            font-weight: 600;
             color: white;
-            padding: 40px;
+            transition: all 0.3s;
         }
 
-        .loader-letter {
-            animation: loaderAnim 4s infinite linear;
-        }
-
-        @keyframes loaderAnim {
-            0%, 100% { opacity: 0.2; transform: translateY(0); }
-            20% { opacity: 1; transform: scale(1.15); text-shadow: 0 0 4px #fff; }
-            40% { opacity: 0.5; transform: translateY(0); }
+        .send-btn:hover {
+            border-color: #8B0000;
+            background: #8B0000;
         }
 
         .stats-grid {
@@ -555,6 +718,8 @@
             .shops-grid { grid-template-columns: 1fr; }
             .feedback-grid { grid-template-columns: 1fr; }
             .feedback-btn, .send-btn { grid-column: span 1; }
+            .wallet-section { padding: 20px; }
+            .card-item { height: 140px; padding: 12px; }
         }
     </style>
 </head>
@@ -613,7 +778,7 @@
         </div>
     </div>
 
-    <!-- Premium Card Display -->
+    <!-- Premium Card -->
     <div style="display: flex; justify-content: center; margin-bottom: 60px;">
         <div class="premium-card">
             <span></span>
@@ -663,31 +828,31 @@
     <div class="rating">
         <input type="radio" id="star5" name="rating" value="5" style="display: none;">
         <label for="star5">
-            <svg viewBox="0 0 24 24">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.5">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
             </svg>
         </label>
         <input type="radio" id="star4" name="rating" value="4" style="display: none;">
         <label for="star4">
-            <svg viewBox="0 0 24 24">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.5">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
             </svg>
         </label>
         <input type="radio" id="star3" name="rating" value="3" style="display: none;">
         <label for="star3">
-            <svg viewBox="0 0 24 24">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.5">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
             </svg>
         </label>
         <input type="radio" id="star2" name="rating" value="2" style="display: none;">
         <label for="star2">
-            <svg viewBox="0 0 24 24">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.5">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
             </svg>
         </label>
         <input type="radio" id="star1" name="rating" value="1" style="display: none;">
         <label for="star1">
-            <svg viewBox="0 0 24 24">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.5">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
             </svg>
         </label>
@@ -702,38 +867,98 @@
         <a href="browse-shops.html" class="view-all-btn">View All Businesses →</a>
     </div>
 
-    <!-- Loading Animation -->
-    <div class="loader-wrapper" id="loadingIndicator" style="display: none;">
-        <span class="loader-letter">L</span>
-        <span class="loader-letter">o</span>
-        <span class="loader-letter">a</span>
-        <span class="loader-letter">d</span>
-        <span class="loader-letter">i</span>
-        <span class="loader-letter">n</span>
-        <span class="loader-letter">g</span>
-        <span class="loader-letter">.</span>
-        <span class="loader-letter">.</span>
-        <span class="loader-letter">.</span>
+    <!-- Wallet Payment Section -->
+    <div class="wallet-section">
+        <h2 class="wallet-title">💳 Payment Methods</h2>
+        <div class="wallet-container">
+            <div class="wallet">
+                <div class="wallet-back"></div>
+                <div class="card-item card-stripe">
+                    <div class="card-inner">
+                        <div class="card-top">
+                            <span>CRIMSON OWL</span>
+                            <div class="chip"></div>
+                        </div>
+                        <div class="card-bottom">
+                            <div>
+                                <span class="label">Card Holder</span>
+                                <span class="value">Business Owner</span>
+                            </div>
+                            <div>
+                                <span class="label">Expires</span>
+                                <span class="value">12/28</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-item card-wise">
+                    <div class="card-inner">
+                        <div class="card-top">
+                            <span>CRIMSON OWL</span>
+                            <div class="chip"></div>
+                        </div>
+                        <div class="card-bottom">
+                            <div>
+                                <span class="label">Card Holder</span>
+                                <span class="value">Business Owner</span>
+                            </div>
+                            <div>
+                                <span class="label">Expires</span>
+                                <span class="value">12/28</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-item card-paypal">
+                    <div class="card-inner">
+                        <div class="card-top">
+                            <span>CRIMSON OWL</span>
+                            <div class="chip"></div>
+                        </div>
+                        <div class="card-bottom">
+                            <div>
+                                <span class="label">Card Holder</span>
+                                <span class="value">Business Owner</span>
+                            </div>
+                            <div>
+                                <span class="label">Expires</span>
+                                <span class="value">12/28</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pocket">
+                    <div class="pocket-content">
+                        <div class="balance-stars">**** **** **** 1234</div>
+                        <div class="balance-real">💰 Total Balance: 0 ETB</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 30px; color: #888; font-size: 14px;">
+            <p>💳 Hover over the wallet to see card details</p>
+            <p style="margin-top: 8px;">✅ Accepting: Telebirr | Chapa | Bank Transfer | Credit Card</p>
+        </div>
     </div>
 
-    <!-- Feedback Section -->
+    <!-- Black Feedback Section -->
     <div class="feedback-section">
-        <h3 style="color: white; text-align: center; margin-bottom: 20px;">Send Feedback</h3>
+        <h3>📝 Send Feedback</h3>
         <div class="feedback-grid">
             <textarea placeholder="Your feedback..." class="feedback-textarea" id="feedbackText"></textarea>
             <button class="feedback-btn" onclick="sendFeedback('happy')">
-                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 512 512" fill="#64748b">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 512 512" fill="#888">
                     <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path>
                 </svg>
             </button>
             <button class="feedback-btn" onclick="sendFeedback('sad')">
-                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 512 512" fill="#64748b">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 512 512" fill="#888">
                     <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM174.6 384.1c-4.5 12.5-18.2 18.9-30.7 14.4s-18.9-18.2-14.4-30.7C146.9 319.4 198.9 288 256 288s109.1 31.4 126.6 79.9c4.5 12.5-2 26.2-14.4 30.7s-26.2-2-30.7-14.4C328.2 358.5 297.2 336 256 336s-72.2 22.5-81.4 48.1zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path>
                 </svg>
             </button>
             <span></span>
             <button class="send-btn" onclick="sendFeedbackMessage()">
-                <svg fill="none" viewBox="0 0 24 24" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg">
+                <svg fill="none" viewBox="0 0 24 24" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg" stroke="#888">
                     <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" d="M7.39999 6.32003L15.89 3.49003C19.7 2.22003 21.77 4.30003 20.51 8.11003L17.68 16.6C15.78 22.31 12.66 22.31 10.76 16.6L9.91999 14.08L7.39999 13.24C1.68999 11.34 1.68999 8.23003 7.39999 6.32003Z"></path>
                     <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" d="M10.11 13.6501L13.69 10.0601"></path>
                 </svg>
