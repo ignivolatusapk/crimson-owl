@@ -206,6 +206,12 @@
         }
 
         /* Pricing Cards */
+        .pricing-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -279,6 +285,7 @@
             font-size: 14px;
             display: inline-block;
             width: 100%;
+            box-sizing: border-box;
         }
 
         .plan-btn-outline {
@@ -292,6 +299,7 @@
             font-size: 14px;
             display: inline-block;
             width: 100%;
+            box-sizing: border-box;
         }
 
         .stats-grid {
@@ -414,6 +422,7 @@
             .shops-grid { grid-template-columns: 1fr; }
             .pricing-grid { gap: 20px; }
             .plan-price { font-size: 32px; }
+            .plan-btn, .plan-btn-outline { font-size: 13px; padding: 10px 16px; }
         }
     </style>
 </head>
@@ -472,67 +481,6 @@
         </div>
     </div>
 
-    <h2 class="section-title">Pricing Plans</h2>
-    <p class="section-subtitle">Choose the plan that works for your business</p>
-
-    <div class="pricing-grid">
-        <div class="pricing-card">
-            <div class="plan-name">Monthly</div>
-            <div class="plan-price">1,500 ETB <small>/month</small></div>
-            <div class="plan-desc">Perfect for seasonal businesses</div>
-            <ul class="plan-features">
-                <li>✓ Your own website</li>
-                <li>✓ Product/Service listing</li>
-                <li>✓ Order management</li>
-                <li>✓ Customer support</li>
-                <li>✓ Cancel anytime</li>
-            </ul>
-            <a href="apply.html" class="plan-btn">Get Started</a>
-        </div>
-
-        <div class="pricing-card featured">
-            <div class="plan-name">Yearly</div>
-            <div class="plan-price">17,000 ETB <small>/year</small></div>
-            <div class="plan-desc">Save 1,000 ETB - Best value!</div>
-            <ul class="plan-features">
-                <li>✓ Everything in Monthly</li>
-                <li>✓ 2 months free!</li>
-                <li>✓ Priority support</li>
-                <li>✓ Free setup</li>
-                <li>✓ 24/7 monitoring</li>
-            </ul>
-            <a href="apply.html" class="plan-btn">Get Started</a>
-        </div>
-
-        <div class="pricing-card">
-            <div class="plan-name">Yearly + Domain</div>
-            <div class="plan-price">17,000 + Domain</div>
-            <div class="plan-desc">Your own custom domain name</div>
-            <ul class="plan-features">
-                <li>✓ Everything in Yearly</li>
-                <li>✓ Custom domain (yourbusiness.com)</li>
-                <li>✓ Professional email</li>
-                <li>✓ SEO optimization</li>
-                <li>✓ Domain management</li>
-            </ul>
-            <a href="apply.html" class="plan-btn">Get Started</a>
-        </div>
-
-        <div class="pricing-card">
-            <div class="plan-name">Custom Website</div>
-            <div class="plan-price">One-time</div>
-            <div class="plan-desc">Own it forever, no monthly fee</div>
-            <ul class="plan-features">
-                <li>✓ Fully custom design</li>
-                <li>✓ One-time payment</li>
-                <li>✓ Full ownership</li>
-                <li>✓ No monthly fees</li>
-                <li>✓ Contact for quote</li>
-            </ul>
-            <a href="mailto:ignivolatusapk@gmail.com?subject=Custom%20Website%20Inquiry" class="plan-btn-outline">Contact Us</a>
-        </div>
-    </div>
-
     <h2 class="section-title">Featured Businesses</h2>
     <p class="section-subtitle">Discover top businesses in Ethiopia</p>
 
@@ -540,6 +488,70 @@
 
     <div class="view-all">
         <a href="browse-shops.html" class="view-all-btn">View All Businesses →</a>
+    </div>
+
+    <!-- Pricing Plans at the Bottom -->
+    <div class="pricing-section">
+        <h2 class="section-title">Pricing Plans</h2>
+        <p class="section-subtitle">Choose the plan that works for your business</p>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="plan-name">Monthly</div>
+                <div class="plan-price">1,500 ETB <small>/month</small></div>
+                <div class="plan-desc">Perfect for seasonal businesses</div>
+                <ul class="plan-features">
+                    <li>✓ Your own website</li>
+                    <li>✓ Product/Service listing</li>
+                    <li>✓ Order management</li>
+                    <li>✓ Customer support</li>
+                    <li>✓ Cancel anytime</li>
+                </ul>
+                <a href="apply.html" class="plan-btn">Get Started</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="plan-name">Yearly</div>
+                <div class="plan-price">17,000 ETB <small>/year</small></div>
+                <div class="plan-desc">Save 1,000 ETB - Best value!</div>
+                <ul class="plan-features">
+                    <li>✓ Everything in Monthly</li>
+                    <li>✓ 2 months free!</li>
+                    <li>✓ Priority support</li>
+                    <li>✓ Free setup</li>
+                    <li>✓ 24/7 monitoring</li>
+                </ul>
+                <a href="apply.html" class="plan-btn">Get Started</a>
+            </div>
+
+            <div class="pricing-card">
+                <div class="plan-name">Yearly + Domain</div>
+                <div class="plan-price">17,000 + Domain</div>
+                <div class="plan-desc">Your own custom domain name</div>
+                <ul class="plan-features">
+                    <li>✓ Everything in Yearly</li>
+                    <li>✓ Custom domain (yourbusiness.com)</li>
+                    <li>✓ Professional email</li>
+                    <li>✓ SEO optimization</li>
+                    <li>✓ Domain management</li>
+                </ul>
+                <a href="apply.html" class="plan-btn">Get Started</a>
+            </div>
+
+            <div class="pricing-card">
+                <div class="plan-name">Custom Website</div>
+                <div class="plan-price">One-time</div>
+                <div class="plan-desc">Own it forever, no monthly fee</div>
+                <ul class="plan-features">
+                    <li>✓ Fully custom design</li>
+                    <li>✓ One-time payment</li>
+                    <li>✓ Full ownership</li>
+                    <li>✓ No monthly fees</li>
+                    <li>✓ Contact for quote</li>
+                </ul>
+                <a href="mailto:ignivolatusapk@gmail.com?subject=Custom%20Website%20Inquiry" class="plan-btn-outline">Contact Us</a>
+            </div>
+        </div>
     </div>
 </div>
 
