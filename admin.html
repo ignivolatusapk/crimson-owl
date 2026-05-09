@@ -47,7 +47,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 60px 20px;
         }
@@ -79,6 +79,7 @@
             color: white;
             font-size: 14px;
             margin-bottom: 16px;
+            font-family: inherit;
         }
 
         input:focus, select:focus, textarea:focus {
@@ -128,12 +129,6 @@
             color: #ff4444;
         }
 
-        .message.info {
-            background: rgba(139, 0, 0, 0.2);
-            border: 1px solid #8B0000;
-            color: #8B0000;
-        }
-
         .shop-item {
             background: #0a0a0a;
             padding: 16px;
@@ -155,6 +150,23 @@
             color: #888;
             font-size: 12px;
             margin: 0;
+            word-break: break-all;
+        }
+
+        .shop-logo-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #1a1a1a;
+        }
+
+        .delete-btn {
+            background: #ff4444;
+            color: white;
+            padding: 8px 16px;
+            font-size: 12px;
+            width: auto;
         }
 
         .form-row {
@@ -185,7 +197,7 @@
 
         .json-output {
             background: #0a0a0a;
-            padding: 16px;
+            padding: 20px;
             border-radius: 12px;
             margin: 16px 0;
             font-family: monospace;
@@ -205,6 +217,9 @@
             }
             .login-box, .admin-box {
                 padding: 24px;
+            }
+            .container {
+                padding: 30px 16px;
             }
         }
     </style>
@@ -247,48 +262,144 @@
     <!-- Admin Panel -->
     <div id="adminSection" style="display: none;">
         <div class="admin-box">
-            <h1>➕ Add New Shop</h1>
+            <h1>➕ Add New Business</h1>
             <p>Fill the form below, then copy the JSON to GitHub</p>
             
             <div id="adminMessage"></div>
             
             <div class="form-row">
-                <input type="text" id="shopName" placeholder="Shop Name *">
+                <input type="text" id="shopName" placeholder="Business Name *">
                 <select id="category">
-                    <option>Fashion & Clothing</option>
-                    <option>Food & Restaurant</option>
-                    <option>Electronics</option>
-                    <option>Handicrafts & Art</option>
-                    <option>Home & Living</option>
-                    <option>Beauty & Health</option>
+                    <optgroup label="🏨 Hospitality">
+                        <option>🏨 Hotel & Resort</option>
+                        <option>☕ Cafe & Coffee Shop</option>
+                        <option>🍽️ Restaurant & Dining</option>
+                        <option>🍺 Bar & Lounge</option>
+                    </optgroup>
+                    <optgroup label="✈️ Travel & Transportation">
+                        <option>✈️ Airline Company</option>
+                        <option>🚗 Travel Agency</option>
+                        <option>🚌 Bus & Transport</option>
+                        <option>🚕 Taxi & Ride Share</option>
+                        <option>🏖️ Tour Operator</option>
+                    </optgroup>
+                    <optgroup label="🏛️ Government & Public Services">
+                        <option>🏛️ Government Office</option>
+                        <option>📜 Embassy & Consulate</option>
+                        <option>🏥 Public Hospital</option>
+                        <option>📚 Public Library</option>
+                        <option>⚖️ Court & Legal Services</option>
+                    </optgroup>
+                    <optgroup label="💼 Private Companies">
+                        <option>💼 Corporate Company</option>
+                        <option>🏦 Bank & Financial</option>
+                        <option>📞 Telecom & Internet</option>
+                        <option>⚡ Energy & Utilities</option>
+                        <option>🏗️ Construction & Real Estate</option>
+                    </optgroup>
+                    <optgroup label="🛍️ Retail & Shopping">
+                        <option>👗 Fashion & Clothing</option>
+                        <option>📱 Electronics & Gadgets</option>
+                        <option>🛒 Supermarket & Grocery</option>
+                        <option>💍 Jewelry & Accessories</option>
+                        <option>📚 Bookstore & Stationery</option>
+                    </optgroup>
+                    <optgroup label="🏥 Health & Wellness">
+                        <option>🏥 Private Hospital & Clinic</option>
+                        <option>💊 Pharmacy & Drug Store</option>
+                        <option>🏋️ Gym & Fitness Center</option>
+                        <option>🧘 Spa & Wellness</option>
+                        <option>🦷 Dental Clinic</option>
+                    </optgroup>
+                    <optgroup label="🎓 Education & Training">
+                        <option>🏫 University & College</option>
+                        <option>📖 Private School</option>
+                        <option>💻 Training Center</option>
+                        <option>🎓 Online Learning</option>
+                    </optgroup>
+                    <optgroup label="🎨 Arts & Entertainment">
+                        <option>🎬 Cinema & Theater</option>
+                        <option>🖼️ Art Gallery</option>
+                        <option>🎵 Music Venue</option>
+                        <option>🎪 Event & Conference Center</option>
+                    </optgroup>
+                    <optgroup label="🔧 Services">
+                        <option>🔧 Repair & Maintenance</option>
+                        <option>💇 Salon & Barber</option>
+                        <option>📸 Photography Studio</option>
+                        <option>⚖️ Legal & Law Firm</option>
+                        <option>📊 Accounting & Consulting</option>
+                    </optgroup>
                 </select>
             </div>
             
-            <input type="text" id="shopUrl" placeholder="Shop URL * (e.g., https://shopname.com)">
+            <input type="text" id="shopUrl" placeholder="Website URL * (e.g., https://business.com)">
             
-            <div class="imgbb-helper">
-                📸 <strong>Upload shop logo to ImgBB:</strong><br>
-                1. Go to <a href="https://imgbb.com" target="_blank">imgbb.com</a><br>
-                2. Upload your logo → copy "Direct URL"<br>
-                3. Paste it below 👇
+            <div class="form-row">
+                <input type="text" id="phone" placeholder="Phone Number *">
+                <input type="email" id="email" placeholder="Email *">
             </div>
             
-            <input type="text" id="shopLogoUrl" placeholder="Paste ImgBB Direct URL here (optional)">
-            <textarea id="description" rows="3" placeholder="Shop Description *"></textarea>
+            <input type="text" id="address" placeholder="Physical Address *">
             
-            <button onclick="generateJSON()">🔧 Generate Shop JSON</button>
+            <div class="imgbb-helper">
+                📸 <strong>Upload images to ImgBB:</strong><br>
+                1. Go to <a href="https://imgbb.com" target="_blank">imgbb.com</a><br>
+                2. Upload store photo and logo<br>
+                3. Copy <strong>"Direct URL"</strong> for each<br>
+                4. Paste below
+            </div>
             
-            <div id="jsonOutput" style="display: none;">
+            <div class="form-row">
+                <input type="text" id="storePhoto" placeholder="Store Photo URL *">
+                <input type="text" id="logoUrl" placeholder="Logo URL (optional)">
+            </div>
+            
+            <div class="form-row">
+                <input type="number" id="rating" step="0.1" min="1" max="5" placeholder="Rating (1-5)">
+                <input type="number" id="reviews" placeholder="Number of Reviews">
+            </div>
+            
+            <textarea id="description" rows="2" placeholder="Short Description * (appears on shop card)"></textarea>
+            <textarea id="fullDescription" rows="4" placeholder="Full Description * (detailed about the business)"></textarea>
+            
+            <!-- Business Hours Section -->
+            <div style="background: #0a0a0a; padding: 16px; border-radius: 12px; margin: 16px 0;">
+                <p style="color: white; margin-bottom: 12px;">🕒 Business Hours</p>
+                <div class="form-row">
+                    <input type="text" id="mon" placeholder="Monday (e.g., 9:00 AM - 7:00 PM)">
+                    <input type="text" id="tue" placeholder="Tuesday">
+                </div>
+                <div class="form-row">
+                    <input type="text" id="wed" placeholder="Wednesday">
+                    <input type="text" id="thu" placeholder="Thursday">
+                </div>
+                <div class="form-row">
+                    <input type="text" id="fri" placeholder="Friday">
+                    <input type="text" id="sat" placeholder="Saturday">
+                </div>
+                <input type="text" id="sun" placeholder="Sunday">
+            </div>
+            
+            <!-- Gallery Photos -->
+            <div style="background: #0a0a0a; padding: 16px; border-radius: 12px; margin: 16px 0;">
+                <p style="color: white; margin-bottom: 12px;">📸 Gallery Photos (one URL per line)</p>
+                <textarea id="gallery" rows="3" placeholder="https://i.ibb.co/xxx/photo1.jpg&#10;https://i.ibb.co/xxx/photo2.jpg&#10;https://i.ibb.co/xxx/photo3.jpg"></textarea>
+            </div>
+            
+            <button onclick="generateJSON()">🔧 Generate Business JSON</button>
+            
+            <div id="jsonOutput" style="display: none; margin-top: 20px;">
                 <h3>📋 Copy this JSON to GitHub:</h3>
                 <div class="json-output" id="jsonCode"></div>
-                <button class="copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+                <button class="copy-btn" onclick="copyToClipboard()" style="background: #333; margin-top: 8px;">📋 Copy to Clipboard</button>
                 <div class="imgbb-helper" style="margin-top: 16px;">
                     📝 <strong>How to add to GitHub:</strong><br>
-                    1. Go to <strong>shops.json</strong> in your GitHub repository<br>
+                    1. Go to <strong>shops.json</strong> in your repository<br>
                     2. Click the pencil icon (Edit)<br>
-                    3. Paste the new shop inside the "shops" array<br>
-                    4. Click "Commit changes"<br>
-                    5. Website updates in 1-2 minutes!
+                    3. Add a comma after the previous shop's }<br>
+                    4. Paste the new JSON above<br>
+                    5. Click "Commit changes"
                 </div>
             </div>
             
@@ -333,13 +444,13 @@
         container.innerHTML = currentShops.map(shop => `
             <div class="shop-item">
                 <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
-                    ${shop.logoUrl && shop.logoUrl !== '' ? 
-                        `<img src="${shop.logoUrl}" style="width: 40px; height: 40px; border-radius: 8px; object-fit: cover;">` : 
-                        `<div style="width: 40px; height: 40px; border-radius: 8px; background: #1a1a1a; display: flex; align-items: center; justify-content: center;">🦉</div>`
+                    ${shop.storePhoto ? 
+                        `<img src="${shop.storePhoto}" class="shop-logo-preview" onerror="this.src=''">` : 
+                        `<div class="shop-logo-preview" style="display: flex; align-items: center; justify-content: center;">🏢</div>`
                     }
                     <div class="shop-info">
                         <h4>${shop.shopName}</h4>
-                        <p>${shop.shopUrl}</p>
+                        <p>${shop.category}</p>
                     </div>
                 </div>
             </div>
@@ -350,31 +461,65 @@
         const shopName = document.getElementById('shopName').value;
         const category = document.getElementById('category').value;
         const shopUrl = document.getElementById('shopUrl').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const address = document.getElementById('address').value;
+        const storePhoto = document.getElementById('storePhoto').value;
+        const logoUrl = document.getElementById('logoUrl').value;
         const description = document.getElementById('description').value;
-        const logoUrl = document.getElementById('shopLogoUrl').value;
+        const fullDescription = document.getElementById('fullDescription').value;
+        const rating = document.getElementById('rating').value;
+        const reviews = document.getElementById('reviews').value;
         
-        if (!shopName || !shopUrl || !description) {
-            document.getElementById('adminMessage').innerHTML = '<div class="message error">❌ Please fill all required fields</div>';
+        // Get hours
+        const hours = {
+            monday: document.getElementById('mon').value || "Closed",
+            tuesday: document.getElementById('tue').value || "Closed",
+            wednesday: document.getElementById('wed').value || "Closed",
+            thursday: document.getElementById('thu').value || "Closed",
+            friday: document.getElementById('fri').value || "Closed",
+            saturday: document.getElementById('sat').value || "Closed",
+            sunday: document.getElementById('sun').value || "Closed"
+        };
+        
+        // Get gallery (split by new line)
+        const galleryText = document.getElementById('gallery').value;
+        const gallery = galleryText ? galleryText.split('\n').filter(url => url.trim()) : [];
+        
+        if (!shopName || !category || !shopUrl || !phone || !email || !address || !storePhoto || !description || !fullDescription) {
+            document.getElementById('adminMessage').innerHTML = '<div class="message error">❌ Please fill all required fields (*)</div>';
             setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 3000);
             return;
         }
         
+        const newId = Date.now();
+        const today = new Date().toISOString().split('T')[0];
+        
         const newShop = {
-            id: Date.now(),
+            id: newId,
             shopName: shopName,
             category: category,
             description: description,
+            fullDescription: fullDescription,
             shopUrl: shopUrl,
-            logoUrl: logoUrl || '',
+            logoUrl: logoUrl || "",
+            storePhoto: storePhoto,
+            phone: phone,
+            email: email,
+            address: address,
+            hours: hours,
+            gallery: gallery,
+            rating: rating ? parseFloat(rating) : 4.5,
+            reviews: reviews ? parseInt(reviews) : 0,
             status: "active",
-            addedDate: new Date().toISOString().split('T')[0]
+            addedDate: today
         };
         
         const jsonString = JSON.stringify(newShop, null, 2);
         
-        document.getElementById('jsonCode').innerHTML = jsonString;
+        document.getElementById('jsonCode').innerText = jsonString;
         document.getElementById('jsonOutput').style.display = 'block';
-        document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ JSON generated! Copy it to GitHub shops.json</div>';
+        document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ JSON generated! Copy it to shops.json on GitHub.</div>';
         
         document.getElementById('jsonOutput').scrollIntoView({ behavior: 'smooth' });
     }
@@ -397,11 +542,10 @@
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         storedCode = code;
         
-        // Also show code in console for testing
         console.log('Verification code:', code);
         
         const formData = new FormData();
-        formData.append('_subject', '🔐 Crimson Owl - Admin Verification Code');
+        formData.append('_subject', 'Crimson Owl - Admin Verification Code');
         formData.append('Code', code);
         formData.append('Message', `Your verification code is: ${code}\n\nEnter this code to access the admin panel.\n\nThis code expires in 10 minutes.`);
         
@@ -415,7 +559,7 @@
             if (response.ok) {
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('verifySection').style.display = 'block';
-                document.getElementById('verifyMessage').innerHTML = '<div class="message success">✅ Code sent to ignivolatusapk@gmail.com! Check your inbox.</div>';
+                document.getElementById('verifyMessage').innerHTML = '<div class="message success">✅ Code sent to your email!</div>';
                 
                 setTimeout(() => {
                     storedCode = null;
@@ -424,10 +568,9 @@
                 throw new Error();
             }
         } catch (error) {
-            // Fallback - show code on screen
             document.getElementById('loginMessage').innerHTML = `
                 <div class="message info">
-                    📝 Email sending failed. Use this code: <strong style="font-size: 24px;">${code}</strong>
+                    📝 Use this code: <strong style="font-size: 24px;">${code}</strong>
                 </div>
             `;
             setTimeout(() => {
@@ -467,6 +610,8 @@
         storedCode = null;
         document.getElementById('adminSection').style.display = 'none';
         document.getElementById('loginSection').style.display = 'block';
+        document.getElementById('adminEmail').value = 'ignivolatusapk@gmail.com';
+        document.getElementById('jsonOutput').style.display = 'none';
     }
 </script>
 
