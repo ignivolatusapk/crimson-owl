@@ -140,22 +140,12 @@
             border-color: #8B0000;
         }
 
-        /* FIXED: Horizontal Scrolling Categories */
-        .category-wrapper {
-            position: relative;
-            margin-bottom: 24px;
-        }
-
         .category-filter {
             display: flex;
             gap: 10px;
             overflow-x: auto;
-            overflow-y: hidden;
-            padding: 8px 4px 20px 4px;
-            margin: 0 -4px;
+            padding: 8px 0 20px 0;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-            scrollbar-color: #8B0000 #333;
         }
 
         .category-filter::-webkit-scrollbar {
@@ -182,7 +172,6 @@
             font-size: 13px;
             white-space: nowrap;
             flex-shrink: 0;
-            transition: all 0.2s;
         }
 
         .filter-btn.active {
@@ -191,36 +180,18 @@
             border-color: #8B0000;
         }
 
-        .filter-btn:hover {
-            background: #333;
-        }
-
-        /* Scroll hint */
-        .scroll-hint {
-            text-align: center;
-            color: #666;
-            font-size: 11px;
-            margin-top: 4px;
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .scroll-hint {
-                display: block;
-            }
-        }
-
         .shops-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 24px;
         }
 
+        /* Updated Shop Card with Store Photo */
         .shop-card {
             background: #1a1a1a;
             border: 1px solid #333;
             border-radius: 20px;
-            padding: 24px;
+            overflow: hidden;
             cursor: pointer;
             transition: all 0.3s;
         }
@@ -230,17 +201,28 @@
             border-color: #8B0000;
         }
 
+        .shop-photo {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #0a0a0a;
+        }
+
+        .shop-info {
+            padding: 20px;
+        }
+
         .shop-header {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-bottom: 16px;
+            gap: 12px;
+            margin-bottom: 12px;
         }
 
         .shop-logo-img {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             object-fit: cover;
             background: #0a0a0a;
         }
@@ -261,7 +243,19 @@
             font-size: 13px;
             color: #aaa;
             line-height: 1.5;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
+        }
+
+        .shop-details-link {
+            color: #8B0000;
+            font-size: 13px;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .shop-details-link:hover {
+            text-decoration: underline;
         }
 
         .empty-state {
@@ -294,7 +288,6 @@
             .nav-links { display: none; }
             .menu-btn { display: block; }
             .page-header h1 { font-size: 24px; }
-            .category-filter { padding-bottom: 16px; }
         }
     </style>
 </head>
@@ -324,33 +317,21 @@
 <div class="container">
     <div class="page-header">
         <h1>All Businesses</h1>
-        <p>Browse companies, hotels, cafes, government services, and more in Ethiopia</p>
+        <p>Browse hotels, cafes, restaurants, shops and more in Ethiopia</p>
     </div>
 
     <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search businesses...">
 
-    <div class="category-wrapper">
-        <div class="category-filter" id="categoryFilter">
-            <button class="filter-btn active" data-category="all">All</button>
-            <button class="filter-btn" data-category="🏨 Hotel & Resort">🏨 Hotels</button>
-            <button class="filter-btn" data-category="☕ Cafe & Coffee Shop">☕ Cafes</button>
-            <button class="filter-btn" data-category="🍽️ Restaurant & Dining">🍽️ Restaurants</button>
-            <button class="filter-btn" data-category="✈️ Airline Company">✈️ Airlines</button>
-            <button class="filter-btn" data-category="🚗 Travel Agency">🚗 Travel</button>
-            <button class="filter-btn" data-category="🏛️ Government Office">🏛️ Government</button>
-            <button class="filter-btn" data-category="💼 Corporate Company">💼 Corporate</button>
-            <button class="filter-btn" data-category="🏦 Bank & Financial">🏦 Banks</button>
-            <button class="filter-btn" data-category="📞 Telecom & Internet">📞 Telecom</button>
-            <button class="filter-btn" data-category="🏥 Private Hospital & Clinic">🏥 Hospitals</button>
-            <button class="filter-btn" data-category="🏫 University & College">🏫 Universities</button>
-            <button class="filter-btn" data-category="🛒 Supermarket & Grocery">🛒 Supermarkets</button>
-            <button class="filter-btn" data-category="👗 Fashion & Clothing">👗 Fashion</button>
-            <button class="filter-btn" data-category="🏋️ Gym & Fitness Center">🏋️ Gyms</button>
-            <button class="filter-btn" data-category="💇 Salon & Barber">💇 Salons</button>
-            <button class="filter-btn" data-category="🔧 Repair & Maintenance">🔧 Repair</button>
-            <button class="filter-btn" data-category="📸 Photography Studio">📸 Photography</button>
-        </div>
-        <div class="scroll-hint">← swipe left to see more categories →</div>
+    <div class="category-filter" id="categoryFilter">
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="🏨 Hotel & Resort">🏨 Hotels</button>
+        <button class="filter-btn" data-category="☕ Cafe & Coffee Shop">☕ Cafes</button>
+        <button class="filter-btn" data-category="🍽️ Restaurant & Dining">🍽️ Restaurants</button>
+        <button class="filter-btn" data-category="Fashion & Clothing">👗 Fashion</button>
+        <button class="filter-btn" data-category="Electronics">📱 Electronics</button>
+        <button class="filter-btn" data-category="🏛️ Government Office">🏛️ Government</button>
+        <button class="filter-btn" data-category="💼 Corporate Company">💼 Corporate</button>
+        <button class="filter-btn" data-category="🏦 Bank & Financial">🏦 Banks</button>
     </div>
 
     <div id="shopsList">
@@ -363,22 +344,77 @@
 </div>
 
 <script>
-    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
+    // Complete businesses data with store photos
+    const businessesData = [
+        {
+            id: 1,
+            shopName: "Habesha Traditional Fashion",
+            category: "Fashion & Clothing",
+            description: "Beautiful traditional Ethiopian clothing, habesha kemis, and modern fusion wear.",
+            shopUrl: "#",
+            logoUrl: "",
+            storePhoto: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=400",
+            status: "active"
+        },
+        {
+            id: 2,
+            shopName: "Addis Coffee & Spice",
+            category: "Food & Restaurant",
+            description: "Fresh Ethiopian coffee beans, organic spices, and traditional coffee sets.",
+            shopUrl: "#",
+            logoUrl: "",
+            storePhoto: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400",
+            status: "active"
+        },
+        {
+            id: 3,
+            shopName: "Ethio Electronics",
+            category: "Electronics",
+            description: "Latest smartphones, laptops, and gadgets with warranty.",
+            shopUrl: "#",
+            logoUrl: "",
+            storePhoto: "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400",
+            status: "active"
+        },
+        {
+            id: 4,
+            shopName: "Sheraton Addis Hotel",
+            category: "Hotel & Resort",
+            description: "Luxury 5-star hotel in the heart of Addis Ababa with world-class amenities.",
+            shopUrl: "#",
+            logoUrl: "",
+            storePhoto: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
+            status: "active"
+        },
+        {
+            id: 5,
+            shopName: "Tomoca Coffee",
+            category: "Cafe & Coffee Shop",
+            description: "Famous Ethiopian coffee shop serving traditional coffee since 1953.",
+            shopUrl: "#",
+            logoUrl: "",
+            storePhoto: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400",
+            status: "active"
+        },
+        {
+            id: 6,
+            shopName: "Yod Abyssinia",
+            category: "Restaurant & Dining",
+            description: "Traditional Ethiopian restaurant with cultural shows and live music.",
+            shopUrl: "#",
+            logoUrl: "",
+            storePhoto: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400",
+            status: "active"
+        }
+    ];
+
     let shops = [];
     let currentCategory = 'all';
     let currentSearch = '';
 
-    async function loadShops() {
-        try {
-            const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
-            if (!response.ok) throw new Error();
-            const data = await response.json();
-            shops = data.shops.filter(s => s.status === 'active');
-            displayShops();
-        } catch (error) {
-            document.getElementById('shopsList').innerHTML = '<div class="empty-state"><p>⚠️ Unable to load businesses. Please check back later.</p></div>';
-            console.error('Error loading shops:', error);
-        }
+    function loadShops() {
+        shops = businessesData.filter(s => s.status === 'active');
+        displayShops();
     }
 
     function displayShops() {
@@ -399,30 +435,37 @@
         const container = document.getElementById('shopsList');
 
         if (filtered.length === 0) {
-            container.innerHTML = '<div class="empty-state"><p>✨ No businesses found</p><p style="font-size: 12px; margin-top: 8px;">Try a different category or search term</p></div>';
+            container.innerHTML = '<div class="empty-state"><p>✨ No businesses found</p></div>';
             return;
         }
 
         container.innerHTML = `
             <div class="shops-grid">
                 ${filtered.map(shop => `
-                    <div class="shop-card" onclick="window.open('${shop.shopUrl}', '_blank')">
-                        <div class="shop-header">
-                            ${shop.logoUrl && shop.logoUrl !== '' ?
-                                `<img src="${shop.logoUrl}" class="shop-logo-img" alt="${shop.shopName}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                                <div class="shop-logo-img" style="display: none; align-items: center; justify-content: center; font-size: 28px;">🏢</div>` :
-                                `<div class="shop-logo-img" style="display: flex; align-items: center; justify-content: center; font-size: 28px;">🏢</div>`
-                            }
-                            <div>
-                                <div class="shop-name">${shop.shopName}</div>
-                                <div class="shop-category">${shop.category}</div>
+                    <div class="shop-card" onclick="viewBusiness(${shop.id})">
+                        <img src="${shop.storePhoto || 'https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400'}" class="shop-photo" alt="${shop.shopName}" onerror="this.src='https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400'">
+                        <div class="shop-info">
+                            <div class="shop-header">
+                                ${shop.logoUrl && shop.logoUrl !== '' ? 
+                                    `<img src="${shop.logoUrl}" class="shop-logo-img" alt="${shop.shopName}">` : 
+                                    `<div class="shop-logo-img" style="display: flex; align-items: center; justify-content: center; font-size: 24px;">🏢</div>`
+                                }
+                                <div>
+                                    <div class="shop-name">${shop.shopName}</div>
+                                    <div class="shop-category">${shop.category}</div>
+                                </div>
                             </div>
+                            <div class="shop-desc">${shop.description.substring(0, 100)}${shop.description.length > 100 ? '...' : ''}</div>
+                            <span class="shop-details-link">View Details →</span>
                         </div>
-                        <div class="shop-desc">${shop.description.substring(0, 120)}${shop.description.length > 120 ? '...' : ''}</div>
                     </div>
                 `).join('')}
             </div>
         `;
+    }
+
+    function viewBusiness(id) {
+        window.location.href = `business-details.html?id=${id}`;
     }
 
     function filterShops() {
@@ -430,7 +473,6 @@
         displayShops();
     }
 
-    // Category filter setup
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -445,15 +487,6 @@
     function toggleMenu() {
         document.getElementById('mobileMenu').classList.toggle('show');
     }
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(e) {
-        const menu = document.getElementById('mobileMenu');
-        const menuBtn = document.querySelector('.menu-btn');
-        if (menu.classList.contains('show') && !menu.contains(e.target) && !menuBtn.contains(e.target)) {
-            menu.classList.remove('show');
-        }
-    });
 
     loadShops();
 </script>
