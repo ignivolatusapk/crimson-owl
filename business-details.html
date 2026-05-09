@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Details - Crimson Owl</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 16px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-logo img {
+            height: 36px;
+            width: auto;
+        }
+
+        .nav-logo span {
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #8B0000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Business Header */
+        .business-header {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 30px;
+        }
+
+        .business-logo-large {
+            width: 150px;
+            height: 150px;
+            border-radius: 20px;
+            object-fit: cover;
+            background: #1a1a1a;
+        }
+
+        .business-title h1 {
+            color: white;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .business-category {
+            display: inline-block;
+            background: rgba(139, 0, 0, 0.3);
+            color: #8B0000;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .business-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 4px;
+        }
+
+        .stars svg {
+            width: 20px;
+            height: 20px;
+            fill: #ffc73a;
+        }
+
+        .rating-text {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* Business Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .info-card h3 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card p {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(139, 0, 0, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .contact-value {
+            color: white;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .contact-value:hover {
+            color: #8B0000;
+        }
+
+        /* Business Hours */
+        .hours-list {
+            list-style: none;
+        }
+
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #aaa;
+        }
+
+        .hours-list li span:first-child {
+            color: white;
+        }
+
+        /* Map */
+        .map-container {
+            background: #1a1a1a;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 300px;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+        }
+
+        /* Photo Gallery */
+        .photo-gallery {
+            margin-bottom: 40px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Full Description */
+        .description-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+
+        .description-section h3 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .description-section p {
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 40px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .action-btn.website {
+            background: #8B0000;
+            color: white;
+            border: none;
+        }
+
+        .action-btn.website:hover {
+            background: #a00000;
+        }
+
+        .action-btn.call {
+            background: transparent;
+            border: 2px solid #8B0000;
+            color: white;
+        }
+
+        .action-btn.call:hover {
+            background: #8B0000;
+        }
+
+        .action-btn.direction {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .action-btn.direction:hover {
+            background: white;
+            color: black;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 32px 24px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            color: #666;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .business-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 20px;
+            }
+            
+            .business-logo-large {
+                margin: 0 auto;
+            }
+            
+            .business-rating {
+                justify-content: center;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .container {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <img src="images/logo.png" alt="Crimson Owl Logo">
+            <span>CRIMSON OWL</span>
+        </div>
+        <a href="javascript:history.back()" class="back-btn">← Back</a>
+    </div>
+</div>
+
+<div class="container" id="businessDetails">
+    <div style="text-align: center; padding: 60px; color: #aaa;">Loading business details...</div>
+</div>
+
+<div class="footer">
+    <p>© 2026 Crimson Owl | Ethiopian Business Directory</p>
+</div>
+
+<script>
+    // Get business ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const businessId = urlParams.get('id');
+    
+    // Sample business data with full details
+    const businessesData = {
+        1: {
+            id: 1,
+            name: "Habesha Traditional Fashion",
+            category: "Fashion & Clothing",
+            logo: "",
+            photos: [
+                "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=400",
+                "https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400",
+                "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400"
+            ],
+            description: "Habesha Traditional Fashion is Ethiopia's premier destination for authentic traditional clothing. We specialize in handcrafted habesha kemis, men's traditional suits, and modern fusion wear that celebrates Ethiopian heritage.",
+            fullDescription: "Founded in 2010, Habesha Traditional Fashion has grown from a small shop in Addis Ababa to a recognized brand known for quality and authenticity. Our garments are made by skilled artisans using traditional techniques passed down through generations. We offer custom tailoring services for weddings, holidays, and special occasions. Every piece is unique, featuring intricate embroidery and high-quality fabrics. Our mission is to preserve and promote Ethiopian traditional fashion while creating economic opportunities for local artisans.",
+            phone: "+251 911 234 567",
+            email: "info@habeshafashion.com",
+            website: "https://habesha-fashion.crimsonowl.com",
+            address: "Bole Road, near Edna Mall, Addis Ababa, Ethiopia",
+            hours: {
+                monday: "9:00 AM - 7:00 PM",
+                tuesday: "9:00 AM - 7:00 PM",
+                wednesday: "9:00 AM - 7:00 PM",
+                thursday: "9:00 AM - 7:00 PM",
+                friday: "9:00 AM - 7:00 PM",
+                saturday: "10:00 AM - 6:00 PM",
+                sunday: "Closed"
+            },
+            rating: 4.8,
+            reviews: 127,
+            location: {
+                lat: 9.0054,
+                lng: 38.7636
+            }
+        },
+        2: {
+            id: 2,
+            name: "Addis Coffee & Spice",
+            category: "Food & Restaurant",
+            logo: "",
+            photos: [
+                "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400",
+                "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400",
+                "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400"
+            ],
+            description: "Fresh Ethiopian coffee beans, organic spices, and traditional coffee sets. Direct from farmers to you.",
+            fullDescription: "Addis Coffee & Spice connects Ethiopian coffee farmers directly with coffee lovers around the world. We source the finest Yirgacheffe, Sidama, and Harrar coffee beans, roasted to perfection. Our spice collection includes authentic berbere, mitmita, and other traditional Ethiopian spices. We also sell traditional jebenas (coffee pots) and coffee ceremony sets. Our shop in Addis Ababa offers daily coffee tastings and cultural experiences.",
+            phone: "+251 922 345 678",
+            email: "hello@addiscoffee.com",
+            website: "https://addis-coffee.crimsonowl.com",
+            address: "Meskel Square, behind the flower shop, Addis Ababa, Ethiopia",
+            hours: {
+                monday: "8:00 AM - 8:00 PM",
+                tuesday: "8:00 AM - 8:00 PM",
+                wednesday: "8:00 AM - 8:00 PM",
+                thursday: "8:00 AM - 8:00 PM",
+                friday: "8:00 AM - 8:00 PM",
+                saturday: "9:00 AM - 7:00 PM",
+                sunday: "9:00 AM - 5:00 PM"
+            },
+            rating: 4.9,
+            reviews: 234,
+            location: {
+                lat: 9.0107,
+                lng: 38.7675
+            }
+        },
+        3: {
+            id: 3,
+            name: "Ethio Electronics",
+            category: "Electronics",
+            logo: "",
+            photos: [
+                "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400",
+                "https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=400",
+                "https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=400"
+            ],
+            description: "Latest smartphones, laptops, and gadgets with warranty. Best prices in Addis Ababa.",
+            fullDescription: "Ethio Electronics is your one-stop shop for all electronic needs in Ethiopia. We carry the latest smartphones from Samsung, iPhone, Xiaomi, and Tecno. Our laptop selection includes HP, Dell, Lenovo, and MacBook. All products come with official warranty and after-sales support. We also offer repair services for all electronic devices. Our knowledgeable staff helps you find the perfect device for your needs and budget.",
+            phone: "+251 933 456 789",
+            email: "support@ethioelectronics.com",
+            website: "https://ethio-electronics.crimsonowl.com",
+            address: "Megenagna, next to the square, Addis Ababa, Ethiopia",
+            hours: {
+                monday: "9:00 AM - 8:00 PM",
+                tuesday: "9:00 AM - 8:00 PM",
+                wednesday: "9:00 AM - 8:00 PM",
+                thursday: "9:00 AM - 8:00 PM",
+                friday: "9:00 AM - 8:00 PM",
+                saturday: "10:00 AM - 8:00 PM",
+                sunday: "10:00 AM - 6:00 PM"
+            },
+            rating: 4.6,
+            reviews: 89,
+            location: {
+                lat: 9.0303,
+                lng: 38.7925
+            }
+        }
+    };
+
+    function displayBusinessDetails() {
+        const business = businessesData[businessId];
+        
+        if (!business) {
+            document.getElementById('businessDetails').innerHTML = `
+                <div style="text-align: center; padding: 60px;">
+                    <p style="color: red;">Business not found</p>
+                    <a href="browse-shops.html" class="back-btn" style="display: inline-block; margin-top: 20px;">← Back to Shops</a>
+                </div>
+            `;
+            return;
+        }
+
+        // Generate star rating HTML
+        const fullStars = Math.floor(business.rating);
+        const hasHalfStar = business.rating % 1 >= 0.5;
+        let starsHtml = '';
+        for (let i = 0; i < fullStars; i++) {
+            starsHtml += `<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
+        }
+        if (hasHalfStar) {
+            starsHtml += `<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="url(#half)"/></svg>`;
+        }
+
+        // Generate hours HTML
+        const days = [
+            { key: 'monday', label: 'Monday' },
+            { key: 'tuesday', label: 'Tuesday' },
+            { key: 'wednesday', label: 'Wednesday' },
+            { key: 'thursday', label: 'Thursday' },
+            { key: 'friday', label: 'Friday' },
+            { key: 'saturday', label: 'Saturday' },
+            { key: 'sunday', label: 'Sunday' }
+        ];
+
+        const hoursHtml = days.map(day => `
+            <li>
+                <span>${day.label}</span>
+                <span>${business.hours[day.key] || 'Closed'}</span>
+            </li>
+        `).join('');
+
+        // Generate photo gallery HTML
+        const galleryHtml = business.photos && business.photos.length > 0 ? 
+            business.photos.map(photo => `
+                <div class="gallery-item" onclick="window.open('${photo}', '_blank')">
+                    <img src="${photo}" alt="${business.name}">
+                </div>
+            `).join('') : 
+            '<p style="color: #aaa; grid-column: 1/-1; text-align: center;">No photos available</p>';
+
+        const html = `
+            <div class="business-header">
+                <div>
+                    ${business.logo ? 
+                        `<img src="${business.logo}" class="business-logo-large" alt="${business.name}">` :
+                        `<div class="business-logo-large" style="display: flex; align-items: center; justify-content: center; font-size: 60px; background: #1a1a1a;">🏢</div>`
+                    }
+                </div>
+                <div class="business-title">
+                    <span class="business-category">${business.category}</span>
+                    <h1>${business.name}</h1>
+                    <div class="business-rating">
+                        <div class="stars">${starsHtml}</div>
+                        <span class="rating-text">${business.rating} (${business.reviews} reviews)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📞 Contact Information</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-info">
+                            <div class="contact-label">Phone</div>
+                            <a href="tel:${business.phone}" class="contact-value">${business.phone}</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-info">
+                            <div class="contact-label">Email</div>
+                            <a href="mailto:${business.email}" class="contact-value">${business.email}</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-info">
+                            <div class="contact-label">Address</div>
+                            <div class="contact-value">${business.address}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>🕒 Business Hours</h3>
+                    <ul class="hours-list">
+                        ${hoursHtml}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-card" style="margin-bottom: 24px;">
+                <h3>🗺️ Location Map</h3>
+                <div class="map-container">
+                    <div class="map-placeholder">
+                        <div style="font-size: 48px; margin-bottom: 16px;">📍</div>
+                        <div>${business.address}</div>
+                        <div style="font-size: 12px; margin-top: 16px;">Click "Get Directions" below for navigation</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="photo-gallery">
+                <h3 style="color: white; font-size: 18px;">📸 Photo Gallery</h3>
+                <div class="gallery-grid">
+                    ${galleryHtml}
+                </div>
+            </div>
+
+            <div class="description-section">
+                <h3>📖 About ${business.name}</h3>
+                <p>${business.fullDescription || business.description}</p>
+            </div>
+
+            <div class="action-buttons">
+                <a href="${business.website}" target="_blank" class="action-btn website">🌐 Visit Website</a>
+                <a href="tel:${business.phone}" class="action-btn call">📞 Call Now</a>
+                <a href="https://maps.google.com/?q=${encodeURIComponent(business.address)}" target="_blank" class="action-btn direction">🗺️ Get Directions</a>
+            </div>
+        `;
+
+        document.getElementById('businessDetails').innerHTML = html;
+    }
+
+    displayBusinessDetails();
+</script>
+
+</body>
+</html>
