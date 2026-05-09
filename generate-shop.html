@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Shop - Crimson Owl</title>
+    <title>Generate Shop Code - Crimson Owl</title>
     <style>
         * {
             margin: 0;
@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
@@ -71,6 +71,32 @@
             border-color: #8B0000;
         }
 
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .hours-group {
+            margin-top: 20px;
+            padding: 16px;
+            background: #0a0a0a;
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+
+        .hours-title {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
         button {
             background: #8B0000;
             color: white;
@@ -81,6 +107,7 @@
             font-size: 14px;
             cursor: pointer;
             width: 100%;
+            margin-top: 10px;
         }
 
         button:hover {
@@ -93,6 +120,8 @@
             border-radius: 12px;
             margin: 20px 0;
             border: 1px solid #333;
+            max-height: 400px;
+            overflow: auto;
         }
 
         .json-output pre {
@@ -142,110 +171,211 @@
             text-align: center;
         }
 
-        .category-group {
-            margin-bottom: 8px;
+        .gallery-item {
+            background: #0a0a0a;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .gallery-item input {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .remove-gallery {
+            background: #ff4444;
+            padding: 8px 16px;
+            width: auto;
+            margin-top: 0;
+        }
+
+        .add-gallery {
+            background: #333;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row, .form-row-3 {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .card {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="card">
-            <h1>➕ Add New Business/Shop</h1>
-            <p>Add any business - hotel, cafe, travel agency, government office, private company, restaurant, etc.</p>
+            <h1>➕ Generate Business Code</h1>
+            <p>Fill in all details to get the complete JSON code for your business</p>
 
             <div id="message"></div>
 
-            <div class="form-group">
-                <label>🏢 Business/Shop Name *</label>
-                <input type="text" id="shopName" placeholder="e.g., Sheraton Addis, Ethiopian Airlines, Tomoca Coffee">
+            <!-- Basic Info -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>🏢 Business Name *</label>
+                    <input type="text" id="shopName" placeholder="e.g., Tomoca Coffee">
+                </div>
+                <div class="form-group">
+                    <label>📂 Category *</label>
+                    <select id="category">
+                        <optgroup label="🏨 Hospitality">
+                            <option>🏨 Hotel & Resort</option>
+                            <option>☕ Cafe & Coffee Shop</option>
+                            <option>🍽️ Restaurant & Dining</option>
+                            <option>🍺 Bar & Lounge</option>
+                        </optgroup>
+                        <optgroup label="✈️ Travel & Transportation">
+                            <option>✈️ Airline Company</option>
+                            <option>🚗 Travel Agency</option>
+                            <option>🚌 Bus & Transport</option>
+                        </optgroup>
+                        <optgroup label="🏛️ Government & Public">
+                            <option>🏛️ Government Office</option>
+                            <option>📜 Embassy & Consulate</option>
+                            <option>🏥 Public Hospital</option>
+                        </optgroup>
+                        <optgroup label="💼 Private Companies">
+                            <option>💼 Corporate Company</option>
+                            <option>🏦 Bank & Financial</option>
+                            <option>📞 Telecom & Internet</option>
+                        </optgroup>
+                        <optgroup label="🛍️ Retail & Shopping">
+                            <option>👗 Fashion & Clothing</option>
+                            <option>📱 Electronics & Gadgets</option>
+                            <option>🛒 Supermarket & Grocery</option>
+                        </optgroup>
+                        <optgroup label="🏥 Health & Wellness">
+                            <option>🏥 Private Hospital & Clinic</option>
+                            <option>💊 Pharmacy & Drug Store</option>
+                            <option>🏋️ Gym & Fitness Center</option>
+                        </optgroup>
+                        <optgroup label="🎓 Education">
+                            <option>🏫 University & College</option>
+                            <option>📖 Private School</option>
+                            <option>💻 Training Center</option>
+                        </optgroup>
+                    </select>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>📂 Business Category *</label>
-                <select id="category">
-                    <optgroup label="🏨 Hospitality">
-                        <option>🏨 Hotel & Resort</option>
-                        <option>☕ Cafe & Coffee Shop</option>
-                        <option>🍽️ Restaurant & Dining</option>
-                        <option>🍺 Bar & Lounge</option>
-                        <option>🍕 Fast Food & Takeaway</option>
-                    </optgroup>
-                    <optgroup label="✈️ Travel & Transportation">
-                        <option>✈️ Airline Company</option>
-                        <option>🚗 Travel Agency</option>
-                        <option>🚌 Bus & Transport</option>
-                        <option>🚕 Taxi & Ride Share</option>
-                        <option>🏖️ Tour Operator</option>
-                    </optgroup>
-                    <optgroup label="🏛️ Government & Public Services">
-                        <option>🏛️ Government Office</option>
-                        <option>📜 Embassy & Consulate</option>
-                        <option>🏥 Public Hospital</option>
-                        <option>📚 Public Library</option>
-                        <option>⚖️ Court & Legal Services</option>
-                    </optgroup>
-                    <optgroup label="💼 Private Companies">
-                        <option>💼 Corporate Company</option>
-                        <option>🏦 Bank & Financial</option>
-                        <option>📞 Telecom & Internet</option>
-                        <option>⚡ Energy & Utilities</option>
-                        <option>🏗️ Construction & Real Estate</option>
-                    </optgroup>
-                    <optgroup label="🛍️ Retail & Shopping">
-                        <option>👗 Fashion & Clothing</option>
-                        <option>📱 Electronics & Gadgets</option>
-                        <option>🛒 Supermarket & Grocery</option>
-                        <option>💍 Jewelry & Accessories</option>
-                        <option>📚 Bookstore & Stationery</option>
-                    </optgroup>
-                    <optgroup label="🏥 Health & Wellness">
-                        <option>🏥 Private Hospital & Clinic</option>
-                        <option>💊 Pharmacy & Drug Store</option>
-                        <option>🏋️ Gym & Fitness Center</option>
-                        <option>🧘 Spa & Wellness</option>
-                        <option>🦷 Dental Clinic</option>
-                    </optgroup>
-                    <optgroup label="🎓 Education & Training">
-                        <option>🏫 University & College</option>
-                        <option>📖 Private School</option>
-                        <option>💻 Training Center</option>
-                        <option>🎓 Online Learning</option>
-                    </optgroup>
-                    <optgroup label="🎨 Arts & Entertainment">
-                        <option>🎬 Cinema & Theater</option>
-                        <option>🖼️ Art Gallery</option>
-                        <option>🎵 Music Venue</option>
-                        <option>🎪 Event & Conference Center</option>
-                    </optgroup>
-                    <optgroup label="🔧 Services">
-                        <option>🔧 Repair & Maintenance</option>
-                        <option>💇 Salon & Barber</option>
-                        <option>📸 Photography Studio</option>
-                        <option>⚖️ Legal & Law Firm</option>
-                        <option>📊 Accounting & Consulting</option>
-                    </optgroup>
-                </select>
+            <!-- Store Photo & Logo -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>📸 Store Photo URL *</label>
+                    <input type="text" id="storePhoto" placeholder="https://i.ibb.co/xxx/store-photo.jpg">
+                    <div class="helper" style="margin-top: 5px;">Upload to ImgBB and paste the Direct URL</div>
+                </div>
+                <div class="form-group">
+                    <label>🖼️ Logo URL (optional)</label>
+                    <input type="text" id="logoUrl" placeholder="https://i.ibb.co/xxx/logo.jpg">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>🔗 Business Website URL *</label>
-                <input type="text" id="shopUrl" placeholder="https://www.example.com">
-            </div>
-
-            <div class="form-group">
-                <label>🖼️ Logo Image URL (from ImgBB)</label>
-                <input type="text" id="logoUrl" placeholder="https://i.ibb.co/xxx/logo.jpg">
-                <div class="helper" style="margin-top: 8px;">
-                    📸 Get URL from <a href="https://imgbb.com" target="_blank">imgbb.com</a> → Upload business logo → Copy "Direct URL"
+            <!-- Contact Info -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>📞 Phone Number *</label>
+                    <input type="text" id="phone" placeholder="+251 911 234 567">
+                </div>
+                <div class="form-group">
+                    <label>✉️ Email *</label>
+                    <input type="email" id="email" placeholder="info@business.com">
                 </div>
             </div>
 
             <div class="form-group">
-                <label>📝 Business Description *</label>
-                <textarea id="description" rows="4" placeholder="Describe what this business does, what they offer, their products/services..."></textarea>
+                <label>📍 Address *</label>
+                <input type="text" id="address" placeholder="Bole Road, near Edna Mall, Addis Ababa">
             </div>
 
-            <button onclick="generateAndShow()">🔧 Generate Business Code</button>
+            <div class="form-group">
+                <label>🌐 Website URL *</label>
+                <input type="text" id="shopUrl" placeholder="https://www.business.com">
+            </div>
+
+            <!-- Business Hours -->
+            <div class="hours-group">
+                <div class="hours-title">🕒 Business Hours</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Monday</label>
+                        <input type="text" id="mon" placeholder="9:00 AM - 7:00 PM">
+                    </div>
+                    <div class="form-group">
+                        <label>Tuesday</label>
+                        <input type="text" id="tue" placeholder="9:00 AM - 7:00 PM">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Wednesday</label>
+                        <input type="text" id="wed" placeholder="9:00 AM - 7:00 PM">
+                    </div>
+                    <div class="form-group">
+                        <label>Thursday</label>
+                        <input type="text" id="thu" placeholder="9:00 AM - 7:00 PM">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Friday</label>
+                        <input type="text" id="fri" placeholder="9:00 AM - 7:00 PM">
+                    </div>
+                    <div class="form-group">
+                        <label>Saturday</label>
+                        <input type="text" id="sat" placeholder="10:00 AM - 6:00 PM">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Sunday</label>
+                    <input type="text" id="sun" placeholder="Closed">
+                </div>
+            </div>
+
+            <!-- Photo Gallery -->
+            <div class="hours-group">
+                <div class="hours-title">📸 Photo Gallery</div>
+                <div id="galleryContainer">
+                    <div class="gallery-item">
+                        <input type="text" class="gallery-url" placeholder="https://i.ibb.co/xxx/photo1.jpg">
+                        <button type="button" class="remove-gallery" onclick="removeGalleryItem(this)">✖</button>
+                    </div>
+                </div>
+                <button type="button" class="add-gallery" onclick="addGalleryItem()">+ Add Another Photo</button>
+                <div class="helper" style="margin-top: 10px;">Add multiple photos of your store, products, or services</div>
+            </div>
+
+            <!-- Descriptions -->
+            <div class="form-group">
+                <label>📝 Short Description *</label>
+                <textarea id="description" rows="2" placeholder="Brief description for the shop card..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>📖 Full Description *</label>
+                <textarea id="fullDescription" rows="5" placeholder="Detailed description about your business, history, products, services..."></textarea>
+            </div>
+
+            <!-- Rating (Optional) -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>⭐ Rating (1-5)</label>
+                    <input type="number" id="rating" step="0.1" min="1" max="5" placeholder="4.8">
+                </div>
+                <div class="form-group">
+                    <label>📊 Number of Reviews</label>
+                    <input type="number" id="reviews" placeholder="127">
+                </div>
+            </div>
+
+            <button onclick="generateJSON()">🔧 Generate Business JSON</button>
 
             <div id="result" style="display: none; margin-top: 24px;">
                 <hr>
@@ -256,90 +386,150 @@
                 <button class="copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
 
                 <div class="helper">
-                    <strong>📝 STEP-BY-STEP TO ADD TO GITHUB:</strong><br><br>
+                    <strong>📝 HOW TO ADD TO GITHUB:</strong><br><br>
                     1. Go to: <strong>https://github.com/ignivolatusapk/crimson-owl/blob/main/shops.json</strong><br>
                     2. Click the <strong>✏️ pencil icon</strong> (Edit)<br>
-                    3. Find the <strong>last business</strong> in the list<br>
-                    4. Add a <strong>comma ,</strong> after its closing <strong>}</strong><br>
-                    5. Press <strong>Enter</strong> to go to a new line<br>
-                    6. <strong>Paste</strong> the code above<br>
-                    7. Click <strong>"Commit changes"</strong><br>
-                    8. Wait <strong>1-2 minutes</strong> → Business appears on website!
+                    3. Find the last business, add a <strong>comma ,</strong> after its closing <strong>}</strong><br>
+                    4. <strong>Paste</strong> the new JSON<br>
+                    5. Click <strong>"Commit changes"</strong><br>
+                    6. Wait <strong>1-2 minutes</strong> → Business appears on website!
                 </div>
             </div>
         </div>
 
         <div class="card">
-            <h3 style="color: white; margin-bottom: 16px;">📋 Example businesses.json format</h3>
+            <h3 style="color: white; margin-bottom: 16px;">📋 Example shops.json format</h3>
             <div class="json-output">
                 <pre style="color: #ffaa00;">{
   "shops": [
     {
       "id": 1,
-      "shopName": "Sheraton Addis Hotel",
-      "category": "🏨 Hotel & Resort",
-      "description": "Luxury 5-star hotel in the heart of Addis Ababa...",
-      "shopUrl": "https://sheratonaddis.com",
-      "logoUrl": "",
+      "shopName": "Your Business Name",
+      "category": "☕ Cafe & Coffee Shop",
+      "description": "Short description...",
+      "fullDescription": "Detailed description...",
+      "shopUrl": "https://yourwebsite.com",
+      "logoUrl": "https://i.ibb.co/xxx/logo.jpg",
+      "storePhoto": "https://i.ibb.co/xxx/store.jpg",
+      "phone": "+251 911 234 567",
+      "email": "info@yourbusiness.com",
+      "address": "Your full address",
+      "hours": {
+        "monday": "9:00 AM - 7:00 PM",
+        "tuesday": "9:00 AM - 7:00 PM",
+        "wednesday": "9:00 AM - 7:00 PM",
+        "thursday": "9:00 AM - 7:00 PM",
+        "friday": "9:00 AM - 7:00 PM",
+        "saturday": "10:00 AM - 6:00 PM",
+        "sunday": "Closed"
+      },
+      "gallery": [
+        "https://i.ibb.co/xxx/photo1.jpg",
+        "https://i.ibb.co/xxx/photo2.jpg"
+      ],
+      "rating": 4.8,
+      "reviews": 127,
       "status": "active",
-      "addedDate": "2026-01-15"
-    }<span style="color: #0f0;">,  ← ADD COMMA HERE</span>
-    <span style="color: #0f0;">{
-      "id": 2,
-      "shopName": "Ethiopian Airlines",
-      "category": "✈️ Airline Company",
-      ...
-    }</span>
+      "addedDate": "2026-05-09"
+    }
   ]
 }</pre>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3 style="color: white; margin-bottom: 16px;">📋 Business Examples You Can Add</h3>
-            <div class="helper" style="margin-top: 0;">
-                <strong>🏨 Hotels:</strong> Sheraton, Hilton, Hyatt, Marriott, Jupiter, Ramada<br>
-                <strong>☕ Cafes:</strong> Tomoca, Kaldi's, Mokarara, Lime Tree, Mamma's Kitchen<br>
-                <strong>✈️ Travel:</strong> Ethiopian Airlines, Nile Travel, Abyssinia Tours, Sky Travel<br>
-                <strong>🏛️ Government:</strong> Ministry of Tourism, Ethiopian Passport Office, Customs Authority<br>
-                <strong>💼 Private:</strong> Dashen Bank, Ethio Telecom, Sheger FM, Heineken Ethiopia<br>
-                <strong>🍽️ Restaurants:</strong> Yod Abyssinia, 2000 Habesha, Sishu, Castelli, Makush Art Gallery<br>
-                <strong>🏥 Health:</strong> Kadisco Hospital, St. Paul's, Hayat Hospital, Clinics<br>
-                <strong>🎓 Education:</strong> Addis Ababa University, Unity University, Ethiopian Skylight
             </div>
         </div>
     </div>
 
     <script>
-        function generateAndShow() {
+        let galleryCount = 1;
+
+        function addGalleryItem() {
+            const container = document.getElementById('galleryContainer');
+            const newItem = document.createElement('div');
+            newItem.className = 'gallery-item';
+            newItem.innerHTML = `
+                <input type="text" class="gallery-url" placeholder="https://i.ibb.co/xxx/photo${galleryCount + 1}.jpg">
+                <button type="button" class="remove-gallery" onclick="removeGalleryItem(this)">✖</button>
+            `;
+            container.appendChild(newItem);
+            galleryCount++;
+        }
+
+        function removeGalleryItem(btn) {
+            const container = document.getElementById('galleryContainer');
+            if (container.children.length > 1) {
+                btn.parentElement.remove();
+                galleryCount--;
+            } else {
+                alert('At least one gallery photo is required');
+            }
+        }
+
+        function generateJSON() {
+            // Get all values
             const shopName = document.getElementById('shopName').value;
             const category = document.getElementById('category').value;
+            const storePhoto = document.getElementById('storePhoto').value;
+            const logoUrl = document.getElementById('logoUrl').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
             const shopUrl = document.getElementById('shopUrl').value;
             const description = document.getElementById('description').value;
-            const logoUrl = document.getElementById('logoUrl').value;
+            const fullDescription = document.getElementById('fullDescription').value;
+            const rating = document.getElementById('rating').value;
+            const reviews = document.getElementById('reviews').value;
 
-            if (!shopName || !shopUrl || !description) {
-                document.getElementById('message').innerHTML = '<div class="success" style="background: rgba(255,0,0,0.1); border-color: #ff4444; color: #ff4444;">❌ Please fill Business Name, URL, and Description</div>';
+            // Validate required fields
+            if (!shopName || !category || !storePhoto || !phone || !email || !address || !shopUrl || !description || !fullDescription) {
+                document.getElementById('message').innerHTML = '<div class="success" style="background: rgba(255,0,0,0.1); border-color: #ff4444; color: #ff4444;">❌ Please fill all required fields (*)</div>';
                 setTimeout(() => document.getElementById('message').innerHTML = '', 3000);
                 return;
             }
 
-            // Add https:// if missing
-            let finalUrl = shopUrl;
-            if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
-                finalUrl = 'https://' + finalUrl;
+            // Get hours
+            const hours = {
+                monday: document.getElementById('mon').value || "Closed",
+                tuesday: document.getElementById('tue').value || "Closed",
+                wednesday: document.getElementById('wed').value || "Closed",
+                thursday: document.getElementById('thu').value || "Closed",
+                friday: document.getElementById('fri').value || "Closed",
+                saturday: document.getElementById('sat').value || "Closed",
+                sunday: document.getElementById('sun').value || "Closed"
+            };
+
+            // Get gallery photos
+            const galleryInputs = document.querySelectorAll('.gallery-url');
+            const gallery = [];
+            galleryInputs.forEach(input => {
+                if (input.value.trim()) {
+                    gallery.push(input.value.trim());
+                }
+            });
+
+            // Add default placeholder if gallery empty
+            if (gallery.length === 0) {
+                gallery.push(storePhoto);
             }
 
             const newId = Date.now();
             const today = new Date().toISOString().split('T')[0];
 
+            // Build the business object
             const businessObject = {
                 id: newId,
                 shopName: shopName,
                 category: category,
                 description: description,
-                shopUrl: finalUrl,
-                logoUrl: logoUrl || '',
+                fullDescription: fullDescription,
+                shopUrl: shopUrl,
+                logoUrl: logoUrl || "",
+                storePhoto: storePhoto,
+                phone: phone,
+                email: email,
+                address: address,
+                hours: hours,
+                gallery: gallery,
+                rating: rating ? parseFloat(rating) : 4.5,
+                reviews: reviews ? parseInt(reviews) : 0,
                 status: "active",
                 addedDate: today
             };
