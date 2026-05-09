@@ -684,7 +684,7 @@
 </div>
 
 <div class="container">
-    <!-- Stats Cards - KEPT -->
+    <!-- Stats Cards -->
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-number" id="shopCount">--</div>
@@ -816,30 +816,34 @@
         </div>
     </div>
 
-    <!-- Black Feedback Section - Sends to your email -->
+    <!-- Black Feedback Section - Using Formspree -->
     <div class="feedback-section">
         <h3>📝 Send Feedback</h3>
-        <div class="feedback-grid">
-            <textarea placeholder="Your feedback..." class="feedback-textarea" id="feedbackText"></textarea>
-            <button class="feedback-btn" onclick="sendFeedback('happy')">
-                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 512 512" fill="#888">
-                    <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path>
-                </svg>
-            </button>
-            <button class="feedback-btn" onclick="sendFeedback('sad')">
-                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 512 512" fill="#888">
-                    <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM174.6 384.1c-4.5 12.5-18.2 18.9-30.7 14.4s-18.9-18.2-14.4-30.7C146.9 319.4 198.9 288 256 288s109.1 31.4 126.6 79.9c4.5 12.5-2 26.2-14.4 30.7s-26.2-2-30.7-14.4C328.2 358.5 297.2 336 256 336s-72.2 22.5-81.4 48.1zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path>
-                </svg>
-            </button>
-            <span></span>
-            <button class="send-btn" onclick="sendFeedbackMessage()">
-                <svg fill="none" viewBox="0 0 24 24" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg" stroke="#888">
-                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" d="M7.39999 6.32003L15.89 3.49003C19.7 2.22003 21.77 4.30003 20.51 8.11003L17.68 16.6C15.78 22.31 12.66 22.31 10.76 16.6L9.91999 14.08L7.39999 13.24C1.68999 11.34 1.68999 8.23003 7.39999 6.32003Z"></path>
-                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" d="M10.11 13.6501L13.69 10.0601"></path>
-                </svg>
-                Send
-            </button>
-        </div>
+        <form id="feedbackForm" action="https://formspree.io/f/mlgzlbak" method="POST">
+            <div class="feedback-grid">
+                <textarea name="message" placeholder="Your feedback..." class="feedback-textarea" id="feedbackText" required></textarea>
+                <button type="button" class="feedback-btn" onclick="setFeedback('happy')">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 512 512" fill="#888">
+                        <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path>
+                    </svg>
+                </button>
+                <button type="button" class="feedback-btn" onclick="setFeedback('sad')">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 512 512" fill="#888">
+                        <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM174.6 384.1c-4.5 12.5-18.2 18.9-30.7 14.4s-18.9-18.2-14.4-30.7C146.9 319.4 198.9 288 256 288s109.1 31.4 126.6 79.9c4.5 12.5-2 26.2-14.4 30.7s-26.2-2-30.7-14.4C328.2 358.5 297.2 336 256 336s-72.2 22.5-81.4 48.1zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path>
+                    </svg>
+                </button>
+                <span></span>
+                <button type="submit" class="send-btn">
+                    <svg fill="none" viewBox="0 0 24 24" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg" stroke="#888">
+                        <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" d="M7.39999 6.32003L15.89 3.49003C19.7 2.22003 21.77 4.30003 20.51 8.11003L17.68 16.6C15.78 22.31 12.66 22.31 10.76 16.6L9.91999 14.08L7.39999 13.24C1.68999 11.34 1.68999 8.23003 7.39999 6.32003Z"></path>
+                        <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" d="M10.11 13.6501L13.69 10.0601"></path>
+                    </svg>
+                    Send
+                </button>
+            </div>
+            <input type="hidden" name="_subject" value="Crimson Owl - New Feedback">
+            <input type="hidden" name="_to" value="ignivolatusapk@gmail.com">
+        </form>
     </div>
 
     <!-- Social Media Icons - Small at Bottom -->
@@ -916,7 +920,7 @@
         document.getElementById('mobileMenu').classList.toggle('show');
     }
 
-    function sendFeedback(type) {
+    function setFeedback(type) {
         const textarea = document.getElementById('feedbackText');
         if (type === 'happy') {
             textarea.value = '😊 I love this platform! ';
@@ -926,16 +930,16 @@
         textarea.focus();
     }
 
-    function sendFeedbackMessage() {
-        const feedback = document.getElementById('feedbackText').value;
-        if (feedback.trim()) {
-            window.location.href = `mailto:ignivolatusapk@gmail.com?subject=Crimson Owl Feedback&body=${encodeURIComponent(feedback)}`;
+    // Formspree will handle the form submission automatically
+    // Add success message on form submit
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+        // Form will submit to Formspree, which will send email to ignivolatusapk@gmail.com
+        // No need to prevent default - Formspree handles it
+        setTimeout(() => {
             alert('Thank you for your feedback!');
             document.getElementById('feedbackText').value = '';
-        } else {
-            alert('Please enter your feedback before sending.');
-        }
-    }
+        }, 100);
+    });
 
     loadShops();
 </script>
