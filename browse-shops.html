@@ -148,6 +148,7 @@
             -webkit-overflow-scrolling: touch;
             scrollbar-width: thin;
             scrollbar-color: #8B0000 #333;
+            flex-wrap: wrap;
         }
 
         .category-filter::-webkit-scrollbar {
@@ -173,7 +174,6 @@
             cursor: pointer;
             font-size: 13px;
             white-space: nowrap;
-            flex-shrink: 0;
             transition: all 0.2s;
         }
 
@@ -276,6 +276,22 @@
             font-weight: 500;
         }
 
+        .featured-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .shop-card {
+            position: relative;
+        }
+
         .shop-details-link {
             color: #8B0000;
             font-size: 13px;
@@ -338,6 +354,7 @@
             .shop-photo { height: 160px; }
             .shop-info { padding: 16px; }
             .shop-name { font-size: 16px; }
+            .category-filter { flex-wrap: nowrap; }
         }
     </style>
 </head>
@@ -372,24 +389,69 @@
 
     <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search businesses...">
 
+    <!-- ALL CATEGORIES - Now matching admin panel -->
     <div class="category-filter" id="categoryFilter">
         <button class="filter-btn active" data-category="all">All</button>
+        
+        <!-- 🏨 Hospitality -->
         <button class="filter-btn" data-category="🏨 Hotel & Resort">🏨 Hotels</button>
         <button class="filter-btn" data-category="☕ Cafe & Coffee Shop">☕ Cafes</button>
         <button class="filter-btn" data-category="🍽️ Restaurant & Dining">🍽️ Restaurants</button>
+        <button class="filter-btn" data-category="🍺 Bar & Lounge">🍺 Bars & Lounges</button>
+        
+        <!-- ✈️ Travel -->
         <button class="filter-btn" data-category="✈️ Airline Company">✈️ Airlines</button>
-        <button class="filter-btn" data-category="🚗 Travel Agency">🚗 Travel</button>
+        <button class="filter-btn" data-category="🚗 Travel Agency">🚗 Travel Agencies</button>
+        <button class="filter-btn" data-category="🚌 Bus & Transport">🚌 Bus & Transport</button>
+        <button class="filter-btn" data-category="🚕 Taxi & Ride Share">🚕 Taxi & Ride Share</button>
+        <button class="filter-btn" data-category="🏖️ Tour Operator">🏖️ Tour Operators</button>
+        
+        <!-- 🏛️ Government -->
         <button class="filter-btn" data-category="🏛️ Government Office">🏛️ Government</button>
-        <button class="filter-btn" data-category="💼 Corporate Company">💼 Corporate</button>
+        <button class="filter-btn" data-category="📜 Embassy & Consulate">📜 Embassies</button>
+        <button class="filter-btn" data-category="🏥 Public Hospital">🏥 Public Hospitals</button>
+        <button class="filter-btn" data-category="📚 Public Library">📚 Libraries</button>
+        <button class="filter-btn" data-category="⚖️ Court & Legal Services">⚖️ Courts</button>
+        
+        <!-- 💼 Private Companies -->
+        <button class="filter-btn" data-category="💼 Corporate Company">💼 Corporations</button>
         <button class="filter-btn" data-category="🏦 Bank & Financial">🏦 Banks</button>
         <button class="filter-btn" data-category="📞 Telecom & Internet">📞 Telecom</button>
-        <button class="filter-btn" data-category="🏥 Private Hospital & Clinic">🏥 Hospitals</button>
-        <button class="filter-btn" data-category="🏫 University & College">🏫 Universities</button>
-        <button class="filter-btn" data-category="🛒 Supermarket & Grocery">🛒 Supermarkets</button>
+        <button class="filter-btn" data-category="⚡ Energy & Utilities">⚡ Energy</button>
+        <button class="filter-btn" data-category="🏗️ Construction & Real Estate">🏗️ Construction</button>
+        
+        <!-- 🛍️ Retail -->
         <button class="filter-btn" data-category="👗 Fashion & Clothing">👗 Fashion</button>
+        <button class="filter-btn" data-category="📱 Electronics & Gadgets">📱 Electronics</button>
+        <button class="filter-btn" data-category="🛒 Supermarket & Grocery">🛒 Supermarkets</button>
+        <button class="filter-btn" data-category="💍 Jewelry & Accessories">💍 Jewelry</button>
+        <button class="filter-btn" data-category="📚 Bookstore & Stationery">📚 Bookstores</button>
+        
+        <!-- 🏥 Health -->
+        <button class="filter-btn" data-category="🏥 Private Hospital & Clinic">🏥 Private Hospitals</button>
+        <button class="filter-btn" data-category="💊 Pharmacy & Drug Store">💊 Pharmacies</button>
         <button class="filter-btn" data-category="🏋️ Gym & Fitness Center">🏋️ Gyms</button>
+        <button class="filter-btn" data-category="🧘 Spa & Wellness">🧘 Spas</button>
+        <button class="filter-btn" data-category="🦷 Dental Clinic">🦷 Dental Clinics</button>
+        
+        <!-- 🎓 Education -->
+        <button class="filter-btn" data-category="🏫 University & College">🏫 Universities</button>
+        <button class="filter-btn" data-category="📖 Private School">📖 Private Schools</button>
+        <button class="filter-btn" data-category="💻 Training Center">💻 Training Centers</button>
+        <button class="filter-btn" data-category="🎓 Online Learning">🎓 Online Learning</button>
+        
+        <!-- 🎨 Arts -->
+        <button class="filter-btn" data-category="🎬 Cinema & Theater">🎬 Cinemas</button>
+        <button class="filter-btn" data-category="🖼️ Art Gallery">🖼️ Art Galleries</button>
+        <button class="filter-btn" data-category="🎵 Music Venue">🎵 Music Venues</button>
+        <button class="filter-btn" data-category="🎪 Event & Conference Center">🎪 Event Centers</button>
+        
+        <!-- 🔧 Services -->
+        <button class="filter-btn" data-category="🔧 Repair & Maintenance">🔧 Repair</button>
         <button class="filter-btn" data-category="💇 Salon & Barber">💇 Salons</button>
         <button class="filter-btn" data-category="📸 Photography Studio">📸 Photography</button>
+        <button class="filter-btn" data-category="⚖️ Legal & Law Firm">⚖️ Law Firms</button>
+        <button class="filter-btn" data-category="📊 Accounting & Consulting">📊 Accounting</button>
     </div>
 
     <div id="shopsList">
@@ -475,6 +537,7 @@
             <div class="shops-grid">
                 ${filtered.map(shop => `
                     <div class="shop-card" onclick="viewBusiness(${shop.id})">
+                        ${shop.featured ? '<div class="featured-badge">⭐ FEATURED</div>' : ''}
                         <img src="${shop.storePhoto || 'https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400'}" 
                              class="shop-photo" 
                              alt="${shop.shopName}"
