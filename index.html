@@ -205,101 +205,235 @@
             margin-bottom: 48px;
         }
 
-        /* Pricing Cards */
-        .pricing-section {
-            margin-top: 60px;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        /* Premium Card from Uiverse */
+        .premium-card {
+            width: 200px;
+            height: 250px;
+            border-radius: 20px;
+            background: linear-gradient(170deg, rgba(58, 56, 56, 0.623) 0%, rgb(31, 31, 31) 100%);
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.55);
+            cursor: pointer;
+            transition: all .3s;
+            margin: 0 auto;
         }
 
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
+        .premium-card:hover {
+            transform: scale(0.9);
         }
 
-        .pricing-card {
+        .premium-card span {
+            position: absolute;
+            overflow: hidden;
+            width: 150px;
+            height: 150px;
+            top: -10px;
+            left: -10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .premium-card span::before {
+            content: 'Premium';
+            position: absolute;
+            width: 150%;
+            height: 40px;
+            background-image: linear-gradient(45deg, #ff6547 0%, #ffb144  51%, #ff7053  100%);
+            transform: rotate(-45deg) translateY(-20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.23);
+        }
+
+        .premium-card span::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            bottom: 0;
+            left: 0;
+            height: 10px;
+            z-index: -1;
+            box-shadow: 140px -140px #cc3f47;
+            background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+        }
+
+        /* Social Media Cards */
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: 0.5em;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .social-card {
+            width: 90px;
+            height: 90px;
+            outline: none;
+            border: none;
+            background: white;
+            border-radius: 90px 5px 5px 5px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+            transition: .2s ease-in-out;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-card:nth-child(2) { border-radius: 5px 90px 5px 5px; }
+        .social-card:nth-child(3) { border-radius: 5px 5px 5px 90px; }
+        .social-card:nth-child(4) { border-radius: 5px 5px 90px 5px; }
+
+        .social-card:hover { scale: 1.1; }
+        .social-card:hover .instagram { fill: white; }
+        .social-card:nth-child(1):hover { background-color: #cc39a4; }
+        .social-card:nth-child(2):hover { background-color: #03A9F4; }
+        .social-card:nth-child(3):hover { background-color: black; }
+        .social-card:nth-child(4):hover { background-color: #8c9eff; }
+
+        /* Blob Card */
+        .blob-card {
+            position: relative;
+            width: 190px;
+            height: 254px;
+            background: lightgrey;
+            box-shadow: #d11bff42 0 15px 40px -5px;
+            z-index: 1;
+            border-radius: 21px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .blob-card .blob {
+            position: absolute;
+            z-index: -1;
+            border-radius: 5em;
+            width: 200px;
+            height: 200px;
+        }
+
+        .blob-card .blob:nth-child(2) { left: -50px; top: -90px; background: #ff930f; }
+        .blob-card .blob:nth-child(3) { left: 110px; top: -20px; background: #bf0fff; }
+        .blob-card .blob:nth-child(4) { left: -40px; top: 100px; background: #ff1b6b; }
+        .blob-card .blob:nth-child(5) { left: 100px; top: 180px; background: #0061ff; }
+
+        .blob-content {
+            background: linear-gradient(rgba(255, 255, 255, 0.473), rgba(150, 150, 150, 0.25));
+            backdrop-filter: blur(20px);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 21px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Rating Stars */
+        .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 0.3rem;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .rating svg {
+            width: 2rem;
+            height: 2rem;
+            cursor: pointer;
+        }
+
+        /* Feedback Section */
+        .feedback-section {
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
             padding: 32px;
-            text-align: center;
+            margin-top: 60px;
+        }
+
+        .feedback-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.5rem;
+            background: white;
+            border-radius: 1rem;
+            padding: 0.5rem;
+        }
+
+        .feedback-textarea {
+            grid-column: span 6;
+            background: #f1f5f9;
+            color: #1e293b;
+            height: 7rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            resize: none;
+            outline: none;
+        }
+
+        .feedback-textarea:focus { border-color: #8B0000; }
+
+        .feedback-btn {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             transition: all 0.3s;
         }
 
-        .pricing-card:hover {
-            transform: translateY(-5px);
-            border-color: #8B0000;
+        .feedback-btn:hover { border-color: #8B0000; background: #8B0000; }
+        .feedback-btn:hover svg { fill: white; }
+
+        .send-btn {
+            grid-column: span 2;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            align-items: center;
         }
 
-        .pricing-card.featured {
-            border: 2px solid #8B0000;
-            background: rgba(139, 0, 0, 0.1);
-        }
-
-        .plan-name {
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 16px;
-        }
-
-        .plan-price {
-            font-size: 42px;
-            font-weight: 800;
-            color: #8B0000;
-            margin-bottom: 8px;
-        }
-
-        .plan-price small {
-            font-size: 14px;
-            color: #aaa;
-        }
-
-        .plan-desc {
-            color: #aaa;
-            font-size: 14px;
-            margin-bottom: 24px;
-        }
-
-        .plan-features {
-            list-style: none;
-            margin-bottom: 32px;
-        }
-
-        .plan-features li {
-            color: #ccc;
-            font-size: 13px;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .plan-btn {
-            background: #8B0000;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 40px;
-            text-decoration: none;
+        /* Loading Animation */
+        .loader-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.2rem;
+            font-size: 1.6em;
             font-weight: 600;
-            font-size: 14px;
-            display: inline-block;
-            width: 100%;
-            box-sizing: border-box;
+            color: white;
+            padding: 40px;
         }
 
-        .plan-btn-outline {
-            background: transparent;
-            border: 2px solid #8B0000;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            display: inline-block;
-            width: 100%;
-            box-sizing: border-box;
+        .loader-letter {
+            animation: loaderAnim 4s infinite linear;
+        }
+
+        @keyframes loaderAnim {
+            0%, 100% { opacity: 0.2; transform: translateY(0); }
+            20% { opacity: 1; transform: scale(1.15); text-shadow: 0 0 4px #fff; }
+            40% { opacity: 0.5; transform: translateY(0); }
         }
 
         .stats-grid {
@@ -412,7 +546,6 @@
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 32px; }
-            .hero-logo img { width: 80px; height: 80px; }
             .section-title { font-size: 26px; }
             .stats-grid { gap: 15px; }
             .stat-number { font-size: 28px; }
@@ -420,9 +553,8 @@
             .menu-btn { display: block; }
             .container { padding: 40px 16px; }
             .shops-grid { grid-template-columns: 1fr; }
-            .pricing-grid { gap: 20px; }
-            .plan-price { font-size: 32px; }
-            .plan-btn, .plan-btn-outline { font-size: 13px; padding: 10px 16px; }
+            .feedback-grid { grid-template-columns: 1fr; }
+            .feedback-btn, .send-btn { grid-column: span 1; }
         }
     </style>
 </head>
@@ -481,6 +613,86 @@
         </div>
     </div>
 
+    <!-- Premium Card Display -->
+    <div style="display: flex; justify-content: center; margin-bottom: 60px;">
+        <div class="premium-card">
+            <span></span>
+        </div>
+    </div>
+
+    <!-- Social Media Cards -->
+    <div class="social-grid">
+        <div class="social-card">
+            <svg class="instagram" height="28" width="28" viewBox="0 0 24 24" fill="#cc39a4">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.053.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/>
+                <path d="M12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
+                <circle cx="18.406" cy="5.594" r="1.44"/>
+            </svg>
+        </div>
+        <div class="social-card">
+            <svg class="twitter" height="28" width="28" viewBox="0 0 24 24" fill="#03A9F4">
+                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 0021.913-5.466c.299-.777.526-1.582.67-2.403.024-.13.048-.261.07-.393a4.96 4.96 0 002.03-1.35z"/>
+            </svg>
+        </div>
+        <div class="social-card">
+            <svg class="github" height="28" width="28" viewBox="0 0 24 24" fill="black">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+        </div>
+        <div class="social-card">
+            <svg class="discord" height="28" width="28" viewBox="0 0 24 24" fill="#8c9eff">
+                <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.356 0c-.164-.386-.398-.875-.608-1.25a.077.077 0 00-.079-.037 19.75 19.75 0 00-4.885 1.515.069.069 0 00-.032.027C2.04 7.848 1.244 13.28 1.636 18.633a.082.082 0 00.036.055 19.901 19.901 0 005.856 2.95.077.077 0 00.082-.028c.451-.613.854-1.26 1.198-1.943a.076.076 0 00-.042-.106 13.193 13.193 0 01-1.848-.879.076.076 0 01-.037-.1c.124-.19.25-.384.382-.58a.075.075 0 01.088-.03c3.85 1.755 8.026 1.755 11.824 0a.075.075 0 01.089.03c.132.196.258.39.382.58a.076.076 0 01-.037.1 13.193 13.193 0 01-1.848.879.075.075 0 00-.042.106c.344.683.747 1.33 1.198 1.943a.077.077 0 00.082.028 19.901 19.901 0 005.856-2.95.073.073 0 00.036-.055c.466-5.996-.778-11.383-3.265-16.236a.073.073 0 00-.032-.027zM8.3 15.862c-1.132 0-2.058-1.04-2.058-2.318 0-1.278.926-2.317 2.058-2.317 1.132 0 2.058 1.04 2.058 2.317 0 1.278-.926 2.318-2.058 2.318zm7.4 0c-1.132 0-2.058-1.04-2.058-2.318 0-1.278.926-2.317 2.058-2.317 1.132 0 2.058 1.04 2.058 2.317 0 1.278-.926 2.318-2.058 2.318z"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Blob Card -->
+    <div style="display: flex; justify-content: center; margin-bottom: 60px;">
+        <div class="blob-card">
+            <div class="blob"></div>
+            <div class="blob"></div>
+            <div class="blob"></div>
+            <div class="blob"></div>
+            <div class="blob-content">
+                <span>Crimson Owl</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating Stars -->
+    <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5" style="display: none;">
+        <label for="star5">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+        </label>
+        <input type="radio" id="star4" name="rating" value="4" style="display: none;">
+        <label for="star4">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+        </label>
+        <input type="radio" id="star3" name="rating" value="3" style="display: none;">
+        <label for="star3">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+        </label>
+        <input type="radio" id="star2" name="rating" value="2" style="display: none;">
+        <label for="star2">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+        </label>
+        <input type="radio" id="star1" name="rating" value="1" style="display: none;">
+        <label for="star1">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+        </label>
+    </div>
+
     <h2 class="section-title">Featured Businesses</h2>
     <p class="section-subtitle">Discover top businesses in Ethiopia</p>
 
@@ -490,67 +702,43 @@
         <a href="browse-shops.html" class="view-all-btn">View All Businesses →</a>
     </div>
 
-    <!-- Pricing Plans at the Bottom -->
-    <div class="pricing-section">
-        <h2 class="section-title">Pricing Plans</h2>
-        <p class="section-subtitle">Choose the plan that works for your business</p>
+    <!-- Loading Animation -->
+    <div class="loader-wrapper" id="loadingIndicator" style="display: none;">
+        <span class="loader-letter">L</span>
+        <span class="loader-letter">o</span>
+        <span class="loader-letter">a</span>
+        <span class="loader-letter">d</span>
+        <span class="loader-letter">i</span>
+        <span class="loader-letter">n</span>
+        <span class="loader-letter">g</span>
+        <span class="loader-letter">.</span>
+        <span class="loader-letter">.</span>
+        <span class="loader-letter">.</span>
+    </div>
 
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <div class="plan-name">Monthly</div>
-                <div class="plan-price">1,500 ETB <small>/month</small></div>
-                <div class="plan-desc">Perfect for seasonal businesses</div>
-                <ul class="plan-features">
-                    <li>✓ Your own website</li>
-                    <li>✓ Product/Service listing</li>
-                    <li>✓ Order management</li>
-                    <li>✓ Customer support</li>
-                    <li>✓ Cancel anytime</li>
-                </ul>
-                <a href="apply.html" class="plan-btn">Get Started</a>
-            </div>
-
-            <div class="pricing-card featured">
-                <div class="plan-name">Yearly</div>
-                <div class="plan-price">17,000 ETB <small>/year</small></div>
-                <div class="plan-desc">Save 1,000 ETB - Best value!</div>
-                <ul class="plan-features">
-                    <li>✓ Everything in Monthly</li>
-                    <li>✓ 2 months free!</li>
-                    <li>✓ Priority support</li>
-                    <li>✓ Free setup</li>
-                    <li>✓ 24/7 monitoring</li>
-                </ul>
-                <a href="apply.html" class="plan-btn">Get Started</a>
-            </div>
-
-            <div class="pricing-card">
-                <div class="plan-name">Yearly + Domain</div>
-                <div class="plan-price">17,000 + Domain</div>
-                <div class="plan-desc">Your own custom domain name</div>
-                <ul class="plan-features">
-                    <li>✓ Everything in Yearly</li>
-                    <li>✓ Custom domain (yourbusiness.com)</li>
-                    <li>✓ Professional email</li>
-                    <li>✓ SEO optimization</li>
-                    <li>✓ Domain management</li>
-                </ul>
-                <a href="apply.html" class="plan-btn">Get Started</a>
-            </div>
-
-            <div class="pricing-card">
-                <div class="plan-name">Custom Website</div>
-                <div class="plan-price">One-time</div>
-                <div class="plan-desc">Own it forever, no monthly fee</div>
-                <ul class="plan-features">
-                    <li>✓ Fully custom design</li>
-                    <li>✓ One-time payment</li>
-                    <li>✓ Full ownership</li>
-                    <li>✓ No monthly fees</li>
-                    <li>✓ Contact for quote</li>
-                </ul>
-                <a href="mailto:ignivolatusapk@gmail.com?subject=Custom%20Website%20Inquiry" class="plan-btn-outline">Contact Us</a>
-            </div>
+    <!-- Feedback Section -->
+    <div class="feedback-section">
+        <h3 style="color: white; text-align: center; margin-bottom: 20px;">Send Feedback</h3>
+        <div class="feedback-grid">
+            <textarea placeholder="Your feedback..." class="feedback-textarea" id="feedbackText"></textarea>
+            <button class="feedback-btn" onclick="sendFeedback('happy')">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 512 512" fill="#64748b">
+                    <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path>
+                </svg>
+            </button>
+            <button class="feedback-btn" onclick="sendFeedback('sad')">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 512 512" fill="#64748b">
+                    <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM174.6 384.1c-4.5 12.5-18.2 18.9-30.7 14.4s-18.9-18.2-14.4-30.7C146.9 319.4 198.9 288 256 288s109.1 31.4 126.6 79.9c4.5 12.5-2 26.2-14.4 30.7s-26.2-2-30.7-14.4C328.2 358.5 297.2 336 256 336s-72.2 22.5-81.4 48.1zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path>
+                </svg>
+            </button>
+            <span></span>
+            <button class="send-btn" onclick="sendFeedbackMessage()">
+                <svg fill="none" viewBox="0 0 24 24" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" d="M7.39999 6.32003L15.89 3.49003C19.7 2.22003 21.77 4.30003 20.51 8.11003L17.68 16.6C15.78 22.31 12.66 22.31 10.76 16.6L9.91999 14.08L7.39999 13.24C1.68999 11.34 1.68999 8.23003 7.39999 6.32003Z"></path>
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" d="M10.11 13.6501L13.69 10.0601"></path>
+                </svg>
+                Send
+            </button>
         </div>
     </div>
 </div>
@@ -604,6 +792,27 @@
 
     function toggleMenu() {
         document.getElementById('mobileMenu').classList.toggle('show');
+    }
+
+    function sendFeedback(type) {
+        const textarea = document.getElementById('feedbackText');
+        if (type === 'happy') {
+            textarea.value = '😊 I love this platform! ';
+        } else {
+            textarea.value = '😔 I have a suggestion: ';
+        }
+        textarea.focus();
+    }
+
+    function sendFeedbackMessage() {
+        const feedback = document.getElementById('feedbackText').value;
+        if (feedback.trim()) {
+            window.location.href = `mailto:ignivolatusapk@gmail.com?subject=Crimson Owl Feedback&body=${encodeURIComponent(feedback)}`;
+            alert('Thank you for your feedback!');
+            document.getElementById('feedbackText').value = '';
+        } else {
+            alert('Please enter your feedback before sending.');
+        }
     }
 
     loadShops();
