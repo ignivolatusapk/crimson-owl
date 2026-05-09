@@ -146,6 +146,8 @@
             overflow-x: auto;
             padding: 8px 0 20px 0;
             -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #8B0000 #333;
         }
 
         .category-filter::-webkit-scrollbar {
@@ -172,6 +174,7 @@
             font-size: 13px;
             white-space: nowrap;
             flex-shrink: 0;
+            transition: all 0.2s;
         }
 
         .filter-btn.active {
@@ -180,13 +183,16 @@
             border-color: #8B0000;
         }
 
+        .filter-btn:hover {
+            background: #333;
+        }
+
         .shops-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 24px;
         }
 
-        /* Updated Shop Card with Store Photo */
         .shop-card {
             background: #1a1a1a;
             border: 1px solid #333;
@@ -246,12 +252,37 @@
             margin-bottom: 12px;
         }
 
+        .shop-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .stars svg {
+            width: 14px;
+            height: 14px;
+            fill: #ffc73a;
+        }
+
+        .rating-value {
+            color: #ffc73a;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
         .shop-details-link {
             color: #8B0000;
             font-size: 13px;
             text-decoration: none;
             font-weight: 500;
             display: inline-block;
+            margin-top: 10px;
         }
 
         .shop-details-link:hover {
@@ -267,6 +298,16 @@
 
         .empty-state p {
             color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .empty-state .btn-primary {
+            background: #8B0000;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .footer {
@@ -282,12 +323,21 @@
             font-size: 12px;
         }
 
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #aaa;
+        }
+
         @media (max-width: 768px) {
             .container { padding: 20px 16px; }
             .shops-grid { grid-template-columns: 1fr; gap: 16px; }
             .nav-links { display: none; }
             .menu-btn { display: block; }
             .page-header h1 { font-size: 24px; }
+            .shop-photo { height: 160px; }
+            .shop-info { padding: 16px; }
+            .shop-name { font-size: 16px; }
         }
     </style>
 </head>
@@ -327,15 +377,23 @@
         <button class="filter-btn" data-category="🏨 Hotel & Resort">🏨 Hotels</button>
         <button class="filter-btn" data-category="☕ Cafe & Coffee Shop">☕ Cafes</button>
         <button class="filter-btn" data-category="🍽️ Restaurant & Dining">🍽️ Restaurants</button>
-        <button class="filter-btn" data-category="Fashion & Clothing">👗 Fashion</button>
-        <button class="filter-btn" data-category="Electronics">📱 Electronics</button>
+        <button class="filter-btn" data-category="✈️ Airline Company">✈️ Airlines</button>
+        <button class="filter-btn" data-category="🚗 Travel Agency">🚗 Travel</button>
         <button class="filter-btn" data-category="🏛️ Government Office">🏛️ Government</button>
         <button class="filter-btn" data-category="💼 Corporate Company">💼 Corporate</button>
         <button class="filter-btn" data-category="🏦 Bank & Financial">🏦 Banks</button>
+        <button class="filter-btn" data-category="📞 Telecom & Internet">📞 Telecom</button>
+        <button class="filter-btn" data-category="🏥 Private Hospital & Clinic">🏥 Hospitals</button>
+        <button class="filter-btn" data-category="🏫 University & College">🏫 Universities</button>
+        <button class="filter-btn" data-category="🛒 Supermarket & Grocery">🛒 Supermarkets</button>
+        <button class="filter-btn" data-category="👗 Fashion & Clothing">👗 Fashion</button>
+        <button class="filter-btn" data-category="🏋️ Gym & Fitness Center">🏋️ Gyms</button>
+        <button class="filter-btn" data-category="💇 Salon & Barber">💇 Salons</button>
+        <button class="filter-btn" data-category="📸 Photography Studio">📸 Photography</button>
     </div>
 
     <div id="shopsList">
-        <div style="text-align: center; padding: 40px; color: #aaa;">Loading businesses...</div>
+        <div class="loading">Loading businesses...</div>
     </div>
 </div>
 
@@ -344,77 +402,46 @@
 </div>
 
 <script>
-    // Complete businesses data with store photos
-    const businessesData = [
-        {
-            id: 1,
-            shopName: "Habesha Traditional Fashion",
-            category: "Fashion & Clothing",
-            description: "Beautiful traditional Ethiopian clothing, habesha kemis, and modern fusion wear.",
-            shopUrl: "#",
-            logoUrl: "",
-            storePhoto: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=400",
-            status: "active"
-        },
-        {
-            id: 2,
-            shopName: "Addis Coffee & Spice",
-            category: "Food & Restaurant",
-            description: "Fresh Ethiopian coffee beans, organic spices, and traditional coffee sets.",
-            shopUrl: "#",
-            logoUrl: "",
-            storePhoto: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400",
-            status: "active"
-        },
-        {
-            id: 3,
-            shopName: "Ethio Electronics",
-            category: "Electronics",
-            description: "Latest smartphones, laptops, and gadgets with warranty.",
-            shopUrl: "#",
-            logoUrl: "",
-            storePhoto: "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400",
-            status: "active"
-        },
-        {
-            id: 4,
-            shopName: "Sheraton Addis Hotel",
-            category: "Hotel & Resort",
-            description: "Luxury 5-star hotel in the heart of Addis Ababa with world-class amenities.",
-            shopUrl: "#",
-            logoUrl: "",
-            storePhoto: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
-            status: "active"
-        },
-        {
-            id: 5,
-            shopName: "Tomoca Coffee",
-            category: "Cafe & Coffee Shop",
-            description: "Famous Ethiopian coffee shop serving traditional coffee since 1953.",
-            shopUrl: "#",
-            logoUrl: "",
-            storePhoto: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400",
-            status: "active"
-        },
-        {
-            id: 6,
-            shopName: "Yod Abyssinia",
-            category: "Restaurant & Dining",
-            description: "Traditional Ethiopian restaurant with cultural shows and live music.",
-            shopUrl: "#",
-            logoUrl: "",
-            storePhoto: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400",
-            status: "active"
-        }
-    ];
-
+    // GitHub RAW URL - Loads your shops.json
+    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
+    
     let shops = [];
     let currentCategory = 'all';
     let currentSearch = '';
 
-    function loadShops() {
-        shops = businessesData.filter(s => s.status === 'active');
-        displayShops();
+    // Helper function to generate star rating HTML
+    function getStarRating(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 >= 0.5;
+        let stars = '';
+        for (let i = 0; i < fullStars; i++) {
+            stars += `<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
+        }
+        if (hasHalfStar) {
+            stars += `<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
+        }
+        for (let i = stars.length / 24; i < 5; i++) {
+            stars += `<svg viewBox="0 0 24 24" fill="none" stroke="#555"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
+        }
+        return stars;
+    }
+
+    async function loadShops() {
+        try {
+            const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
+            if (!response.ok) throw new Error('Failed to load');
+            const data = await response.json();
+            shops = data.shops.filter(s => s.status === 'active');
+            displayShops();
+        } catch (error) {
+            console.error('Error loading shops:', error);
+            document.getElementById('shopsList').innerHTML = `
+                <div class="empty-state">
+                    <p>⚠️ Unable to load businesses. Please check back later.</p>
+                    <a href="apply.html" class="btn-primary">List Your Business →</a>
+                </div>
+            `;
+        }
     }
 
     function displayShops() {
@@ -435,7 +462,12 @@
         const container = document.getElementById('shopsList');
 
         if (filtered.length === 0) {
-            container.innerHTML = '<div class="empty-state"><p>✨ No businesses found</p></div>';
+            container.innerHTML = `
+                <div class="empty-state">
+                    <p>✨ No businesses found</p>
+                    <a href="apply.html" class="btn-primary">List Your Business →</a>
+                </div>
+            `;
             return;
         }
 
@@ -443,11 +475,14 @@
             <div class="shops-grid">
                 ${filtered.map(shop => `
                     <div class="shop-card" onclick="viewBusiness(${shop.id})">
-                        <img src="${shop.storePhoto || 'https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400'}" class="shop-photo" alt="${shop.shopName}" onerror="this.src='https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400'">
+                        <img src="${shop.storePhoto || 'https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400'}" 
+                             class="shop-photo" 
+                             alt="${shop.shopName}"
+                             onerror="this.src='https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400'">
                         <div class="shop-info">
                             <div class="shop-header">
                                 ${shop.logoUrl && shop.logoUrl !== '' ? 
-                                    `<img src="${shop.logoUrl}" class="shop-logo-img" alt="${shop.shopName}">` : 
+                                    `<img src="${shop.logoUrl}" class="shop-logo-img" alt="${shop.shopName}" onerror="this.src=''">` : 
                                     `<div class="shop-logo-img" style="display: flex; align-items: center; justify-content: center; font-size: 24px;">🏢</div>`
                                 }
                                 <div>
@@ -456,7 +491,13 @@
                                 </div>
                             </div>
                             <div class="shop-desc">${shop.description.substring(0, 100)}${shop.description.length > 100 ? '...' : ''}</div>
-                            <span class="shop-details-link">View Details →</span>
+                            ${shop.rating ? `
+                                <div class="shop-rating">
+                                    <div class="stars">${getStarRating(shop.rating)}</div>
+                                    <span class="rating-value">${shop.rating}</span>
+                                </div>
+                            ` : ''}
+                            <div class="shop-details-link">View Details →</div>
                         </div>
                     </div>
                 `).join('')}
@@ -473,6 +514,7 @@
         displayShops();
     }
 
+    // Set up category filters
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -487,6 +529,15 @@
     function toggleMenu() {
         document.getElementById('mobileMenu').classList.toggle('show');
     }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('mobileMenu');
+        const menuBtn = document.querySelector('.menu-btn');
+        if (menu && menu.classList.contains('show') && !menu.contains(e.target) && !menuBtn.contains(e.target)) {
+            menu.classList.remove('show');
+        }
+    });
 
     loadShops();
 </script>
