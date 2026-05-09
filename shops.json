@@ -31,6 +31,16 @@
       "fullDescription": "Addis Coffee & Spice connects Ethiopian coffee farmers directly with coffee lovers. We source the finest Yirgacheffe, Sidama, and Harrar coffee beans.",
       "status": "active",
       "addedDate": "2026-01-20"
+    },
+    {
+  "id": 1778357360999,
+  "shopName": "Michael tour ",
+  "category": "Handicrafts & Art",
+  "description": "travel ",
+  "shopUrl": "https://michaeltoureth.com/",
+  "logoUrl": "https://i.ibb.co/pjMKtBgy/photo-76-2026-05-04-13-28-32.jpg",
+  "status": "active",
+  "addedDate": "2026-05-09"
     }
   ]
 }
