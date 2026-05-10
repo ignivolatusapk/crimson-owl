@@ -339,7 +339,7 @@
     text-align: center; display: none; margin-bottom: 1rem;
   }
 
-  /* SOCIAL */
+  /* SOCIAL SECTION - Fixed Icons */
   .social-section {
     padding: 40px 60px;
     background: var(--black);
@@ -348,12 +348,16 @@
   }
   .social-icons { display: flex; justify-content: center; gap: 1.5rem; }
   .social-icon {
-    width: 40px; height: 40px;
+    width: 44px; height: 44px;
     background: var(--charcoal); border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; transition: all 0.3s;
   }
   .social-icon:hover { background: var(--crimson); transform: translateY(-3px); }
+  .social-icon svg {
+    width: 20px; height: 20px;
+    fill: var(--pure-white);
+  }
 
   /* FOOTER */
   footer {
@@ -405,6 +409,8 @@
     section { padding: 60px 30px; }
     .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
     .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+    .social-icons { gap: 1rem; }
+    .social-icon { width: 38px; height: 38px; }
   }
 </style>
 </head>
@@ -436,7 +442,7 @@
   <button class="nav-cta" onclick="window.location.href='apply.html'">List Your Business</button>
 </nav>
 
-<!-- HERO with Image -->
+<!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-bg-img"></div>
   <div class="hero-overlay"></div>
@@ -487,7 +493,7 @@
   </div>
 </section>
 
-<!-- WALLET SECTION -->
+<!-- WALLET -->
 <section class="wallet-section">
   <h2 class="wallet-title">💳 Payment Methods</h2>
   <div class="wallet-container">
@@ -536,13 +542,35 @@
   </form>
 </section>
 
-<!-- SOCIAL -->
+<!-- SOCIAL SECTION - Fixed SVG Icons -->
 <section class="social-section">
   <div class="social-icons">
-    <div class="social-icon" onclick="window.open('https://www.instagram.com', '_blank')">📷</div>
-    <div class="social-icon" onclick="window.open('https://www.twitter.com', '_blank')">🐦</div>
-    <div class="social-icon" onclick="window.open('https://www.facebook.com', '_blank')">📘</div>
-    <div class="social-icon" onclick="window.open('https://t.me/crimsonowl', '_blank')">📱</div>
+    <!-- Instagram -->
+    <div class="social-icon" onclick="window.open('https://www.instagram.com', '_blank')">
+      <svg viewBox="0 0 24 24" fill="white">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/>
+        <path d="M12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
+        <circle cx="18.406" cy="5.594" r="1.44"/>
+      </svg>
+    </div>
+    <!-- Twitter/X -->
+    <div class="social-icon" onclick="window.open('https://www.twitter.com', '_blank')">
+      <svg viewBox="0 0 24 24" fill="white">
+        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 0021.913-5.466c.299-.777.526-1.582.67-2.403.024-.13.048-.261.07-.393a4.96 4.96 0 002.03-1.35z"/>
+      </svg>
+    </div>
+    <!-- Facebook -->
+    <div class="social-icon" onclick="window.open('https://www.facebook.com', '_blank')">
+      <svg viewBox="0 0 24 24" fill="white">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+      </svg>
+    </div>
+    <!-- Telegram -->
+    <div class="social-icon" onclick="window.open('https://t.me/crimsonowl', '_blank')">
+      <svg viewBox="0 0 24 24" fill="white">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.08-.2-.09-.06-.22-.04-.31-.02-.13.02-2.18 1.38-3.16 2-.2.13-.38.19-.54.19-.18 0-.36-.06-.52-.12-.3-.12-.53-.21-.51-.44.01-.13.09-.26.26-.39.53-.34 2.36-1.45 3.79-2.11 1.83-.85 2.48-1.01 2.9-1.01.15 0 .49.03.71.22.19.16.24.38.26.6-.02.13-.07.4-.12.69z"/>
+      </svg>
+    </div>
   </div>
 </section>
 
@@ -669,5 +697,6 @@
 
   loadFeaturedShops();
 </script>
+
 </body>
 </html>
