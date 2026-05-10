@@ -1,312 +1,447 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>List Your Business - Crimson Owl</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>List Your Business - Crimson Owl</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        :root {
-            --crimson: #8B0000;
-            --crimson-light: #a52a2a;
-            --text-dark: #1a1a1a;
-            --text-medium: #4a4a4a;
-            --text-light: #6c757d;
-            --bg-white: #ffffff;
-            --bg-off-white: #f8f9fa;
-            --border-light: #e9ecef;
-            --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05);
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+  :root {
+    --crimson: #8B0000;
+    --crimson-dark: #5A0000;
+    --crimson-light: #A52A2A;
+    --pure-white: #FFFFFF;
+    --off-white: #F5F5F0;
+    --light-gray: #E8E8E8;
+    --mid-gray: #AAAAAA;
+    --dark-gray: #333333;
+    --charcoal: #1A1A1A;
+    --black: #000000;
+    --near-black: #0A0A0A;
+  }
 
-        body {
-            font-family: var(--font-sans);
-            background-color: var(--bg-off-white);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
+  html { scroll-behavior: smooth; }
 
-        .navbar {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 0.75rem 1.5rem;
-            border-bottom: 1px solid var(--border-light);
-        }
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: var(--black);
+    color: var(--off-white);
+    overflow-x: hidden;
+    cursor: none;
+  }
 
-        .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  /* Custom Cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--crimson);
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s, height 0.3s;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--crimson);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, opacity 0.3s;
+    opacity: 0.6;
+  }
 
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 60px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--pure-white);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo img { height: 36px; width: auto; }
+  .nav-links {
+    display: flex; gap: 40px; list-style: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .nav-links a {
+    color: var(--mid-gray); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--crimson); }
 
-        .nav-logo img {
-            height: 36px;
-            width: auto;
-        }
+  /* Container */
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 140px 24px 60px;
+  }
 
-        .nav-logo span {
-            color: var(--text-dark);
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
+  /* Form Card */
+  .form-card {
+    background: var(--charcoal);
+    border-radius: 24px;
+    padding: 48px;
+    border: 1px solid rgba(139,0,0,0.2);
+  }
+  .form-card h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; margin-bottom: 8px;
+  }
+  .form-card > p {
+    color: var(--mid-gray);
+    margin-bottom: 32px;
+  }
 
-        .back-btn {
-            color: var(--text-dark);
-            text-decoration: none;
-            background: var(--bg-white);
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            font-size: 0.85rem;
-            border: 1px solid var(--border-light);
-        }
+  .form-group { margin-bottom: 24px; }
+  .form-group label {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    color: var(--light-gray);
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 14px;
+    background: var(--near-black);
+    border: 1px solid rgba(139,0,0,0.3);
+    border-radius: 12px;
+    color: var(--pure-white);
+    font-family: inherit;
+    font-size: 0.9rem;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none; border-color: var(--crimson);
+  }
 
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
+  /* Pricing Options */
+  .pricing-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .pricing-option {
+    background: var(--near-black);
+    border: 2px solid rgba(139,0,0,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+  }
+  .pricing-option.selected {
+    border-color: var(--crimson);
+    background: rgba(139,0,0,0.15);
+  }
+  .pricing-option:hover { border-color: var(--crimson); }
+  .pricing-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 600;
+    color: var(--pure-white);
+  }
+  .pricing-price {
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--crimson);
+    margin-top: 8px;
+  }
+  .pricing-price small { font-size: 0.7rem; color: var(--mid-gray); }
 
-        .form-card {
-            background: var(--bg-white);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            border: 1px solid var(--border-light);
-        }
+  .info-box {
+    background: rgba(139,0,0,0.1);
+    border: 1px solid rgba(139,0,0,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 24px 0;
+    text-align: center;
+  }
+  .info-box p { margin: 4px 0; color: var(--mid-gray); }
+  .info-box strong { color: var(--crimson); }
 
-        .form-card h1 {
-            font-size: 1.75rem;
-            margin-bottom: 0.5rem;
-        }
+  .btn-submit {
+    width: 100%;
+    background: var(--crimson);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 40px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .btn-submit:hover { background: var(--crimson-light); transform: translateY(-2px); }
 
-        .form-card > p {
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-        }
+  .message {
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .message.success {
+    background: rgba(0,255,0,0.1);
+    border: 1px solid #00ff00;
+    color: #00ff00;
+  }
+  .message.error {
+    background: rgba(255,0,0,0.1);
+    border: 1px solid #ff4444;
+    color: #ff4444;
+  }
 
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
+  /* Footer */
+  footer {
+    background: #050505;
+    padding: 40px 60px 30px;
+    border-top: 1px solid rgba(139,0,0,0.2);
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 20px;
+  }
+  .footer-logo { display: flex; align-items: center; gap: 10px; }
+  .footer-logo img { height: 32px; }
+  .footer-logo span {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--pure-white);
+  }
+  .footer-links { display: flex; gap: 30px; list-style: none; flex-wrap: wrap; }
+  .footer-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem; color: var(--mid-gray); text-decoration: none;
+  }
+  .footer-links a:hover { color: var(--crimson); }
+  .footer-bottom {
+    max-width: 1200px; margin: 30px auto 0;
+    padding-top: 20px; border-top: 1px solid rgba(139,0,0,0.2);
+    display: flex; justify-content: space-between;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem; color: rgba(158,158,158,0.4);
+    flex-wrap: wrap; gap: 10px;
+  }
 
-        .form-group label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            font-size: 0.85rem;
-        }
-
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--bg-off-white);
-            border: 1px solid var(--border-light);
-            border-radius: 0.75rem;
-            font-family: inherit;
-            font-size: 0.9rem;
-        }
-
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--crimson);
-        }
-
-        .info-box {
-            background: var(--bg-off-white);
-            padding: 1rem;
-            border-radius: 0.75rem;
-            margin: 1.5rem 0;
-            text-align: center;
-        }
-
-        .info-box p {
-            margin: 0.25rem 0;
-        }
-
-        .btn-submit {
-            width: 100%;
-            background: var(--crimson);
-            color: white;
-            padding: 0.85rem;
-            border: none;
-            border-radius: 2rem;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        .btn-submit:hover {
-            background: var(--crimson-light);
-        }
-
-        .message {
-            padding: 0.75rem;
-            border-radius: 0.75rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .message.success {
-            background: rgba(0, 255, 0, 0.1);
-            border: 1px solid #00ff00;
-            color: #00ff00;
-        }
-
-        .footer {
-            background: var(--bg-white);
-            padding: 2rem 1rem;
-            text-align: center;
-            border-top: 1px solid var(--border-light);
-            margin-top: 2rem;
-        }
-
-        .footer p {
-            color: var(--text-light);
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 768px) {
-            .form-card {
-                padding: 1.5rem;
-            }
-            .form-card h1 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .container { padding: 120px 16px 40px; }
+    .form-card { padding: 28px; }
+    .pricing-options { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>
 </head>
 <body>
 
-<div class="navbar">
-    <div class="nav-container">
-        <div class="nav-logo">
-            <img src="images/logo.png" alt="Crimson Owl Logo">
-            <span>CRIMSON OWL</span>
-        </div>
-        <a href="index.html" class="back-btn">← Back to Home</a>
-    </div>
-</div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <div class="nav-logo">
+    <img src="images/logo.png" alt="Crimson Owl Logo">
+    <span>Crimson Owl</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="browse-shops.html">Businesses</a></li>
+    <li><a href="apply.html">List Business</a></li>
+  </ul>
+</nav>
 
 <div class="container">
-    <div class="form-card">
-        <h1>📝 List Your Business</h1>
-        <p>Fill the form below. We'll contact you within 24 hours.</p>
+  <div class="form-card">
+    <h1>📝 List Your Business</h1>
+    <p>Fill the form below. We'll contact you within 24 hours.</p>
 
-        <div id="formMessage"></div>
+    <div id="formMessage"></div>
 
-        <form id="applyForm">
-            <div class="form-group">
-                <label>Business Name *</label>
-                <input type="text" id="businessName" required placeholder="e.g., Tomoca Coffee">
-            </div>
+    <form id="applyForm">
+      <div class="form-group">
+        <label>Business Name *</label>
+        <input type="text" id="businessName" required placeholder="e.g., Tomoca Coffee">
+      </div>
 
-            <div class="form-group">
-                <label>Your Name *</label>
-                <input type="text" id="ownerName" required>
-            </div>
+      <div class="form-group">
+        <label>Your Name *</label>
+        <input type="text" id="ownerName" required>
+      </div>
 
-            <div class="form-group">
-                <label>Email *</label>
-                <input type="email" id="email" required>
-            </div>
+      <div class="form-group">
+        <label>Email *</label>
+        <input type="email" id="email" required>
+      </div>
 
-            <div class="form-group">
-                <label>Phone *</label>
-                <input type="tel" id="phone" required>
-            </div>
+      <div class="form-group">
+        <label>Phone *</label>
+        <input type="tel" id="phone" required>
+      </div>
 
-            <div class="form-group">
-                <label>Business Category *</label>
-                <select id="category">
-                    <option>🏨 Hotel & Resort</option>
-                    <option>☕ Cafe & Coffee Shop</option>
-                    <option>🍽️ Restaurant & Dining</option>
-                    <option>✈️ Airline Company</option>
-                    <option>🚗 Travel Agency</option>
-                    <option>🏛️ Government Office</option>
-                    <option>💼 Corporate Company</option>
-                    <option>🏦 Bank & Financial</option>
-                    <option>📞 Telecom & Internet</option>
-                    <option>🏥 Private Hospital & Clinic</option>
-                    <option>🏫 University & College</option>
-                    <option>🛒 Supermarket & Grocery</option>
-                    <option>👗 Fashion & Clothing</option>
-                    <option>🏋️ Gym & Fitness Center</option>
-                    <option>💇 Salon & Barber</option>
-                    <option>📸 Photography Studio</option>
-                </select>
-            </div>
+      <div class="form-group">
+        <label>Category *</label>
+        <select id="category">
+          <optgroup label="🏨 Hospitality">
+            <option>🏨 Hotel & Resort</option>
+            <option>☕ Cafe & Coffee Shop</option>
+            <option>🍽️ Restaurant & Dining</option>
+          </optgroup>
+          <optgroup label="✈️ Travel">
+            <option>✈️ Airline Company</option>
+            <option>🚗 Travel Agency</option>
+          </optgroup>
+          <optgroup label="🏛️ Government">
+            <option>🏛️ Government Office</option>
+            <option>📜 Embassy & Consulate</option>
+          </optgroup>
+          <optgroup label="💼 Private">
+            <option>💼 Corporate Company</option>
+            <option>🏦 Bank & Financial</option>
+            <option>📞 Telecom & Internet</option>
+          </optgroup>
+          <optgroup label="🛍️ Retail">
+            <option>👗 Fashion & Clothing</option>
+            <option>📱 Electronics & Gadgets</option>
+            <option>🛒 Supermarket & Grocery</option>
+          </optgroup>
+          <optgroup label="🏥 Health">
+            <option>🏥 Private Hospital & Clinic</option>
+            <option>🏋️ Gym & Fitness Center</option>
+          </optgroup>
+          <optgroup label="🎓 Education">
+            <option>🏫 University & College</option>
+            <option>📖 Private School</option>
+          </optgroup>
+        </select>
+      </div>
 
-            <div class="form-group">
-                <label>Business Description *</label>
-                <textarea id="description" rows="4" required placeholder="Describe what your business does..."></textarea>
-            </div>
+      <div class="form-group">
+        <label>Business Description *</label>
+        <textarea id="description" rows="4" required placeholder="Describe what your business does..."></textarea>
+      </div>
 
-            <div class="info-box">
-                <p><strong>💰 Total: 1,500 ETB</strong></p>
-                <p>Setup Fee: 1,000 ETB (one-time)</p>
-                <p>Monthly Rent: 500 ETB</p>
-            </div>
+      <div class="form-group">
+        <label>Choose a Plan *</label>
+        <div class="pricing-options">
+          <div class="pricing-option" data-plan="Monthly - 1,500 ETB">
+            <div class="pricing-title">Monthly</div>
+            <div class="pricing-price">1,500 ETB <small>/month</small></div>
+          </div>
+          <div class="pricing-option" data-plan="Yearly - 17,000 ETB">
+            <div class="pricing-title">Yearly</div>
+            <div class="pricing-price">17,000 ETB <small>/year</small></div>
+          </div>
+          <div class="pricing-option" data-plan="Yearly + Domain - 17,000 + Domain">
+            <div class="pricing-title">Yearly + Domain</div>
+            <div class="pricing-price">17,000 + Domain</div>
+          </div>
+          <div class="pricing-option" data-plan="Custom Website - One-time">
+            <div class="pricing-title">Custom Website</div>
+            <div class="pricing-price">One-time</div>
+          </div>
+        </div>
+        <input type="hidden" id="selectedPlan" required>
+      </div>
 
-            <button type="submit" class="btn-submit">Submit Application</button>
-        </form>
+      <div class="info-box">
+        <p><strong>💰 What happens next?</strong></p>
+        <p>1. We'll review your application within 24 hours</p>
+        <p>2. We'll contact you to confirm your chosen plan</p>
+        <p>3. Your business website will be set up within 48 hours after payment</p>
+      </div>
+
+      <button type="submit" class="btn-submit">Submit Application</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="images/logo.png" alt="Crimson Owl Logo">
+      <span>Crimson Owl</span>
     </div>
-</div>
-
-<div class="footer">
-    <p>© 2026 Crimson Owl | Ethiopian Business Directory</p>
-</div>
+    <ul class="footer-links">
+      <li><a href="apply.html">List Business</a></li>
+      <li><a href="browse-shops.html">Browse</a></li>
+      <li><a href="index.html#featured">Featured</a></li>
+      <li><a href="mailto:ignivolatusapk@gmail.com">Contact</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Crimson Owl. All rights reserved.</span>
+    <span>Ethiopia's Premier Business Directory</span>
+  </div>
+</footer>
 
 <script>
-    const FORMSPREE_ID = 'mlgzlbak';
+  const FORMSPREE_ID = 'mlgzlbak';
 
-    document.getElementById('applyForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
 
-        const formData = new FormData();
-        formData.append('_subject', 'New Business Application - Crimson Owl');
-        formData.append('Business Name', document.getElementById('businessName').value);
-        formData.append('Owner Name', document.getElementById('ownerName').value);
-        formData.append('Email', document.getElementById('email').value);
-        formData.append('Phone', document.getElementById('phone').value);
-        formData.append('Category', document.getElementById('category').value);
-        formData.append('Description', document.getElementById('description').value);
-
-        try {
-            const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            });
-
-            if (response.ok) {
-                document.getElementById('formMessage').innerHTML = '<div class="message success">✅ Application sent! We\'ll contact you within 24 hours.</div>';
-                document.getElementById('applyForm').reset();
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 3000);
-            } else {
-                throw new Error();
-            }
-        } catch (error) {
-            document.getElementById('formMessage').innerHTML = '<div class="message error">❌ Failed to send. Please try again.</div>';
-        }
+  // Plan selection
+  document.querySelectorAll('.pricing-option').forEach(option => {
+    option.addEventListener('click', function() {
+      document.querySelectorAll('.pricing-option').forEach(opt => opt.classList.remove('selected'));
+      this.classList.add('selected');
+      document.getElementById('selectedPlan').value = this.dataset.plan;
     });
-</script>
+  });
 
+  document.getElementById('applyForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const selectedPlan = document.getElementById('selectedPlan').value;
+    if (!selectedPlan) {
+      document.getElementById('formMessage').innerHTML = '<div class="message error">❌ Please select a pricing plan</div>';
+      setTimeout(() => document.getElementById('formMessage').innerHTML = '', 3000);
+      return;
+    }
+    
+    const formData = new FormData();
+    formData.append('_subject', 'New Business Application - Crimson Owl');
+    formData.append('Business Name', document.getElementById('businessName').value);
+    formData.append('Owner Name', document.getElementById('ownerName').value);
+    formData.append('Email', document.getElementById('email').value);
+    formData.append('Phone', document.getElementById('phone').value);
+    formData.append('Category', document.getElementById('category').value);
+    formData.append('Selected Plan', selectedPlan);
+    formData.append('Description', document.getElementById('description').value);
+    
+    try {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST', body: formData, headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        document.getElementById('formMessage').innerHTML = '<div class="message success">✅ Application sent! We\'ll contact you within 24 hours.</div>';
+        document.getElementById('applyForm').reset();
+        document.querySelectorAll('.pricing-option').forEach(opt => opt.classList.remove('selected'));
+        setTimeout(() => window.location.href = 'index.html', 3000);
+      } else throw new Error();
+    } catch(error) {
+      document.getElementById('formMessage').innerHTML = '<div class="message error">❌ Failed to send. Please try again.</div>';
+    }
+  });
+</script>
 </body>
 </html>
