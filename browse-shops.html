@@ -150,6 +150,10 @@
             flex-wrap: wrap;
         }
 
+        .category-filter::-webkit-scrollbar {
+            height: 4px;
+        }
+
         .filter-btn {
             background: #1a1a1a;
             border: 1px solid #333;
@@ -303,11 +307,29 @@
             margin-top: 10px;
         }
 
+        .shop-details-link:hover {
+            text-decoration: underline;
+        }
+
         .empty-state {
             text-align: center;
             padding: 60px;
             background: #1a1a1a;
             border-radius: 20px;
+        }
+
+        .empty-state p {
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .empty-state .btn-primary {
+            background: #8B0000;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .footer {
@@ -318,6 +340,11 @@
             margin-top: 40px;
         }
 
+        .footer p {
+            color: #666;
+            font-size: 12px;
+        }
+
         .loading {
             text-align: center;
             padding: 60px;
@@ -326,10 +353,13 @@
 
         @media (max-width: 768px) {
             .container { padding: 20px 16px; }
-            .shops-grid { grid-template-columns: 1fr; }
+            .shops-grid { grid-template-columns: 1fr; gap: 16px; }
             .nav-links { display: none; }
             .menu-btn { display: block; }
+            .page-header h1 { font-size: 24px; }
             .shop-photo { height: 160px; }
+            .shop-info { padding: 16px; }
+            .shop-name { font-size: 16px; }
             .category-filter { flex-wrap: nowrap; }
         }
     </style>
@@ -365,15 +395,69 @@
 
     <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search businesses...">
 
+    <!-- ALL 55+ CATEGORIES -->
     <div class="category-filter" id="categoryFilter">
         <button class="filter-btn active" data-category="all">All</button>
+        
+        <!-- 🏨 Hospitality -->
         <button class="filter-btn" data-category="🏨 Hotel & Resort">🏨 Hotels</button>
         <button class="filter-btn" data-category="☕ Cafe & Coffee Shop">☕ Cafes</button>
         <button class="filter-btn" data-category="🍽️ Restaurant & Dining">🍽️ Restaurants</button>
-        <button class="filter-btn" data-category="👗 Fashion & Clothing">👗 Fashion</button>
+        <button class="filter-btn" data-category="🍺 Bar & Lounge">🍺 Bars</button>
+        
+        <!-- ✈️ Travel -->
+        <button class="filter-btn" data-category="✈️ Airline Company">✈️ Airlines</button>
+        <button class="filter-btn" data-category="🚗 Travel Agency">🚗 Travel</button>
+        <button class="filter-btn" data-category="🚌 Bus & Transport">🚌 Bus</button>
+        <button class="filter-btn" data-category="🚕 Taxi & Ride Share">🚕 Taxi</button>
+        <button class="filter-btn" data-category="🏖️ Tour Operator">🏖️ Tours</button>
+        
+        <!-- 🏛️ Government -->
+        <button class="filter-btn" data-category="🏛️ Government Office">🏛️ Government</button>
+        <button class="filter-btn" data-category="📜 Embassy & Consulate">📜 Embassies</button>
+        <button class="filter-btn" data-category="🏥 Public Hospital">🏥 Public Health</button>
+        <button class="filter-btn" data-category="📚 Public Library">📚 Libraries</button>
+        <button class="filter-btn" data-category="⚖️ Court & Legal Services">⚖️ Courts</button>
+        
+        <!-- 💼 Private Companies -->
+        <button class="filter-btn" data-category="💼 Corporate Company">💼 Corporate</button>
         <button class="filter-btn" data-category="🏦 Bank & Financial">🏦 Banks</button>
+        <button class="filter-btn" data-category="📞 Telecom & Internet">📞 Telecom</button>
+        <button class="filter-btn" data-category="⚡ Energy & Utilities">⚡ Energy</button>
+        <button class="filter-btn" data-category="🏗️ Construction & Real Estate">🏗️ Construction</button>
+        
+        <!-- 🛍️ Retail -->
+        <button class="filter-btn" data-category="👗 Fashion & Clothing">👗 Fashion</button>
+        <button class="filter-btn" data-category="📱 Electronics & Gadgets">📱 Electronics</button>
+        <button class="filter-btn" data-category="🛒 Supermarket & Grocery">🛒 Supermarkets</button>
+        <button class="filter-btn" data-category="💍 Jewelry & Accessories">💍 Jewelry</button>
+        <button class="filter-btn" data-category="📚 Bookstore & Stationery">📚 Bookstores</button>
+        
+        <!-- 🏥 Health -->
         <button class="filter-btn" data-category="🏥 Private Hospital & Clinic">🏥 Hospitals</button>
+        <button class="filter-btn" data-category="💊 Pharmacy & Drug Store">💊 Pharmacies</button>
+        <button class="filter-btn" data-category="🏋️ Gym & Fitness Center">🏋️ Gyms</button>
+        <button class="filter-btn" data-category="🧘 Spa & Wellness">🧘 Spas</button>
+        <button class="filter-btn" data-category="🦷 Dental Clinic">🦷 Dental</button>
+        
+        <!-- 🎓 Education -->
         <button class="filter-btn" data-category="🏫 University & College">🏫 Universities</button>
+        <button class="filter-btn" data-category="📖 Private School">📖 Schools</button>
+        <button class="filter-btn" data-category="💻 Training Center">💻 Training</button>
+        <button class="filter-btn" data-category="🎓 Online Learning">🎓 Online</button>
+        
+        <!-- 🎨 Arts -->
+        <button class="filter-btn" data-category="🎬 Cinema & Theater">🎬 Cinemas</button>
+        <button class="filter-btn" data-category="🖼️ Art Gallery">🖼️ Art</button>
+        <button class="filter-btn" data-category="🎵 Music Venue">🎵 Music</button>
+        <button class="filter-btn" data-category="🎪 Event & Conference Center">🎪 Events</button>
+        
+        <!-- 🔧 Services -->
+        <button class="filter-btn" data-category="🔧 Repair & Maintenance">🔧 Repair</button>
+        <button class="filter-btn" data-category="💇 Salon & Barber">💇 Salons</button>
+        <button class="filter-btn" data-category="📸 Photography Studio">📸 Photography</button>
+        <button class="filter-btn" data-category="⚖️ Legal & Law Firm">⚖️ Law</button>
+        <button class="filter-btn" data-category="📊 Accounting & Consulting">📊 Accounting</button>
     </div>
 
     <div id="shopsList">
@@ -394,12 +478,8 @@
 
     function getStarRating(rating) {
         const fullStars = Math.floor(rating);
-        const hasHalfStar = rating % 1 >= 0.5;
         let stars = '';
         for (let i = 0; i < fullStars; i++) {
-            stars += `<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
-        }
-        if (hasHalfStar) {
             stars += `<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
         }
         for (let i = stars.length / 24; i < 5; i++) {
@@ -421,7 +501,7 @@
             });
             displayShops();
         } catch (error) {
-            document.getElementById('shopsList').innerHTML = `<div class="empty-state"><p>⚠️ Unable to load businesses.</p></div>`;
+            document.getElementById('shopsList').innerHTML = `<div class="empty-state"><p>⚠️ Unable to load businesses. Please check back later.</p><a href="apply.html" style="color:#8B0000;">List Your Business →</a></div>`;
         }
     }
 
