@@ -127,7 +127,37 @@
     pointer-events: none;
   }
 
-  /* Floating circles - black/white */
+  /* Parallax Heading - Sticky */
+  .parallax-heading {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    will-change: transform;
+  }
+
+  /* Parallax Mountains */
+  .parallax-mountain1, .parallax-mountain2 {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    z-index: 1;
+    will-change: transform;
+  }
+
+  .parallax-mountain1 {
+    opacity: 0.08;
+    transform: translateY(0);
+  }
+
+  .parallax-mountain2 {
+    opacity: 0.05;
+    transform: translateY(0);
+  }
+
+  /* Floating circles */
   .orb {
     position: absolute; border-radius: 50%;
     pointer-events: none; will-change: transform;
@@ -159,7 +189,7 @@
     50% { transform: translateY(-20px) rotate(5deg); }
   }
 
-  /* Owl silhouette - white */
+  /* Owl silhouette */
   .hero-owl {
     position: absolute; right: 8%; top: 50%;
     transform: translateY(-50%);
@@ -670,9 +700,17 @@
 </head>
 <body>
 
-<!-- Cursor -->
+<!-- Custom Cursor -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Mountain Parallax Elements -->
+<svg class="parallax-mountain1" viewBox="0 0 1440 400" preserveAspectRatio="none">
+  <path d="M0,400 L0,200 L200,100 L400,250 L600,50 L800,200 L1000,80 L1200,180 L1440,100 L1440,400 Z" fill="white" opacity="0.3"/>
+</svg>
+<svg class="parallax-mountain2" viewBox="0 0 1440 400" preserveAspectRatio="none">
+  <path d="M0,400 L0,250 L300,150 L500,280 L700,120 L900,220 L1100,90 L1300,200 L1440,130 L1440,400 Z" fill="white" opacity="0.2"/>
+</svg>
 
 <!-- NAV -->
 <nav>
@@ -698,7 +736,7 @@
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 
-  <svg class="hero-owl parallax-layer" id="owlParallax" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg class="hero-owl parallax-heading" id="owlParallax" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
     <ellipse cx="100" cy="130" rx="55" ry="65" fill="white"/>
     <circle cx="78" cy="90" r="22" fill="white"/>
     <circle cx="122" cy="90" r="22" fill="white"/>
@@ -938,7 +976,7 @@
 </footer>
 
 <script>
-  // Custom Cursor
+  // ── Custom Cursor ──
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
@@ -962,11 +1000,45 @@
     });
   });
 
-  // Parallax: Hero Owl and Elements
-  const owl = document.getElementById('owlParallax');
+  // ── Detect if device is mobile ──
+  const isMobile = window.innerWidth <= 768;
+  
+  // Set different speeds for desktop and mobile
+  const headingSpeed = isMobile ? 0.75 : 0.45;
+  const mountain1Speed = isMobile ? -0.15 : -0.15;
+  const mountain2Speed = isMobile ? -0.05 : -0.05;
+
+  // ── Parallax: Heading (Owl) ──
+  function updateHeadingPosition() {
+    const scroll = window.pageYOffset || document.documentElement.scrollTop;
+    const heading = document.querySelector('.parallax-heading');
+    if (heading) {
+      heading.style.transform = `translateY(${scroll * headingSpeed}px)`;
+    }
+    requestAnimationFrame(updateHeadingPosition);
+  }
+
+  // ── Parallax: Mountains ──
+  function updateMountainPositions() {
+    const scroll = window.pageYOffset || document.documentElement.scrollTop;
+    const mountain1 = document.querySelector('.parallax-mountain1');
+    if (mountain1) {
+      mountain1.style.transform = `translateY(${scroll * mountain1Speed}px)`;
+    }
+    const mountain2 = document.querySelector('.parallax-mountain2');
+    if (mountain2) {
+      mountain2.style.transform = `translateY(${scroll * mountain2Speed}px)`;
+    }
+    requestAnimationFrame(updateMountainPositions);
+  }
+
+  // Start parallax animations
+  requestAnimationFrame(updateHeadingPosition);
+  requestAnimationFrame(updateMountainPositions);
+
+  // ── Additional parallax: Orbs and Grid ──
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
-    if (owl) owl.style.transform = `translateY(calc(-50% + ${y * 0.35}px))`;
     document.querySelectorAll('.orb-1').forEach(o => o.style.transform = `translateY(${y * 0.2}px)`);
     document.querySelectorAll('.orb-2').forEach(o => o.style.transform = `translateY(${-y * 0.15}px)`);
     document.querySelectorAll('.orb-3').forEach(o => o.style.transform = `translateY(${y * 0.1}px)`);
@@ -974,7 +1046,7 @@
     if (grid) grid.style.transform = `translateY(${y * 0.08}px)`;
   });
 
-  // Scroll Reveal
+  // ── Scroll Reveal ──
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
