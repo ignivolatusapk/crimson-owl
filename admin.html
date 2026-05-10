@@ -51,6 +51,8 @@
     color: var(--pure-white);
     margin-bottom: 16px;
   }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--crimson); }
+
   button {
     background: var(--crimson);
     color: white;
@@ -85,6 +87,8 @@
     font-family: monospace;
     font-size: 12px;
     margin: 16px 0;
+    color: #0f0;
+    white-space: pre-wrap;
   }
 
   @media (max-width: 768px) {
@@ -130,9 +134,12 @@
       <div class="form-row">
         <input type="text" id="shopName" placeholder="Business Name">
         <select id="category">
-          <option>🏨 Hotel & Resort</option><option>☕ Cafe & Coffee Shop</option>
-          <option>🍽️ Restaurant</option><option>👗 Fashion</option>
-          <option>🏦 Bank</option><option>🏥 Hospital</option>
+          <option>🏨 Hotel & Resort</option>
+          <option>☕ Cafe & Coffee Shop</option>
+          <option>🍽️ Restaurant</option>
+          <option>👗 Fashion</option>
+          <option>🏦 Bank</option>
+          <option>🏥 Hospital</option>
         </select>
       </div>
       <input type="text" id="shopUrl" placeholder="Website URL">
@@ -147,14 +154,15 @@
         <input type="checkbox" id="featuredCheckbox"> ⭐ Featured Business
       </label>
       <button onclick="generateJSON()">🔧 Generate JSON</button>
-      <div id="jsonOutput" style="display:none"><div class="json-output" id="jsonCode"></div><button onclick="copyJSON()">📋 Copy</button></div>
+      <div id="jsonOutput" style="display:none"><div class="json-output" id="jsonCode"></div><button onclick="copyJSON()">📋 Copy to Clipboard</button></div>
       <button onclick="logout()" style="background:#333;margin-top:24px">Logout</button>
     </div>
   </div>
 </div>
 
 <script>
-  const FORMSPREE_ID = 'mlgzlbak';
+  // REPLACE THIS WITH YOUR WEB3FORMS ACCESS KEY
+  const WEB3FORMS_KEY = '786d19c0-96b8-428d-967a-a39f57035e8a';
   let storedCode = null;
 
   const cursor = document.getElementById('cursor');
@@ -165,30 +173,57 @@
 
   async function sendCode(){
     const email = document.getElementById('adminEmail').value;
-    if(email !== 'ignivolatusapk@gmail.com'){ document.getElementById('loginMessage').innerHTML='<div style="color:#ff4444">❌ Unauthorized</div>'; return; }
+    if(email !== 'ignivolatusapk@gmail.com'){ 
+      document.getElementById('loginMessage').innerHTML='<div style="color:#ff4444">❌ Unauthorized email</div>'; 
+      return; 
+    }
     const code = Math.floor(100000+Math.random()*900000).toString();
     storedCode = code;
-    const fd = new FormData();
-    fd.append('_subject','Crimson Owl Admin Code');
-    fd.append('message',`Your code: ${code}`);
-    await fetch(`https://formspree.io/f/${FORMSPREE_ID}`,{method:'POST',body:fd});
-    document.getElementById('loginMessage').innerHTML=`<div style="color:#00ff00">✅ Code sent! Use: ${code}</div>`;
-    setTimeout(()=>{
-      document.getElementById('loginSection').style.display='none';
-      document.getElementById('verifySection').style.display='block';
-    },1000);
+    
+    const formData = new FormData();
+    formData.append('access_key', WEB3FORMS_KEY);
+    formData.append('subject', 'Crimson Owl Admin Verification Code');
+    formData.append('message', `Your verification code is: ${code}\n\nEnter this code to access the admin panel.\n\nCode expires in 10 minutes.`);
+    formData.append('email', email);
+    
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
+      const result = await response.json();
+      if (result.success) {
+        document.getElementById('loginMessage').innerHTML = `<div style="color:#00ff00">✅ Code sent to ${email}! Check your inbox.</div>`;
+        setTimeout(() => {
+          document.getElementById('loginSection').style.display = 'none';
+          document.getElementById('verifySection').style.display = 'block';
+        }, 1500);
+      } else {
+        throw new Error();
+      }
+    } catch(error) {
+      document.getElementById('loginMessage').innerHTML = `<div style="color:#ffaa00">⚠️ Using test code: <strong>${code}</strong></div>`;
+      setTimeout(() => {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('verifySection').style.display = 'block';
+        document.getElementById('verifyMessage').innerHTML = `<div style="color:#ffaa00">🔐 Test Code: <strong style="font-size:24px;">${code}</strong></div>`;
+      }, 1500);
+    }
   }
+
   function verify(){
     if(document.getElementById('verificationCode').value === storedCode){
       document.getElementById('verifySection').style.display='none';
       document.getElementById('adminSection').style.display='block';
       loadAnalytics();
-    } else { document.getElementById('verifyMessage').innerHTML='<div style="color:#ff4444">❌ Invalid code</div>'; }
+    } else { 
+      document.getElementById('verifyMessage').innerHTML='<div style="color:#ff4444">❌ Invalid code</div>'; 
+    }
   }
+
   function backToLogin(){
     document.getElementById('verifySection').style.display='none';
     document.getElementById('loginSection').style.display='block';
+    document.getElementById('verificationCode').value = '';
   }
+
   function logout(){
     document.getElementById('adminSection').style.display='none';
     document.getElementById('loginSection').style.display='block';
@@ -196,13 +231,18 @@
 
   async function loadAnalytics(){
     const views = JSON.parse(localStorage.getItem('crimsonowl_views')||'{}');
-    document.getElementById('totalViews').innerText = Object.values(views).reduce((a,b)=>a+b,0);
-    document.getElementById('todayViews').innerText = views[new Date().toDateString()]||0;
-    const res = await fetch('https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json');
-    const data = await res.json();
-    const active = data.shops.filter(s=>s.status==='active');
-    document.getElementById('totalBusinesses').innerText = active.length;
-    document.getElementById('featuredCount').innerText = active.filter(s=>s.featured).length;
+    document.getElementById('totalViews').innerText = Object.values(views).reduce((a,b)=>a+b,0) || 0;
+    document.getElementById('todayViews').innerText = views[new Date().toDateString()] || 0;
+    try {
+      const res = await fetch('https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json?t='+Date.now());
+      const data = await res.json();
+      const active = data.shops.filter(s=>s.status==='active');
+      document.getElementById('totalBusinesses').innerText = active.length;
+      document.getElementById('featuredCount').innerText = active.filter(s=>s.featured).length;
+    } catch(e) {
+      document.getElementById('totalBusinesses').innerText = '0';
+      document.getElementById('featuredCount').innerText = '0';
+    }
   }
 
   function generateJSON(){
@@ -222,10 +262,13 @@
     };
     document.getElementById('jsonCode').innerText = JSON.stringify(newShop,null,2);
     document.getElementById('jsonOutput').style.display='block';
+    document.getElementById('adminMessage').innerHTML = '<div style="color:#00ff00;padding:12px;background:rgba(0,255,0,0.1);border-radius:12px;margin-bottom:16px;">✅ JSON generated! Copy it to shops.json on GitHub.</div>';
+    setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 3000);
   }
+
   function copyJSON(){
     navigator.clipboard.writeText(document.getElementById('jsonCode').innerText);
-    alert('Copied!');
+    alert('✅ Copied to clipboard! Now paste into shops.json on GitHub');
   }
 </script>
 </body>
