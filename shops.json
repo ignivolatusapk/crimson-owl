@@ -71,6 +71,24 @@
   "reviews": 1,
   "status": "active",
   "addedDate": "2026-05-10"
-    }  
+    },
+    {
+  "id": 1778410621313,
+  "shopName": "The Federal Democratic Republic of Ethiopia’s  website",
+  "category": "🏛️ Government Office",
+  "description": "Government of the Federal Democratic Republic of Ethiopia",
+  "fullDescription": "The Constitution of the Federal Democratic Republic of Ethiopia establishes a federal parliamentary republic. The Federal Republic comprises of the Federal Government, the 9 autonomous Regional States and two city administrations. Both the federal and regional governments are organized into three branches of government – legislative, executive, and judicial.",
+  "shopUrl": "https://www.pmo.gov.et/",
+  "logoUrl": "https://i.ibb.co/3y9DrW6Y/logo.png",
+  "storePhoto": "https://i.ibb.co/nTpqGrf/palace.jpg",
+  "phone": "+251 111 400 740 / +251 111 226 292",
+  "email": "info@pmo.gov.et",
+  "address": "ethiopia",
+  "featured": false,
+  "rating": 5,
+  "reviews": 1,
+  "status": "active",
+  "addedDate": "2026-05-10"
+    }
   ]
 }
