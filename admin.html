@@ -11,25 +11,36 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --crimson: #8B0000;
+            --crimson-light: #a52a2a;
+            --text-dark: #1a1a1a;
+            --text-medium: #4a4a4a;
+            --text-light: #6c757d;
+            --bg-white: #ffffff;
+            --bg-off-white: #f8f9fa;
+            --border-light: #e9ecef;
+            --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #0a0a0a;
-            min-height: 100vh;
+            font-family: var(--font-sans);
+            background-color: var(--bg-off-white);
+            color: var(--text-dark);
+            line-height: 1.6;
         }
 
         .navbar {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 16px 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid var(--border-light);
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .nav-logo {
@@ -44,109 +55,101 @@
         }
 
         .nav-logo span {
-            color: white;
+            color: var(--text-dark);
             font-weight: 700;
-            font-size: 18px;
+            font-size: 1.2rem;
         }
 
         .nav-tabs {
             display: flex;
-            gap: 16px;
-            background: #1a1a1a;
-            padding: 8px 16px;
-            border-radius: 50px;
+            gap: 0.5rem;
+            background: var(--bg-white);
+            padding: 0.5rem;
+            border-radius: 3rem;
+            margin-top: 1rem;
         }
 
         .tab-btn {
             background: none;
             border: none;
-            color: #aaa;
-            padding: 8px 20px;
-            border-radius: 40px;
+            color: var(--text-medium);
+            padding: 0.5rem 1.5rem;
+            border-radius: 2rem;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
         }
 
         .tab-btn.active {
-            background: #8B0000;
-            color: white;
-        }
-
-        .tab-btn:hover {
-            background: #333;
+            background: var(--crimson);
             color: white;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 2rem 1.5rem;
         }
 
         .login-box, .admin-box {
-            background: #1a1a1a;
-            border-radius: 24px;
-            padding: 40px;
-            border: 1px solid #333;
+            background: var(--bg-white);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            border: 1px solid var(--border-light);
         }
 
         .login-box h1, .admin-box h1 {
-            color: white;
-            font-size: 28px;
-            margin-bottom: 8px;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
         }
 
         .login-box p, .admin-box p {
-            color: #aaa;
-            margin-bottom: 24px;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
         }
 
         input, select, textarea {
             width: 100%;
-            padding: 14px;
-            background: #0a0a0a;
-            border: 1px solid #333;
-            border-radius: 12px;
-            color: white;
-            font-size: 14px;
-            margin-bottom: 16px;
+            padding: 0.75rem;
+            background: var(--bg-off-white);
+            border: 1px solid var(--border-light);
+            border-radius: 0.75rem;
             font-family: inherit;
+            margin-bottom: 1rem;
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #8B0000;
+            border-color: var(--crimson);
         }
 
         button {
-            background: #8B0000;
+            background: var(--crimson);
             color: white;
-            padding: 14px 28px;
+            padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 14px;
+            border-radius: 2rem;
+            font-weight: 500;
             cursor: pointer;
             width: 100%;
         }
 
         button:hover {
-            background: #a00000;
+            background: var(--crimson-light);
         }
 
         .code-input {
             letter-spacing: 4px;
-            font-size: 20px;
+            font-size: 1.2rem;
             text-align: center;
         }
 
         .message {
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
             text-align: center;
-            font-size: 14px;
         }
 
         .message.success {
@@ -169,160 +172,123 @@
             display: block;
         }
 
-        /* Analytics Cards */
+        /* Analytics Styles */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .stat-card {
-            background: #0a0a0a;
-            border-radius: 16px;
-            padding: 20px;
+            background: var(--bg-off-white);
+            border-radius: 1rem;
+            padding: 1rem;
             text-align: center;
-            border: 1px solid #333;
         }
 
         .stat-number {
-            font-size: 32px;
-            font-weight: 800;
-            color: #8B0000;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--crimson);
         }
 
         .stat-label {
-            color: #aaa;
-            font-size: 12px;
-            margin-top: 8px;
+            font-size: 0.75rem;
+            color: var(--text-light);
         }
 
-        /* Chart Bars */
         .chart-container {
-            background: #0a0a0a;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid #333;
+            background: var(--bg-off-white);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .chart-title {
-            color: white;
-            font-size: 16px;
-            margin-bottom: 16px;
+            font-weight: 600;
+            margin-bottom: 1rem;
         }
 
         .bar-item {
-            margin-bottom: 12px;
+            margin-bottom: 0.75rem;
         }
 
         .bar-label {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 4px;
-            font-size: 12px;
-            color: #aaa;
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
         }
 
         .bar {
-            background: #333;
+            background: var(--border-light);
             height: 30px;
-            border-radius: 8px;
+            border-radius: 0.5rem;
             overflow: hidden;
         }
 
         .bar-fill {
-            background: #8B0000;
+            background: var(--crimson);
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            padding-right: 10px;
+            padding-right: 0.5rem;
             color: white;
-            font-size: 12px;
-            font-weight: 500;
-            border-radius: 8px;
+            font-size: 0.7rem;
+            border-radius: 0.5rem;
         }
 
-        /* Tables */
         .data-table {
             width: 100%;
             border-collapse: collapse;
         }
 
         .data-table th, .data-table td {
-            padding: 12px;
+            padding: 0.75rem;
             text-align: left;
-            border-bottom: 1px solid #333;
-            color: #aaa;
+            border-bottom: 1px solid var(--border-light);
         }
 
         .data-table th {
-            color: white;
+            color: var(--text-dark);
+            font-weight: 600;
         }
 
-        .rank-1 { color: #FFD700; font-weight: bold; }
-        .rank-2 { color: #C0C0C0; font-weight: bold; }
-        .rank-3 { color: #CD7F32; font-weight: bold; }
-
-        /* Add Business Form */
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .imgbb-helper {
-            background: #0a0a0a;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 16px;
-            font-size: 12px;
-            color: #888;
-            text-align: center;
+            gap: 1rem;
         }
 
         .json-output {
-            background: #0a0a0a;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 16px 0;
+            background: var(--bg-off-white);
+            padding: 1rem;
+            border-radius: 0.75rem;
             font-family: monospace;
-            font-size: 12px;
+            font-size: 0.75rem;
             white-space: pre-wrap;
-            word-break: break-all;
-            border: 1px solid #333;
-            color: #0f0;
-            max-height: 300px;
-            overflow: auto;
+            margin: 1rem 0;
         }
 
         .shop-item {
-            background: #0a0a0a;
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 12px;
+            background: var(--bg-off-white);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .shop-info h4 {
-            color: white;
-            margin-bottom: 4px;
-        }
-
-        .shop-info p {
-            color: #888;
-            font-size: 12px;
         }
 
         @media (max-width: 768px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .form-row { grid-template-columns: 1fr; }
-            .nav-tabs { display: none; }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -362,23 +328,22 @@
             <div id="verifyMessage"></div>
             <input type="text" id="verificationCode" class="code-input" placeholder="000000" maxlength="6">
             <button onclick="verifyCode()">Verify & Login</button>
-            <button onclick="backToLogin()" style="background: #333; margin-top: 12px;">Back</button>
+            <button onclick="backToLogin()" style="background: #ccc; color: #333; margin-top: 0.5rem;">Back</button>
         </div>
     </div>
 
-    <!-- Admin Panel with Tabs -->
+    <!-- Admin Panel -->
     <div id="adminSection" style="display: none;">
         <!-- Analytics Tab -->
         <div id="analyticsTab" class="tab-content active">
             <div class="admin-box">
-                <h1>📊 Website Analytics</h1>
-                <p>Track your website performance and business views</p>
+                <h1>📊 Analytics Dashboard</h1>
+                <p>Track your website performance</p>
 
-                <!-- Stats Cards -->
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-number" id="totalViews">--</div>
-                        <div class="stat-label">Total Page Views</div>
+                        <div class="stat-label">Total Views</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" id="todayViews">--</div>
@@ -390,43 +355,28 @@
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" id="featuredCount">--</div>
-                        <div class="stat-label">Featured Businesses</div>
+                        <div class="stat-label">Featured</div>
                     </div>
                 </div>
 
-                <!-- Weekly Activity Chart -->
                 <div class="chart-container">
-                    <div class="chart-title">📈 Weekly Views (Last 7 Days)</div>
+                    <div class="chart-title">📈 Weekly Views</div>
                     <div id="weeklyChart"></div>
                 </div>
 
-                <!-- Monthly Activity Chart -->
-                <div class="chart-container">
-                    <div class="chart-title">📅 Monthly Views (Last 30 Days)</div>
-                    <div id="monthlyChart"></div>
-                </div>
-
-                <!-- Most Viewed Businesses -->
                 <div class="chart-container">
                     <div class="chart-title">🏆 Most Viewed Businesses</div>
                     <div id="topViewedTable"></div>
                 </div>
 
-                <!-- Category Distribution -->
-                <div class="chart-container">
-                    <div class="chart-title">📂 Businesses by Category</div>
-                    <div id="categoryDistribution"></div>
-                </div>
-
-                <!-- Review Stats -->
-                <div class="stats-grid" style="margin-top: 20px;">
+                <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-number" id="totalReviews">--</div>
                         <div class="stat-label">Total Reviews</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" id="avgRating">--</div>
-                        <div class="stat-label">Average Rating</div>
+                        <div class="stat-label">Avg Rating</div>
                     </div>
                 </div>
             </div>
@@ -443,82 +393,44 @@
                 <div class="form-row">
                     <input type="text" id="shopName" placeholder="Business Name *">
                     <select id="category">
-                        <optgroup label="🏨 Hospitality">
-                            <option>🏨 Hotel & Resort</option>
-                            <option>☕ Cafe & Coffee Shop</option>
-                            <option>🍽️ Restaurant & Dining</option>
-                            <option>🍺 Bar & Lounge</option>
-                        </optgroup>
-                        <optgroup label="✈️ Travel">
-                            <option>✈️ Airline Company</option>
-                            <option>🚗 Travel Agency</option>
-                            <option>🚌 Bus & Transport</option>
-                            <option>🚕 Taxi & Ride Share</option>
-                        </optgroup>
-                        <optgroup label="🏛️ Government">
-                            <option>🏛️ Government Office</option>
-                            <option>📜 Embassy & Consulate</option>
-                            <option>🏥 Public Hospital</option>
-                        </optgroup>
-                        <optgroup label="💼 Private">
-                            <option>💼 Corporate Company</option>
-                            <option>🏦 Bank & Financial</option>
-                            <option>📞 Telecom & Internet</option>
-                        </optgroup>
-                        <optgroup label="🛍️ Retail">
-                            <option>👗 Fashion & Clothing</option>
-                            <option>📱 Electronics & Gadgets</option>
-                            <option>🛒 Supermarket & Grocery</option>
-                        </optgroup>
-                        <optgroup label="🏥 Health">
-                            <option>🏥 Private Hospital & Clinic</option>
-                            <option>💊 Pharmacy & Drug Store</option>
-                            <option>🏋️ Gym & Fitness Center</option>
-                        </optgroup>
-                        <optgroup label="🎓 Education">
-                            <option>🏫 University & College</option>
-                            <option>📖 Private School</option>
-                            <option>💻 Training Center</option>
-                        </optgroup>
+                        <option>🏨 Hotel & Resort</option>
+                        <option>☕ Cafe & Coffee Shop</option>
+                        <option>🍽️ Restaurant & Dining</option>
+                        <option>👗 Fashion & Clothing</option>
+                        <option>🏦 Bank & Financial</option>
+                        <option>🏥 Private Hospital & Clinic</option>
+                        <option>🏫 University & College</option>
                     </select>
                 </div>
                 
                 <input type="text" id="shopUrl" placeholder="Website URL *">
                 
                 <div class="form-row">
-                    <input type="text" id="phone" placeholder="Phone Number *">
+                    <input type="text" id="phone" placeholder="Phone *">
                     <input type="email" id="email" placeholder="Email *">
                 </div>
                 
-                <input type="text" id="address" placeholder="Physical Address *">
-                
-                <div class="imgbb-helper">
-                    📸 Upload images to ImgBB: <a href="https://imgbb.com" target="_blank">imgbb.com</a> → Copy "Direct URL"
-                </div>
-                
-                <div class="form-row">
-                    <input type="text" id="storePhoto" placeholder="Store Photo URL *">
-                    <input type="text" id="logoUrl" placeholder="Logo URL (optional)">
-                </div>
+                <input type="text" id="address" placeholder="Address *">
+                <input type="text" id="storePhoto" placeholder="Store Photo URL *">
+                <input type="text" id="logoUrl" placeholder="Logo URL (optional)">
                 
                 <div class="form-row">
                     <input type="number" id="rating" step="0.1" min="1" max="5" placeholder="Rating (1-5)">
-                    <input type="number" id="reviews" placeholder="Number of Reviews">
+                    <input type="number" id="reviews" placeholder="Reviews count">
                 </div>
                 
-                <div style="display: flex; gap: 16px; margin-bottom: 16px;">
-                    <label style="color: white; display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" id="featuredCheckbox"> ⭐ Featured Business
+                <div style="margin: 1rem 0;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" id="featuredCheckbox"> ⭐ Featured Business (appears on homepage)
                     </label>
                 </div>
                 
                 <textarea id="description" rows="2" placeholder="Short Description *"></textarea>
                 <textarea id="fullDescription" rows="4" placeholder="Full Description *"></textarea>
                 
-                <button onclick="generateJSON()">🔧 Generate Business JSON</button>
+                <button onclick="generateJSON()">🔧 Generate JSON</button>
                 
-                <div id="jsonOutput" style="display: none; margin-top: 20px;">
-                    <h3 style="color: white;">📋 Copy this JSON to GitHub:</h3>
+                <div id="jsonOutput" style="display: none; margin-top: 1rem;">
                     <div class="json-output" id="jsonCode"></div>
                     <button onclick="copyToClipboard()" style="background: #333;">📋 Copy to Clipboard</button>
                 </div>
@@ -529,9 +441,8 @@
         <div id="businessesTab" class="tab-content">
             <div class="admin-box">
                 <h1>📋 All Businesses</h1>
-                <p>Manage your listed businesses</p>
                 <div id="shopsList"></div>
-                <button onclick="logout()" style="background: #333; margin-top: 16px;">Logout</button>
+                <button onclick="logout()" style="background: #333; margin-top: 1rem;">Logout</button>
             </div>
         </div>
     </div>
@@ -542,37 +453,27 @@
     const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
     
     let storedCode = null;
-    let verifiedEmail = null;
     let currentShops = [];
 
-    // Tab switching
     function switchTab(tabName) {
         document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
         document.getElementById(`${tabName}Tab`).classList.add('active');
-        
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
         event.target.classList.add('active');
         
-        if (tabName === 'analytics') {
-            loadAnalytics();
-        } else if (tabName === 'businesses') {
-            loadShopsFromGitHub();
-        }
+        if (tabName === 'analytics') loadAnalytics();
+        else if (tabName === 'businesses') loadShopsFromGitHub();
     }
 
-    // Analytics Functions
     async function loadAnalytics() {
-        // Get view counts from localStorage
         const views = JSON.parse(localStorage.getItem('crimsonowl_views') || '{}');
         const totalViews = Object.values(views).reduce((a, b) => a + b, 0);
         document.getElementById('totalViews').innerText = totalViews || 0;
         
         const today = new Date().toDateString();
-        const todayViews = views[today] || 0;
-        document.getElementById('todayViews').innerText = todayViews;
+        document.getElementById('todayViews').innerText = views[today] || 0;
         
-        // Weekly chart
-        const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         let weeklyHtml = '';
         const maxView = Math.max(...Object.values(views), 1);
         
@@ -591,25 +492,6 @@
         }
         document.getElementById('weeklyChart').innerHTML = weeklyHtml;
         
-        // Monthly chart (last 30 days)
-        let monthlyHtml = '<div style="display: flex; gap: 4px; overflow-x: auto;">';
-        for (let i = 29; i >= 0; i--) {
-            const date = new Date();
-            date.setDate(date.getDate() - i);
-            const dayKey = date.toDateString();
-            const dayViews = views[dayKey] || 0;
-            const height = Math.min((dayViews / maxView) * 60, 60);
-            monthlyHtml += `
-                <div style="text-align: center; width: 30px;">
-                    <div style="height: ${height}px; background: #8B0000; width: 20px; border-radius: 4px 4px 0 0; margin-bottom: 4px;"></div>
-                    <div style="font-size: 8px; color: #888;">${date.getDate()}</div>
-                </div>
-            `;
-        }
-        monthlyHtml += '</div>';
-        document.getElementById('monthlyChart').innerHTML = monthlyHtml;
-        
-        // Load businesses for other stats
         const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
         if (response.ok) {
             const data = await response.json();
@@ -617,43 +499,18 @@
             document.getElementById('totalBusinesses').innerText = businesses.length;
             document.getElementById('featuredCount').innerText = businesses.filter(b => b.featured).length;
             
-            // Get business views
             const businessViews = {};
             businesses.forEach(b => { businessViews[b.id] = parseInt(localStorage.getItem(`views_${b.id}`) || '0'); });
             const sorted = [...businesses].sort((a,b) => (businessViews[b.id] || 0) - (businessViews[a.id] || 0)).slice(0, 10);
             
-            let topHtml = `<table class="data-table"><tr><th>Rank</th><th>Business</th><th>Category</th><th>Views</th></tr>`;
+            let topHtml = `<table class="data-table"><tr><th>Rank</th><th>Business</th><th>Views</th></tr>`;
             sorted.forEach((b, i) => {
-                topHtml += `<tr>
-                    <td class="rank-${i+1}">${i+1}</td>
-                    <td>${b.shopName}${b.featured ? ' ⭐' : ''}</td>
-                    <td>${b.category}</td>
-                    <td>${businessViews[b.id] || 0}</td>
-                </tr>`;
+                topHtml += `<tr><td>${i+1}</td><td>${b.shopName}${b.featured ? ' ⭐' : ''}</td><td>${businessViews[b.id] || 0}</td></tr>`;
             });
             topHtml += `</table>`;
             document.getElementById('topViewedTable').innerHTML = topHtml;
             
-            // Category distribution
-            const categoryCount = {};
-            businesses.forEach(b => { categoryCount[b.category] = (categoryCount[b.category] || 0) + 1; });
-            const sortedCategories = Object.entries(categoryCount).sort((a,b) => b[1] - a[1]).slice(0, 10);
-            let catHtml = '';
-            sortedCategories.forEach(([cat, count]) => {
-                const percent = (count / businesses.length) * 100;
-                catHtml += `
-                    <div class="bar-item">
-                        <div class="bar-label"><span>${cat}</span><span>${count} businesses</span></div>
-                        <div class="bar"><div class="bar-fill" style="width: ${percent}%;">${count}</div></div>
-                    </div>
-                `;
-            });
-            document.getElementById('categoryDistribution').innerHTML = catHtml || '<p style="color:#aaa;">No businesses yet</p>';
-            
-            // Review stats
-            let totalReviews = 0;
-            let totalRating = 0;
-            let reviewCount = 0;
+            let totalReviews = 0, totalRating = 0, reviewCount = 0;
             businesses.forEach(b => {
                 const reviews = JSON.parse(localStorage.getItem(`reviews_${b.id}`) || '[]');
                 totalReviews += reviews.length;
@@ -682,16 +539,12 @@
     function displayShopsList() {
         const container = document.getElementById('shopsList');
         if (currentShops.length === 0) {
-            container.innerHTML = '<p style="color: #888;">No businesses yet. Add your first business in the "Add Business" tab!</p>';
+            container.innerHTML = '<p style="color: #888;">No businesses yet.</p>';
             return;
         }
-        
         container.innerHTML = currentShops.map(shop => `
             <div class="shop-item">
-                <div class="shop-info">
-                    <h4>${shop.shopName} ${shop.featured ? '⭐' : ''}</h4>
-                    <p>${shop.category} | ${shop.phone || 'No phone'}</p>
-                </div>
+                <div><strong>${shop.shopName}</strong> ${shop.featured ? '⭐' : ''}<br><small style="color:#888;">${shop.category}</small></div>
             </div>
         `).join('');
     }
@@ -711,17 +564,14 @@
         const reviews = document.getElementById('reviews').value;
         const featured = document.getElementById('featuredCheckbox').checked;
         
-        if (!shopName || !category || !shopUrl || !phone || !email || !address || !storePhoto || !description || !fullDescription) {
-            document.getElementById('adminMessage').innerHTML = '<div class="message error">❌ Please fill all required fields (*)</div>';
+        if (!shopName || !shopUrl || !phone || !email || !address || !storePhoto || !description || !fullDescription) {
+            document.getElementById('adminMessage').innerHTML = '<div class="message error">❌ Please fill all required fields</div>';
             setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 3000);
             return;
         }
         
-        const newId = Date.now();
-        const today = new Date().toISOString().split('T')[0];
-        
         const newShop = {
-            id: newId,
+            id: Date.now(),
             shopName: shopName,
             category: category,
             description: description,
@@ -736,95 +586,67 @@
             rating: rating ? parseFloat(rating) : 0,
             reviews: reviews ? parseInt(reviews) : 0,
             status: "active",
-            addedDate: today
+            addedDate: new Date().toISOString().split('T')[0]
         };
         
-        const jsonString = JSON.stringify(newShop, null, 2);
-        
-        document.getElementById('jsonCode').innerText = jsonString;
+        document.getElementById('jsonCode').innerText = JSON.stringify(newShop, null, 2);
         document.getElementById('jsonOutput').style.display = 'block';
-        document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ JSON generated! Copy it to shops.json on GitHub.</div>';
+        document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ JSON generated! Copy to shops.json on GitHub.</div>';
     }
 
     function copyToClipboard() {
         const jsonText = document.getElementById('jsonCode').innerText;
         navigator.clipboard.writeText(jsonText);
-        document.getElementById('adminMessage').innerHTML = '<div class="message success">✅ Copied! Now paste into shops.json on GitHub</div>';
-        setTimeout(() => document.getElementById('adminMessage').innerHTML = '', 3000);
+        alert('Copied to clipboard!');
     }
 
     async function sendVerificationCode() {
         const email = document.getElementById('adminEmail').value;
-        
-        if (!email || email !== 'ignivolatusapk@gmail.com') {
-            document.getElementById('loginMessage').innerHTML = '<div class="message error">❌ Only authorized email can access admin panel</div>';
+        if (email !== 'ignivolatusapk@gmail.com') {
+            document.getElementById('loginMessage').innerHTML = '<div class="message error">❌ Unauthorized email</div>';
             return;
         }
-        
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         storedCode = code;
         
-        console.log('Verification code:', code);
-        
         const formData = new FormData();
-        formData.append('_subject', 'Crimson Owl - Admin Verification Code');
-        formData.append('Code', code);
-        formData.append('Message', `Your verification code is: ${code}\n\nEnter this code to access the admin panel.\n\nThis code expires in 10 minutes.`);
+        formData.append('_subject', 'Crimson Owl Admin Code');
+        formData.append('message', `Your code: ${code}`);
         
         try {
-            const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            });
-            
-            if (response.ok) {
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('verifySection').style.display = 'block';
-                document.getElementById('verifyMessage').innerHTML = '<div class="message success">✅ Code sent to your email!</div>';
-                
-                setTimeout(() => { storedCode = null; }, 600000);
-            } else {
-                throw new Error();
-            }
-        } catch (error) {
-            document.getElementById('loginMessage').innerHTML = `<div class="message info">📝 Use code: <strong style="font-size:24px;">${code}</strong></div>`;
+            await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, { method: 'POST', body: formData });
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('verifySection').style.display = 'block';
+            document.getElementById('verifyMessage').innerHTML = '<div class="message success">✅ Code sent! Check email.</div>';
+        } catch(e) {
+            document.getElementById('loginMessage').innerHTML = `<div class="message info">📝 Use code: ${code}</div>`;
             setTimeout(() => {
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('verifySection').style.display = 'block';
-                document.getElementById('verifyMessage').innerHTML = `<div class="message info">🔐 Code: <strong style="font-size:28px;">${code}</strong></div>`;
-            }, 1500);
+                document.getElementById('verifyMessage').innerHTML = `<div class="message info">🔐 Code: ${code}</div>`;
+            }, 1000);
         }
     }
-    
+
     function verifyCode() {
-        const enteredCode = document.getElementById('verificationCode').value;
-        
-        if (enteredCode === storedCode) {
-            verifiedEmail = 'ignivolatusapk@gmail.com';
+        if (document.getElementById('verificationCode').value === storedCode) {
             document.getElementById('verifySection').style.display = 'none';
             document.getElementById('adminSection').style.display = 'block';
             loadAnalytics();
             loadShopsFromGitHub();
         } else {
-            document.getElementById('verifyMessage').innerHTML = '<div class="message error">❌ Invalid verification code</div>';
+            document.getElementById('verifyMessage').innerHTML = '<div class="message error">❌ Invalid code</div>';
         }
     }
-    
+
     function backToLogin() {
         document.getElementById('verifySection').style.display = 'none';
         document.getElementById('loginSection').style.display = 'block';
-        document.getElementById('verificationCode').value = '';
-        storedCode = null;
     }
-    
+
     function logout() {
-        verifiedEmail = null;
-        storedCode = null;
         document.getElementById('adminSection').style.display = 'none';
         document.getElementById('loginSection').style.display = 'block';
-        document.getElementById('adminEmail').value = 'ignivolatusapk@gmail.com';
-        document.getElementById('jsonOutput').style.display = 'none';
     }
 </script>
 
