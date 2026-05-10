@@ -5,375 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Business Details - Crimson Owl</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #0a0a0a; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #0a0a0a;
-            min-height: 100vh;
-        }
+        .navbar { background: rgba(0,0,0,0.95); padding: 16px 24px; border-bottom: 1px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 1000; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; }
+        .nav-logo img { height: 36px; }
+        .nav-logo span { color: white; font-weight: 700; font-size: 18px; }
+        .back-btn { color: white; text-decoration: none; background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 30px; }
+        .back-btn:hover { background: #8B0000; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+        .loading { text-align: center; padding: 60px; color: #aaa; }
 
-        .navbar {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 16px 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        .business-header { display: grid; grid-template-columns: auto 1fr; gap: 30px; background: rgba(255,255,255,0.05); border-radius: 24px; padding: 30px; margin-bottom: 40px; }
+        .business-logo-large { width: 150px; height: 150px; border-radius: 20px; object-fit: cover; background: #1a1a1a; }
+        .business-title h1 { color: white; font-size: 36px; margin-bottom: 10px; }
+        .business-category { display: inline-block; background: rgba(139,0,0,0.3); color: #8B0000; padding: 6px 14px; border-radius: 30px; font-size: 14px; margin-bottom: 16px; }
+        .featured-badge { display: inline-block; background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; padding: 6px 14px; border-radius: 30px; font-size: 12px; font-weight: bold; margin-left: 10px; }
+        .business-rating { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+        .stars { display: flex; gap: 4px; }
+        .stars svg { width: 20px; height: 20px; fill: #ffc73a; }
 
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 24px; margin-bottom: 40px; }
+        .info-card { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 24px; }
+        .info-card h3 { color: white; font-size: 18px; margin-bottom: 16px; }
+        .contact-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .contact-icon { width: 40px; height: 40px; background: rgba(139,0,0,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .contact-label { font-size: 12px; color: #888; }
+        .contact-value { color: white; font-size: 14px; text-decoration: none; }
+        .hours-list li { display: flex; justify-content: space-between; padding: 8px 0; color: #aaa; }
+        .hours-list li span:first-child { color: white; }
 
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .photo-gallery { margin-bottom: 40px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 16px; margin-top: 20px; }
+        .gallery-item { aspect-ratio: 1; border-radius: 16px; overflow: hidden; cursor: pointer; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        .nav-logo img {
-            height: 36px;
-            width: auto;
-        }
+        .description-section { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 24px; margin-bottom: 40px; }
+        .description-section h3 { color: white; font-size: 18px; margin-bottom: 16px; }
+        .description-section p { color: #aaa; line-height: 1.6; }
 
-        .nav-logo span {
-            color: white;
-            font-weight: 700;
-            font-size: 18px;
-        }
+        /* Reviews Section */
+        .reviews-section { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 24px; margin-bottom: 40px; }
+        .reviews-section h3 { color: white; font-size: 18px; margin-bottom: 16px; }
+        .review-item { background: #0a0a0a; border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+        .review-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .reviewer-name { color: white; font-weight: 600; }
+        .review-date { color: #888; font-size: 12px; }
+        .review-stars { display: flex; gap: 2px; margin-bottom: 8px; }
+        .review-stars svg { width: 14px; height: 14px; fill: #ffc73a; }
+        .review-text { color: #aaa; font-size: 13px; line-height: 1.5; }
+        .write-review { margin-top: 24px; }
+        .write-review textarea { width: 100%; padding: 12px; background: #0a0a0a; border: 1px solid #333; border-radius: 12px; color: white; margin-bottom: 12px; }
+        .write-review select { padding: 10px; background: #0a0a0a; border: 1px solid #333; border-radius: 12px; color: white; margin-right: 12px; }
+        .submit-review { background: #8B0000; color: white; padding: 10px 20px; border: none; border-radius: 40px; cursor: pointer; }
 
-        .back-btn {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 8px 16px;
-            border-radius: 30px;
-            transition: all 0.3s;
-        }
+        .action-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+        .action-btn { flex: 1; padding: 14px; border-radius: 40px; text-align: center; text-decoration: none; font-weight: 600; }
+        .action-btn.website { background: #8B0000; color: white; }
+        .action-btn.call { background: transparent; border: 2px solid #8B0000; color: white; }
+        .action-btn.direction { background: transparent; border: 2px solid white; color: white; }
 
-        .back-btn:hover {
-            background: #8B0000;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 24px;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 60px;
-            color: #aaa;
-        }
-
-        .error {
-            text-align: center;
-            padding: 60px;
-            color: #ff4444;
-        }
-
-        .business-header {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            padding: 30px;
-        }
-
-        .business-logo-large {
-            width: 150px;
-            height: 150px;
-            border-radius: 20px;
-            object-fit: cover;
-            background: #1a1a1a;
-        }
-
-        .business-title h1 {
-            color: white;
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-
-        .business-category {
-            display: inline-block;
-            background: rgba(139, 0, 0, 0.3);
-            color: #8B0000;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
-
-        .business-rating {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        .stars {
-            display: flex;
-            gap: 4px;
-        }
-
-        .stars svg {
-            width: 20px;
-            height: 20px;
-            fill: #ffc73a;
-        }
-
-        .rating-text {
-            color: #aaa;
-            font-size: 14px;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        .info-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 24px;
-        }
-
-        .info-card h3 {
-            color: white;
-            font-size: 18px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .contact-item:last-child {
-            border-bottom: none;
-        }
-
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(139, 0, 0, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .contact-info {
-            flex: 1;
-        }
-
-        .contact-label {
-            font-size: 12px;
-            color: #888;
-        }
-
-        .contact-value {
-            color: white;
-            font-size: 14px;
-            text-decoration: none;
-        }
-
-        .contact-value:hover {
-            color: #8B0000;
-        }
-
-        .hours-list {
-            list-style: none;
-        }
-
-        .hours-list li {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: #aaa;
-        }
-
-        .hours-list li span:first-child {
-            color: white;
-        }
-
-        .map-container {
-            background: #1a1a1a;
-            border-radius: 20px;
-            overflow: hidden;
-            height: 300px;
-        }
-
-        .map-placeholder {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-        }
-
-        .photo-gallery {
-            margin-bottom: 40px;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 16px;
-            margin-top: 20px;
-        }
-
-        .gallery-item {
-            aspect-ratio: 1;
-            border-radius: 16px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.02);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .description-section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 40px;
-        }
-
-        .description-section h3 {
-            color: white;
-            font-size: 18px;
-            margin-bottom: 16px;
-        }
-
-        .description-section p {
-            color: #aaa;
-            line-height: 1.6;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 16px;
-            margin-top: 24px;
-            flex-wrap: wrap;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 14px;
-            border-radius: 40px;
-            text-align: center;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .action-btn.website {
-            background: #8B0000;
-            color: white;
-            border: none;
-        }
-
-        .action-btn.website:hover {
-            background: #a00000;
-        }
-
-        .action-btn.call {
-            background: transparent;
-            border: 2px solid #8B0000;
-            color: white;
-        }
-
-        .action-btn.call:hover {
-            background: #8B0000;
-        }
-
-        .action-btn.direction {
-            background: transparent;
-            border: 2px solid white;
-            color: white;
-        }
-
-        .action-btn.direction:hover {
-            background: white;
-            color: black;
-        }
-
-        .footer {
-            background: rgba(0, 0, 0, 0.95);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 32px 24px;
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .footer p {
-            color: #666;
-            font-size: 13px;
-        }
+        .footer { background: rgba(0,0,0,0.95); border-top: 1px solid rgba(255,255,255,0.05); padding: 32px; text-align: center; margin-top: 40px; }
+        .footer p { color: #666; font-size: 13px; }
 
         @media (max-width: 768px) {
-            .business-header {
-                grid-template-columns: 1fr;
-                text-align: center;
-                padding: 20px;
-            }
-            
-            .business-logo-large {
-                margin: 0 auto;
-            }
-            
-            .business-rating {
-                justify-content: center;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            .container {
-                padding: 20px 16px;
-            }
-
-            .business-title h1 {
-                font-size: 24px;
-            }
+            .business-header { grid-template-columns: 1fr; text-align: center; }
+            .business-logo-large { margin: 0 auto; }
+            .business-rating { justify-content: center; }
+            .action-buttons { flex-direction: column; }
         }
     </style>
 </head>
@@ -381,185 +82,99 @@
 
 <div class="navbar">
     <div class="nav-container">
-        <div class="nav-logo">
-            <img src="images/logo.png" alt="Crimson Owl Logo">
-            <span>CRIMSON OWL</span>
-        </div>
+        <div class="nav-logo"><img src="images/logo.png" alt="Logo"><span>CRIMSON OWL</span></div>
         <a href="javascript:history.back()" class="back-btn">← Back</a>
     </div>
 </div>
 
-<div class="container" id="businessDetails">
-    <div class="loading">Loading business details...</div>
-</div>
+<div class="container" id="businessDetails"><div class="loading">Loading...</div></div>
 
-<div class="footer">
-    <p>© 2026 Crimson Owl | Ethiopian Business Directory</p>
-</div>
+<div class="footer"><p>© 2026 Crimson Owl | Ethiopian Business Directory</p></div>
 
 <script>
-    // GitHub RAW URL
     const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
-    
-    // Get business ID from URL
     const urlParams = new URLSearchParams(window.location.search);
     const businessId = parseInt(urlParams.get('id'));
 
-    function getStarRating(rating) {
-        const fullStars = Math.floor(rating);
-        const hasHalfStar = rating % 1 >= 0.5;
+    function getStarRating(rating, size=20) {
+        const full = Math.floor(rating);
         let stars = '';
-        for (let i = 0; i < fullStars; i++) {
-            stars += `<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
-        }
-        if (hasHalfStar) {
-            stars += `<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
-        }
-        for (let i = stars.length / 24; i < 5; i++) {
-            stars += `<svg viewBox="0 0 24 24" fill="none" stroke="#555"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
-        }
+        for(let i=0;i<full;i++) stars += `<svg width="${size}" height="${size}" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
+        for(let i=stars.length/size; i<5; i++) stars += `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#555"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
         return stars;
     }
 
-    async function loadBusinessDetails() {
+    async function loadBusiness() {
         try {
-            const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
-            if (!response.ok) throw new Error('Failed to load');
-            const data = await response.json();
+            const res = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
+            const data = await res.json();
             const business = data.shops.find(s => s.id === businessId && s.status === 'active');
-            
-            if (!business) {
-                document.getElementById('businessDetails').innerHTML = `
-                    <div class="error">
-                        <p>Business not found</p>
-                        <a href="browse-shops.html" class="back-btn" style="display: inline-block; margin-top: 20px;">← Back to Shops</a>
-                    </div>
-                `;
-                return;
-            }
+            if (!business) { document.getElementById('businessDetails').innerHTML = '<div class="loading">Business not found</div>'; return; }
 
-            // Generate hours HTML
-            const days = [
-                { key: 'monday', label: 'Monday' },
-                { key: 'tuesday', label: 'Tuesday' },
-                { key: 'wednesday', label: 'Wednesday' },
-                { key: 'thursday', label: 'Thursday' },
-                { key: 'friday', label: 'Friday' },
-                { key: 'saturday', label: 'Saturday' },
-                { key: 'sunday', label: 'Sunday' }
-            ];
+            // Load reviews from localStorage
+            const reviews = JSON.parse(localStorage.getItem(`reviews_${businessId}`) || '[]');
 
-            const hoursHtml = business.hours ? days.map(day => `
-                <li>
-                    <span>${day.label}</span>
-                    <span>${business.hours[day.key] || 'Closed'}</span>
-                </li>
-            `).join('') : '<li><span>Hours not available</span></li>';
-
-            // Generate gallery HTML
-            const galleryHtml = business.gallery && business.gallery.length > 0 ? 
-                business.gallery.map(photo => `
-                    <div class="gallery-item" onclick="window.open('${photo}', '_blank')">
-                        <img src="${photo}" alt="${business.shopName} gallery">
-                    </div>
-                `).join('') : 
-                '<p style="color: #aaa; grid-column: 1/-1; text-align: center;">No photos available</p>';
+            const hoursHtml = business.hours ? ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'].map(d => `<li><span>${d.charAt(0).toUpperCase()+d.slice(1)}</span><span>${business.hours[d] || 'Closed'}</span></li>`).join('') : '<li>Hours not available</li>';
+            const galleryHtml = business.gallery?.map(p => `<div class="gallery-item" onclick="window.open('${p}','_blank')"><img src="${p}"></div>`).join('') || '<p>No photos</p>';
+            const reviewsHtml = reviews.map(r => `
+                <div class="review-item">
+                    <div class="review-header"><span class="reviewer-name">${r.name}</span><span class="review-date">${r.date}</span></div>
+                    <div class="review-stars">${getStarRating(r.rating, 14)}</div>
+                    <div class="review-text">${r.comment}</div>
+                </div>
+            `).join('');
 
             const html = `
                 <div class="business-header">
-                    <div>
-                        ${business.logoUrl ? 
-                            `<img src="${business.logoUrl}" class="business-logo-large" alt="${business.shopName}">` :
-                            `<div class="business-logo-large" style="display: flex; align-items: center; justify-content: center; font-size: 60px; background: #1a1a1a;">🏢</div>`
-                        }
-                    </div>
+                    <div>${business.logoUrl ? `<img src="${business.logoUrl}" class="business-logo-large">` : `<div class="business-logo-large" style="display:flex;align-items:center;justify-content:center;font-size:60px;">🏢</div>`}</div>
                     <div class="business-title">
-                        <span class="business-category">${business.category}</span>
+                        <span class="business-category">${business.category}</span>${business.featured ? '<span class="featured-badge">⭐ FEATURED</span>' : ''}
                         <h1>${business.shopName}</h1>
-                        <div class="business-rating">
-                            <div class="stars">${getStarRating(business.rating || 4.5)}</div>
-                            <span class="rating-text">${business.rating || 4.5} (${business.reviews || 0} reviews)</span>
-                        </div>
+                        <div class="business-rating"><div class="stars">${getStarRating(business.rating || 0)}</div><span>${business.rating || 0} (${business.reviews || 0} reviews)</span></div>
                     </div>
                 </div>
-
                 <div class="info-grid">
-                    <div class="info-card">
-                        <h3>📞 Contact Information</h3>
-                        <div class="contact-item">
-                            <div class="contact-icon">📱</div>
-                            <div class="contact-info">
-                                <div class="contact-label">Phone</div>
-                                <a href="tel:${business.phone}" class="contact-value">${business.phone || 'Not available'}</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">✉️</div>
-                            <div class="contact-info">
-                                <div class="contact-label">Email</div>
-                                <a href="mailto:${business.email}" class="contact-value">${business.email || 'Not available'}</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">📍</div>
-                            <div class="contact-info">
-                                <div class="contact-label">Address</div>
-                                <div class="contact-value">${business.address || 'Not available'}</div>
-                            </div>
-                        </div>
+                    <div class="info-card"><h3>📞 Contact</h3>
+                        <div class="contact-item"><div class="contact-icon">📱</div><div><div class="contact-label">Phone</div><a href="tel:${business.phone}" class="contact-value">${business.phone}</a></div></div>
+                        <div class="contact-item"><div class="contact-icon">✉️</div><div><div class="contact-label">Email</div><a href="mailto:${business.email}" class="contact-value">${business.email}</a></div></div>
+                        <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-label">Address</div><div class="contact-value">${business.address}</div></div></div>
                     </div>
-
-                    <div class="info-card">
-                        <h3>🕒 Business Hours</h3>
-                        <ul class="hours-list">
-                            ${hoursHtml}
-                        </ul>
+                    <div class="info-card"><h3>🕒 Hours</h3><ul class="hours-list">${hoursHtml}</ul></div>
+                </div>
+                <div class="photo-gallery"><h3>📸 Gallery</h3><div class="gallery-grid">${galleryHtml}</div></div>
+                <div class="description-section"><h3>📖 About</h3><p>${business.fullDescription || business.description}</p></div>
+                <div class="reviews-section"><h3>⭐ Reviews</h3><div id="reviewsList">${reviewsHtml || '<p>No reviews yet. Be the first to review!</p>'}</div>
+                    <div class="write-review"><h4 style="color:white; margin-bottom:12px;">Write a Review</h4>
+                        <input type="text" id="reviewerName" placeholder="Your Name" style="width:100%; padding:10px; background:#0a0a0a; border:1px solid #333; border-radius:12px; color:white; margin-bottom:12px;">
+                        <select id="reviewRating" style="padding:10px; background:#0a0a0a; border:1px solid #333; border-radius:12px; color:white; margin-bottom:12px;">
+                            <option value="5">⭐⭐⭐⭐⭐ - Excellent</option><option value="4">⭐⭐⭐⭐ - Good</option><option value="3">⭐⭐⭐ - Average</option><option value="2">⭐⭐ - Poor</option><option value="1">⭐ - Terrible</option>
+                        </select>
+                        <textarea id="reviewComment" rows="3" placeholder="Your review..." style="width:100%; padding:10px; background:#0a0a0a; border:1px solid #333; border-radius:12px; color:white; margin-bottom:12px;"></textarea>
+                        <button class="submit-review" onclick="submitReview(${business.id})">Submit Review</button>
                     </div>
                 </div>
-
-                <div class="info-card" style="margin-bottom: 24px;">
-                    <h3>🗺️ Location Map</h3>
-                    <div class="map-container">
-                        <div class="map-placeholder">
-                            <div style="font-size: 48px; margin-bottom: 16px;">📍</div>
-                            <div>${business.address || 'Address not available'}</div>
-                            <div style="font-size: 12px; margin-top: 16px;">Click "Get Directions" below for navigation</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="photo-gallery">
-                    <h3 style="color: white; font-size: 18px;">📸 Photo Gallery</h3>
-                    <div class="gallery-grid">
-                        ${galleryHtml}
-                    </div>
-                </div>
-
-                <div class="description-section">
-                    <h3>📖 About ${business.shopName}</h3>
-                    <p>${business.fullDescription || business.description || 'No description available.'}</p>
-                </div>
-
                 <div class="action-buttons">
-                    <a href="${business.shopUrl}" target="_blank" class="action-btn website">🌐 Visit Website</a>
-                    <a href="tel:${business.phone}" class="action-btn call">📞 Call Now</a>
-                    <a href="https://maps.google.com/?q=${encodeURIComponent(business.address || '')}" target="_blank" class="action-btn direction">🗺️ Get Directions</a>
+                    <a href="${business.shopUrl}" target="_blank" class="action-btn website">🌐 Website</a>
+                    <a href="tel:${business.phone}" class="action-btn call">📞 Call</a>
+                    <a href="https://maps.google.com/?q=${encodeURIComponent(business.address)}" target="_blank" class="action-btn direction">🗺️ Directions</a>
                 </div>
             `;
-
             document.getElementById('businessDetails').innerHTML = html;
-        } catch (error) {
-            console.error('Error loading business:', error);
-            document.getElementById('businessDetails').innerHTML = `
-                <div class="error">
-                    <p>⚠️ Unable to load business details</p>
-                    <a href="browse-shops.html" class="back-btn" style="display: inline-block; margin-top: 20px;">← Back to Shops</a>
-                </div>
-            `;
-        }
+        } catch(e) { document.getElementById('businessDetails').innerHTML = '<div class="loading">Error loading</div>'; }
     }
 
-    loadBusinessDetails();
+    function submitReview(businessId) {
+        const name = document.getElementById('reviewerName')?.value;
+        const rating = document.getElementById('reviewRating')?.value;
+        const comment = document.getElementById('reviewComment')?.value;
+        if (!name || !comment) { alert('Please enter your name and review'); return; }
+        const reviews = JSON.parse(localStorage.getItem(`reviews_${businessId}`) || '[]');
+        reviews.unshift({ name, rating: parseInt(rating), comment, date: new Date().toLocaleDateString() });
+        localStorage.setItem(`reviews_${businessId}`, JSON.stringify(reviews));
+        loadBusiness();
+    }
+
+    loadBusiness();
 </script>
 
 </body>
