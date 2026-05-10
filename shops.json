@@ -53,6 +53,24 @@
   "reviews": 0,
   "status": "active",
   "addedDate": "2026-05-10"
+    },
+    {
+  "id": 1778408644263,
+  "shopName": "safaricom ethiopia",
+  "category": "📞 Telecom & Internet",
+  "description": "telecom service ",
+  "fullDescription": "We are a purpose-led technology and communications company, proudly committed to accelerating Ethiopia’s digital transformation and inclusion goals.",
+  "shopUrl": "https://www.safaricom.et/en",
+  "logoUrl": "https://i.ibb.co/QF5Z1MsW/Home.jpg",
+  "storePhoto": "https://i.ibb.co/QF5Z1MsW/Home.jpg",
+  "phone": " 400",
+  "email": "complaints@safaricom.et",
+  "address": "ethiopia",
+  "featured": false,
+  "rating": 5,
+  "reviews": 0,
+  "status": "active",
+  "addedDate": "2026-05-10"
     }
   ]
 }
