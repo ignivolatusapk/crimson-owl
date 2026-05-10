@@ -79,15 +79,14 @@
   }
   .back-btn:hover { background: var(--crimson); }
 
-  /* Container */
   .container {
     max-width: 1000px;
     margin: 0 auto;
     padding: 140px 24px 60px;
   }
 
-  /* Loading */
   .loading { text-align: center; padding: 60px; color: var(--mid-gray); }
+  .error { text-align: center; padding: 60px; color: var(--crimson); }
 
   /* Business Header */
   .business-header {
@@ -137,7 +136,6 @@
   .stars { display: flex; gap: 4px; }
   .stars svg { width: 18px; height: 18px; fill: #FFD700; }
 
-  /* Info Grid */
   .info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -168,10 +166,7 @@
     font-size: 1.2rem;
   }
   .contact-label { font-size: 0.7rem; color: var(--mid-gray); }
-  .contact-value {
-    color: var(--pure-white); font-size: 0.85rem;
-    text-decoration: none;
-  }
+  .contact-value { color: var(--pure-white); font-size: 0.85rem; text-decoration: none; }
   .hours-list { list-style: none; }
   .hours-list li {
     display: flex; justify-content: space-between;
@@ -179,7 +174,6 @@
     font-size: 0.85rem;
   }
 
-  /* Gallery */
   .photo-gallery { margin-bottom: 40px; }
   .photo-gallery h3 {
     font-family: 'Playfair Display', serif;
@@ -200,7 +194,6 @@
   .gallery-item:hover { transform: scale(1.02); }
   .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-  /* Description */
   .description-section {
     background: var(--charcoal);
     border-radius: 20px;
@@ -217,7 +210,6 @@
     color: rgba(255,255,255,0.7);
   }
 
-  /* Reviews */
   .reviews-section {
     background: var(--charcoal);
     border-radius: 20px;
@@ -245,7 +237,6 @@
   .review-stars svg { width: 14px; height: 14px; fill: #FFD700; }
   .review-text { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
 
-  /* Write Review */
   .write-review { margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); }
   .write-review h4 { font-family: 'Playfair Display', serif; margin-bottom: 16px; }
   .write-review input, .write-review select, .write-review textarea {
@@ -271,7 +262,6 @@
   }
   .submit-review:hover { background: var(--crimson-light); }
 
-  /* Action Buttons */
   .action-buttons {
     display: flex; gap: 16px; flex-wrap: wrap;
     margin-top: 24px;
@@ -304,7 +294,6 @@
   }
   .action-btn.direction:hover { border-color: var(--crimson); color: var(--crimson); transform: translateY(-2px); }
 
-  /* Footer */
   footer {
     background: #050505;
     padding: 40px 60px 30px;
@@ -353,17 +342,15 @@
 </head>
 <body>
 
-<!-- Cursor -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo">
     <img src="images/logo.png" alt="Crimson Owl Logo" onerror="this.src='https://placehold.co/36x36/8B0000/white?text=CO'">
     <span>Crimson Owl</span>
   </div>
-  <a href="javascript:history.back()" class="back-btn">← Back</a>
+  <a href="browse-shops.html" class="back-btn">← Back to Businesses</a>
 </nav>
 
 <div class="container" id="businessDetails">
@@ -394,7 +381,6 @@
   const urlParams = new URLSearchParams(window.location.search);
   const businessId = parseInt(urlParams.get('id'));
 
-  // Custom Cursor
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
@@ -426,11 +412,10 @@
       const business = data.shops.find(s => s.id === businessId && s.status === 'active');
       
       if (!business) {
-        document.getElementById('businessDetails').innerHTML = '<div class="loading">Business not found</div>';
+        document.getElementById('businessDetails').innerHTML = '<div class="error">Business not found. <a href="browse-shops.html" style="color:#8B0000;">Go back to browse</a></div>';
         return;
       }
 
-      // Track view
       let views = parseInt(localStorage.getItem(`views_${businessId}`) || '0');
       views++;
       localStorage.setItem(`views_${businessId}`, views);
@@ -440,7 +425,6 @@
       dailyViews[today] = (dailyViews[today] || 0) + 1;
       localStorage.setItem('crimsonowl_views', JSON.stringify(dailyViews));
 
-      // Load reviews
       const reviews = JSON.parse(localStorage.getItem(`reviews_${businessId}`) || '[]');
 
       const hoursHtml = business.hours ? 
@@ -457,16 +441,13 @@
         business.gallery.map(p => `<div class="gallery-item" onclick="window.open('${p}','_blank')"><img src="${p}"></div>`).join('') :
         '<p style="color:#666; grid-column:1/-1;">No photos available</p>';
 
-      const reviewsHtml = reviews.map(r => `
+      const reviewsHtml = reviews.length > 0 ? reviews.map(r => `
         <div class="review-item">
-          <div class="review-header">
-            <span class="reviewer-name">${r.name}</span>
-            <span class="review-date">${r.date}</span>
-          </div>
+          <div class="review-header"><span class="reviewer-name">${r.name}</span><span class="review-date">${r.date}</span></div>
           <div class="review-stars">${getStarRating(r.rating, 14)}</div>
           <div class="review-text">${r.comment}</div>
         </div>
-      `).join('');
+      `).join('') : '<p>No reviews yet. Be the first to review!</p>';
 
       const html = `
         <div class="business-header">
@@ -492,47 +473,26 @@
         <div class="info-grid">
           <div class="info-card">
             <h3>📞 Contact</h3>
-            <div class="contact-item">
-              <div class="contact-icon">📱</div>
-              <div><div class="contact-label">Phone</div><a href="tel:${business.phone}" class="contact-value">${business.phone}</a></div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">✉️</div>
-              <div><div class="contact-label">Email</div><a href="mailto:${business.email}" class="contact-value">${business.email}</a></div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">📍</div>
-              <div><div class="contact-label">Address</div><div class="contact-value">${business.address}</div></div>
-            </div>
+            <div class="contact-item"><div class="contact-icon">📱</div><div><div class="contact-label">Phone</div><a href="tel:${business.phone}" class="contact-value">${business.phone}</a></div></div>
+            <div class="contact-item"><div class="contact-icon">✉️</div><div><div class="contact-label">Email</div><a href="mailto:${business.email}" class="contact-value">${business.email}</a></div></div>
+            <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-label">Address</div><div class="contact-value">${business.address}</div></div></div>
           </div>
-          <div class="info-card">
-            <h3>🕒 Hours</h3>
-            <ul class="hours-list">${hoursHtml}</ul>
-          </div>
+          <div class="info-card"><h3>🕒 Hours</h3><ul class="hours-list">${hoursHtml}</ul></div>
         </div>
 
-        <div class="photo-gallery">
-          <h3>📸 Photo Gallery</h3>
-          <div class="gallery-grid">${galleryHtml}</div>
-        </div>
+        <div class="photo-gallery"><h3>📸 Photo Gallery</h3><div class="gallery-grid">${galleryHtml}</div></div>
 
-        <div class="description-section">
-          <h3>📖 About ${business.shopName}</h3>
-          <p>${business.fullDescription || business.description}</p>
-        </div>
+        <div class="description-section"><h3>📖 About ${business.shopName}</h3><p>${business.fullDescription || business.description}</p></div>
 
         <div class="reviews-section">
           <h3>⭐ Reviews</h3>
-          <div id="reviewsList">${reviewsHtml || '<p>No reviews yet. Be the first to review!</p>'}</div>
+          <div id="reviewsList">${reviewsHtml}</div>
           <div class="write-review">
             <h4>Write a Review</h4>
             <input type="text" id="reviewerName" placeholder="Your Name">
             <select id="reviewRating">
-              <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
-              <option value="4">⭐⭐⭐⭐ - Good</option>
-              <option value="3">⭐⭐⭐ - Average</option>
-              <option value="2">⭐⭐ - Poor</option>
-              <option value="1">⭐ - Terrible</option>
+              <option value="5">⭐⭐⭐⭐⭐ - Excellent</option><option value="4">⭐⭐⭐⭐ - Good</option>
+              <option value="3">⭐⭐⭐ - Average</option><option value="2">⭐⭐ - Poor</option><option value="1">⭐ - Terrible</option>
             </select>
             <textarea id="reviewComment" rows="3" placeholder="Your review..."></textarea>
             <button class="submit-review" onclick="submitReview(${business.id})">Submit Review</button>
@@ -548,7 +508,7 @@
 
       document.getElementById('businessDetails').innerHTML = html;
     } catch(e) {
-      document.getElementById('businessDetails').innerHTML = '<div class="loading">Error loading business details</div>';
+      document.getElementById('businessDetails').innerHTML = '<div class="error">Error loading business details</div>';
     }
   }
 
@@ -556,19 +516,9 @@
     const name = document.getElementById('reviewerName')?.value;
     const rating = document.getElementById('reviewRating')?.value;
     const comment = document.getElementById('reviewComment')?.value;
-    
-    if (!name || !comment) {
-      alert('Please enter your name and review');
-      return;
-    }
-    
+    if (!name || !comment) { alert('Please enter your name and review'); return; }
     const reviews = JSON.parse(localStorage.getItem(`reviews_${businessId}`) || '[]');
-    reviews.unshift({
-      name: name,
-      rating: parseInt(rating),
-      comment: comment,
-      date: new Date().toLocaleDateString()
-    });
+    reviews.unshift({ name, rating: parseInt(rating), comment, date: new Date().toLocaleDateString() });
     localStorage.setItem(`reviews_${businessId}`, JSON.stringify(reviews));
     loadBusiness();
   }
