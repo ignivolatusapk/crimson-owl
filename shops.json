@@ -1,3 +1,6 @@
 {
-  "shops": []
+  "id": 123,
+  "shopName": "Premium Hotel",
+  "featured": true,
+  ...
 }
