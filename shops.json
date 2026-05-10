@@ -17,6 +17,24 @@
       "reviews": 0,
       "status": "active",
       "addedDate": "2026-05-10"
+    },
+    {
+  "id": 1778407461495,
+  "shopName": "ethiotelecom",
+  "category": "📞 Telecom & Internet",
+  "description": "telecom service ",
+  "fullDescription": "Telecom service was introduced in Ethiopia by Emperor Menelik II in 1894 during the commencement of the telephone line installation from Harar to Addis Ababa. Then the inter-urban network was expanded in all other directions from the capital and many important centers in the Empire were interconnected by landlines to facilitate long-distance communications with the help of intermediate operators acting as verbal human repeaters.",
+  "shopUrl": "https://www.ethiotelecom.et/",
+  "logoUrl": "https://i.ibb.co/B2HBVN8S/Ethiopia-Shuts-Down-Text-Message-Service-To-Prevent-Exam-Malpractice-1.jpg",
+  "storePhoto": "https://i.ibb.co/PshWxxJX/ethio-telecom-raises-just-10-of-target-in-historic-ipo-featured-image.png",
+  "phone": " 994",
+  "email": "994@ethionet.et",
+  "address": "ethiopia",
+  "featured": false,
+  "rating": 5,
+  "reviews": 0,
+  "status": "active",
+  "addedDate": "2026-05-10"
     }
   ]
 }
