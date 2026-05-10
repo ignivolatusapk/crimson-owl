@@ -1,20 +1,22 @@
 {
-  "id": 1778405687949,
-  "shopName": "exodus clothing ",
-  "category": "👗 Fashion & Clothing",
-  "description": "ethiopian clothing brand ",
-  "fullDescription": ".",
-  "shopUrl": "https://exodus-clothing.onrender.com/",
-  "logoUrl": "https://i.ibb.co/WvkVtTkt/exoduss.png",
-  "storePhoto": "https://i.ibb.co/WvkVtTkt/exoduss.png",
-  "phone": " +251968621548",
-  "email": "exodusclothingeth@gmail.com",
-  "address": "ethiopia",
-  "featured": true,
-  "rating": 5,
-  "reviews": 0,
-  "status": "active",
-  "addedDate": "2026-05-10"
+  "shops": [
+    {
+      "id": 1778405687949,
+      "shopName": "exodus clothing",
+      "category": "👗 Fashion & Clothing",
+      "description": "Ethiopian clothing brand",
+      "fullDescription": "Ethiopian clothing brand offering unique and stylish traditional and modern clothing pieces.",
+      "shopUrl": "https://exodus-clothing.onrender.com/",
+      "logoUrl": "https://i.ibb.co/WvkVtTkt/exoduss.png",
+      "storePhoto": "https://i.ibb.co/WvkVtTkt/exoduss.png",
+      "phone": "+251968621548",
+      "email": "exodusclothingeth@gmail.com",
+      "address": "Addis Ababa, Ethiopia",
+      "featured": true,
+      "rating": 5,
+      "reviews": 0,
+      "status": "active",
+      "addedDate": "2026-05-10"
     }
   ]
 }
