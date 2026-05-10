@@ -89,6 +89,24 @@
   "reviews": 1,
   "status": "active",
   "addedDate": "2026-05-10"
+    },
+    {
+  "id": 1778413398551,
+  "shopName": " Commercial Bank of Ethiopia",
+  "category": "🏦 Bank & Financial",
+  "description": " Commercial Bank of Ethiopia",
+  "fullDescription": "The history of Commercial Bank of Ethiopia (CBE) dates back to the establishment of the State Bank of Ethiopia in 1942. CBE was legally established as a share company in 1963. Since then, it has been playing signiﬁcant roles in the development of the country.\n\nProudly licensed by the National Bank of Ethiopia on December 16, 1963 (NBE Registration No. LBB/001/63) as per banking business proclamation number 592/2008, we are authorized to provide full banking services across the nation.\n\nCurrently, CBE has more than 44.9 million account holders and more than 1,971 branches and service outlets. The number of Mobile and Internet Banking users has reached more than 11.2 million and 331,729, respectively. Active ATM card holders has also reached more than 15.1 million and there are more than 30.4 million CBEBirr users.",
+  "shopUrl": "https://combanketh.et/home",
+  "logoUrl": "https://i.ibb.co/Tx6Wgszk/cbe-logo.jpg",
+  "storePhoto": "https://i.ibb.co/pBnCrnM2/cbe-hq.jpg",
+  "phone": " 951 /  +251-113-000000",
+  "email": "cbecontactcenter@cbe.com.et",
+  "address": "ethiopia",
+  "featured": false,
+  "rating": 5,
+  "reviews": 1,
+  "status": "active",
+  "addedDate": "2026-05-10"
     }
   ]
 }
