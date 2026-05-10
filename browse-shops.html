@@ -1,455 +1,435 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>All Businesses - Crimson Owl</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Browse Businesses - Crimson Owl</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        :root {
-            --crimson: #8B0000;
-            --crimson-light: #a52a2a;
-            --text-dark: #1a1a1a;
-            --text-medium: #4a4a4a;
-            --text-light: #6c757d;
-            --bg-white: #ffffff;
-            --bg-off-white: #f8f9fa;
-            --border-light: #e9ecef;
-            --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 1rem 1.5rem rgba(0, 0, 0, 0.1);
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+  :root {
+    --crimson: #8B0000;
+    --crimson-dark: #5A0000;
+    --crimson-light: #A52A2A;
+    --pure-white: #FFFFFF;
+    --off-white: #F5F5F0;
+    --light-gray: #E8E8E8;
+    --mid-gray: #AAAAAA;
+    --dark-gray: #333333;
+    --charcoal: #1A1A1A;
+    --black: #000000;
+    --near-black: #0A0A0A;
+  }
 
-        body {
-            font-family: var(--font-sans);
-            background-color: var(--bg-off-white);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
+  html { scroll-behavior: smooth; }
 
-        .navbar {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 0.75rem 1.5rem;
-            border-bottom: 1px solid var(--border-light);
-        }
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: var(--black);
+    color: var(--off-white);
+    overflow-x: hidden;
+    cursor: none;
+  }
 
-        .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  /* Custom Cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--crimson);
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s, height 0.3s;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--crimson);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, opacity 0.3s;
+    opacity: 0.6;
+  }
 
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 60px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--pure-white);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo img { height: 40px; width: auto; }
+  .nav-links {
+    display: flex; gap: 40px; list-style: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .nav-links a {
+    color: var(--mid-gray); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--crimson); }
+  .nav-cta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    background: var(--crimson);
+    color: var(--pure-white);
+    border: none; cursor: none;
+    padding: 10px 24px;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--crimson-light); transform: translateY(-1px); }
 
-        .nav-logo img {
-            height: 36px;
-            width: auto;
-        }
+  /* Container */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 140px 24px 60px;
+  }
 
-        .nav-logo span {
-            color: var(--text-dark);
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
+  /* Header */
+  .page-header { text-align: center; margin-bottom: 48px; }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; color: var(--pure-white);
+  }
+  .page-header p {
+    font-size: 1.1rem; color: var(--mid-gray);
+    margin-top: 8px;
+  }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
+  /* Search */
+  .search-box {
+    width: 100%; max-width: 400px;
+    padding: 14px 20px;
+    margin: 0 auto 32px auto;
+    display: block;
+    background: var(--charcoal);
+    border: 1px solid rgba(139,0,0,0.3);
+    border-radius: 50px;
+    color: var(--pure-white);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+  }
+  .search-box:focus { outline: none; border-color: var(--crimson); }
 
-        .nav-links a {
-            color: var(--text-medium);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
+  /* Category Filter - Horizontal Scroll */
+  .category-wrapper { position: relative; margin-bottom: 40px; }
+  .category-filter {
+    display: flex; gap: 12px;
+    overflow-x: auto; overflow-y: hidden;
+    padding: 8px 4px 20px 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--crimson) #333;
+  }
+  .category-filter::-webkit-scrollbar { height: 4px; }
+  .category-filter::-webkit-scrollbar-track { background: #333; border-radius: 10px; }
+  .category-filter::-webkit-scrollbar-thumb { background: var(--crimson); border-radius: 10px; }
+  .filter-btn {
+    background: var(--charcoal);
+    border: 1px solid rgba(139,0,0,0.3);
+    color: var(--mid-gray);
+    padding: 8px 20px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .filter-btn.active {
+    background: var(--crimson);
+    color: var(--pure-white);
+    border-color: var(--crimson);
+  }
+  .filter-btn:hover { background: var(--crimson-light); color: white; }
+  .scroll-hint {
+    text-align: center; color: #666; font-size: 10px; margin-top: 4px;
+    display: none; font-family: 'Space Mono', monospace;
+  }
+  @media (max-width: 768px) { .scroll-hint { display: block; } }
 
-        .nav-links a:hover {
-            color: var(--crimson);
-        }
+  /* Businesses Grid */
+  .shops-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .shop-card {
+    background: var(--charcoal);
+    border: 1px solid rgba(139,0,0,0.2);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .shop-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--crimson);
+  }
+  .shop-photo {
+    width: 100%; height: 200px;
+    object-fit: cover;
+  }
+  .shop-info { padding: 20px; }
+  .shop-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .shop-logo-img {
+    width: 48px; height: 48px; border-radius: 12px; object-fit: cover;
+  }
+  .shop-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 600; color: var(--pure-white);
+  }
+  .shop-category { font-size: 0.7rem; color: var(--mid-gray); margin-top: 4px; }
+  .shop-desc {
+    font-size: 0.85rem; color: rgba(255,255,255,0.6);
+    line-height: 1.5; margin-bottom: 16px;
+  }
+  .shop-details-link {
+    color: var(--crimson); font-size: 0.8rem;
+    font-weight: 500; text-decoration: none;
+  }
+  .empty-state {
+    text-align: center; padding: 60px;
+    background: var(--charcoal); border-radius: 20px;
+  }
+  .empty-state p { color: var(--mid-gray); }
 
-        .apply-nav {
-            background: var(--crimson);
-            color: white !important;
-            padding: 0.5rem 1.25rem;
-            border-radius: 2rem;
-        }
+  /* Footer */
+  footer {
+    background: #050505;
+    padding: 40px 60px 30px;
+    border-top: 1px solid rgba(139,0,0,0.2);
+    margin-top: 60px;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 20px;
+  }
+  .footer-logo { display: flex; align-items: center; gap: 10px; }
+  .footer-logo img { height: 32px; }
+  .footer-logo span {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--pure-white);
+  }
+  .footer-links { display: flex; gap: 30px; list-style: none; flex-wrap: wrap; }
+  .footer-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem; color: var(--mid-gray); text-decoration: none;
+  }
+  .footer-links a:hover { color: var(--crimson); }
+  .footer-bottom {
+    max-width: 1200px; margin: 30px auto 0;
+    padding-top: 20px; border-top: 1px solid rgba(139,0,0,0.2);
+    display: flex; justify-content: space-between;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem; color: rgba(158,158,158,0.4);
+    flex-wrap: wrap; gap: 10px;
+  }
 
-        .menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 65px;
-            left: 0;
-            right: 0;
-            background: white;
-            z-index: 999;
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .mobile-menu.show {
-            display: block;
-        }
-
-        .mobile-menu a {
-            display: block;
-            color: var(--text-dark);
-            text-decoration: none;
-            padding: 0.75rem;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
-
-        .page-header {
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .page-header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .page-header p {
-            color: var(--text-light);
-        }
-
-        .search-box {
-            width: 100%;
-            max-width: 400px;
-            padding: 0.75rem 1.25rem;
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 2.5rem;
-            font-size: 0.9rem;
-            margin: 0 auto 1.5rem auto;
-            display: block;
-        }
-
-        .search-box:focus {
-            outline: none;
-            border-color: var(--crimson);
-        }
-
-        .category-filter {
-            display: flex;
-            gap: 0.5rem;
-            overflow-x: auto;
-            padding-bottom: 1rem;
-            margin-bottom: 2rem;
-            scrollbar-width: thin;
-        }
-
-        .filter-btn {
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            color: var(--text-medium);
-            padding: 0.5rem 1.25rem;
-            border-radius: 2rem;
-            cursor: pointer;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            transition: all 0.2s;
-        }
-
-        .filter-btn.active {
-            background: var(--crimson);
-            color: white;
-            border-color: var(--crimson);
-        }
-
-        .filter-btn:hover {
-            background: var(--crimson);
-            color: white;
-        }
-
-        .shops-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .shop-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 1.5rem;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
-        }
-
-        .shop-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-            border-color: transparent;
-        }
-
-        .featured-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-            padding: 0.25rem 0.75rem;
-            border-radius: 2rem;
-            font-size: 0.7rem;
-            font-weight: bold;
-            z-index: 2;
-        }
-
-        .shop-photo {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .shop-info {
-            padding: 1.25rem;
-        }
-
-        .shop-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .shop-logo-img {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            object-fit: cover;
-        }
-
-        .shop-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .shop-category {
-            font-size: 0.75rem;
-            color: var(--text-light);
-        }
-
-        .shop-desc {
-            font-size: 0.85rem;
-            color: var(--text-medium);
-            line-height: 1.5;
-            margin-bottom: 1rem;
-        }
-
-        .shop-details-link {
-            color: var(--crimson);
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-decoration: none;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            background: var(--bg-white);
-            border-radius: 1.5rem;
-            color: var(--text-light);
-        }
-
-        .footer {
-            background: var(--bg-white);
-            padding: 2rem 1rem;
-            text-align: center;
-            border-top: 1px solid var(--border-light);
-            margin-top: 2rem;
-        }
-
-        .footer p {
-            color: var(--text-light);
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .menu-btn { display: block; }
-            .shops-grid { grid-template-columns: 1fr; }
-            .container { padding: 1rem; }
-        }
-    </style>
+  @media (max-width: 768px) {
+    nav { padding: 20px 30px; }
+    .nav-links { display: none; }
+    .container { padding: 120px 16px 40px; }
+    .page-header h1 { font-size: 2rem; }
+    .shops-grid { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>
 </head>
 <body>
 
-<div class="navbar">
-    <div class="nav-container">
-        <div class="nav-logo">
-            <img src="images/logo.png" alt="Crimson Owl Logo">
-            <span>CRIMSON OWL</span>
-        </div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="browse-shops.html">Businesses</a>
-            <a href="apply.html" class="apply-nav">List Your Business</a>
-        </div>
-        <button class="menu-btn" onclick="toggleMenu()">☰</button>
-    </div>
-</div>
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-<div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Home</a>
-    <a href="browse-shops.html">Businesses</a>
-    <a href="apply.html">List Your Business</a>
-</div>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="images/logo.png" alt="Crimson Owl Logo" onerror="this.src='https://placehold.co/40x40/8B0000/white?text=CO'">
+    <span>Crimson Owl</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="browse-shops.html">Browse</a></li>
+    <li><a href="apply.html">List Business</a></li>
+  </ul>
+  <button class="nav-cta" onclick="window.location.href='apply.html'">List Your Business</button>
+</nav>
 
 <div class="container">
-    <div class="page-header">
-        <h1>All Businesses</h1>
-        <p>Browse hotels, cafes, restaurants, shops and more in Ethiopia</p>
-    </div>
+  <div class="page-header">
+    <h1>All Businesses</h1>
+    <p>Browse hotels, cafes, restaurants, shops and more in Ethiopia</p>
+  </div>
 
-    <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search businesses...">
+  <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search businesses...">
 
+  <div class="category-wrapper">
     <div class="category-filter" id="categoryFilter">
-        <button class="filter-btn active" data-category="all">All</button>
-        <button class="filter-btn" data-category="🏨 Hotel & Resort">🏨 Hotels</button>
-        <button class="filter-btn" data-category="☕ Cafe & Coffee Shop">☕ Cafes</button>
-        <button class="filter-btn" data-category="🍽️ Restaurant & Dining">🍽️ Restaurants</button>
-        <button class="filter-btn" data-category="👗 Fashion & Clothing">👗 Fashion</button>
-        <button class="filter-btn" data-category="🏦 Bank & Financial">🏦 Banks</button>
-        <button class="filter-btn" data-category="🏥 Private Hospital & Clinic">🏥 Hospitals</button>
-        <button class="filter-btn" data-category="🏫 University & College">🏫 Universities</button>
-        <button class="filter-btn" data-category="🛒 Supermarket & Grocery">🛒 Supermarkets</button>
-        <button class="filter-btn" data-category="🏋️ Gym & Fitness Center">🏋️ Gyms</button>
-        <button class="filter-btn" data-category="📸 Photography Studio">📸 Photography</button>
+      <button class="filter-btn active" data-category="all">All</button>
+      <button class="filter-btn" data-category="🏨 Hotel & Resort">🏨 Hotels</button>
+      <button class="filter-btn" data-category="☕ Cafe & Coffee Shop">☕ Cafes</button>
+      <button class="filter-btn" data-category="🍽️ Restaurant & Dining">🍽️ Restaurants</button>
+      <button class="filter-btn" data-category="✈️ Airline Company">✈️ Airlines</button>
+      <button class="filter-btn" data-category="🚗 Travel Agency">🚗 Travel</button>
+      <button class="filter-btn" data-category="🏛️ Government Office">🏛️ Government</button>
+      <button class="filter-btn" data-category="💼 Corporate Company">💼 Corporate</button>
+      <button class="filter-btn" data-category="🏦 Bank & Financial">🏦 Banks</button>
+      <button class="filter-btn" data-category="📞 Telecom & Internet">📞 Telecom</button>
+      <button class="filter-btn" data-category="🏥 Private Hospital & Clinic">🏥 Hospitals</button>
+      <button class="filter-btn" data-category="🏫 University & College">🏫 Universities</button>
+      <button class="filter-btn" data-category="🛒 Supermarket & Grocery">🛒 Supermarkets</button>
+      <button class="filter-btn" data-category="👗 Fashion & Clothing">👗 Fashion</button>
+      <button class="filter-btn" data-category="🏋️ Gym & Fitness Center">🏋️ Gyms</button>
+      <button class="filter-btn" data-category="💇 Salon & Barber">💇 Salons</button>
+      <button class="filter-btn" data-category="📸 Photography Studio">📸 Photography</button>
+      <button class="filter-btn" data-category="🎬 Cinema & Theater">🎬 Cinemas</button>
+      <button class="filter-btn" data-category="🖼️ Art Gallery">🖼️ Art</button>
+      <button class="filter-btn" data-category="🔧 Repair & Maintenance">🔧 Repair</button>
+      <button class="filter-btn" data-category="⚖️ Legal & Law Firm">⚖️ Law</button>
     </div>
+    <div class="scroll-hint">← swipe left to see more categories →</div>
+  </div>
 
-    <div id="shopsList">
-        <div class="empty-state">Loading businesses...</div>
-    </div>
+  <div id="shopsList"><div class="empty-state">Loading businesses...</div></div>
 </div>
 
-<div class="footer">
-    <p>© 2026 Crimson Owl | Ethiopian Business Directory</p>
-</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="images/logo.png" alt="Crimson Owl Logo">
+      <span>Crimson Owl</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="apply.html">List Business</a></li>
+      <li><a href="browse-shops.html">Browse</a></li>
+      <li><a href="index.html#featured">Featured</a></li>
+      <li><a href="mailto:ignivolatusapk@gmail.com">Contact</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Crimson Owl. All rights reserved.</span>
+    <span>Ethiopia's Premier Business Directory</span>
+  </div>
+</footer>
 
 <script>
-    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
-    
-    let shops = [];
-    let currentCategory = 'all';
-    let currentSearch = '';
+  const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
+  
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
 
-    async function loadShops() {
-        try {
-            const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
-            if (!response.ok) throw new Error();
-            const data = await response.json();
-            shops = data.shops.filter(s => s.status === 'active').sort((a, b) => {
-                if (a.featured && !b.featured) return -1;
-                if (!a.featured && b.featured) return 1;
-                return 0;
-            });
-            displayShops();
-        } catch (error) {
-            document.getElementById('shopsList').innerHTML = '<div class="empty-state">⚠️ Unable to load businesses. Please check back later.</div>';
-        }
+  document.querySelectorAll('a, button, .shop-card, .filter-btn').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px'; cursor.style.height = '20px';
+      ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '12px'; cursor.style.height = '12px';
+      ring.style.transform = 'translate(-50%,-50%) scale(1)';
+    });
+  });
+
+  let shops = [];
+  let currentCategory = 'all';
+  let currentSearch = '';
+
+  async function loadShops() {
+    try {
+      const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
+      if (!response.ok) throw new Error();
+      const data = await response.json();
+      shops = data.shops.filter(s => s.status === 'active').sort((a, b) => {
+        if (a.featured && !b.featured) return -1;
+        if (!a.featured && b.featured) return 1;
+        return 0;
+      });
+      displayShops();
+    } catch (error) {
+      document.getElementById('shopsList').innerHTML = '<div class="empty-state">⚠️ Unable to load businesses. Please check back later.</div>';
+    }
+  }
+
+  function displayShops() {
+    let filtered = shops;
+    if (currentCategory !== 'all') {
+      filtered = filtered.filter(shop => shop.category === currentCategory);
+    }
+    if (currentSearch) {
+      filtered = filtered.filter(shop =>
+        shop.shopName.toLowerCase().includes(currentSearch) ||
+        shop.category.toLowerCase().includes(currentSearch) ||
+        shop.description.toLowerCase().includes(currentSearch)
+      );
     }
 
-    function displayShops() {
-        let filtered = shops;
-        if (currentCategory !== 'all') {
-            filtered = filtered.filter(shop => shop.category === currentCategory);
-        }
-        if (currentSearch) {
-            filtered = filtered.filter(shop =>
-                shop.shopName.toLowerCase().includes(currentSearch) ||
-                shop.category.toLowerCase().includes(currentSearch) ||
-                shop.description.toLowerCase().includes(currentSearch)
-            );
-        }
+    const container = document.getElementById('shopsList');
+    if (filtered.length === 0) {
+      container.innerHTML = '<div class="empty-state">✨ No businesses found</div>';
+      return;
+    }
 
-        const container = document.getElementById('shopsList');
-        if (filtered.length === 0) {
-            container.innerHTML = '<div class="empty-state">✨ No businesses found</div>';
-            return;
-        }
-
-        container.innerHTML = `
-            <div class="shops-grid">
-                ${filtered.map(shop => `
-                    <div class="shop-card" onclick="viewBusiness(${shop.id})">
-                        ${shop.featured ? '<div class="featured-badge">⭐ FEATURED</div>' : ''}
-                        <img src="${shop.storePhoto || 'https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400'}" class="shop-photo" onerror="this.src='https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400'">
-                        <div class="shop-info">
-                            <div class="shop-header">
-                                ${shop.logoUrl ? `<img src="${shop.logoUrl}" class="shop-logo-img">` : `<div class="shop-logo-img" style="display:flex;align-items:center;justify-content:center;font-size:24px;">🏢</div>`}
-                                <div>
-                                    <div class="shop-name">${shop.shopName}</div>
-                                    <div class="shop-category">${shop.category}</div>
-                                </div>
-                            </div>
-                            <div class="shop-desc">${shop.description.substring(0, 100)}${shop.description.length > 100 ? '...' : ''}</div>
-                            <div class="shop-details-link">View Details →</div>
-                        </div>
-                    </div>
-                `).join('')}
+    container.innerHTML = `
+      <div class="shops-grid">
+        ${filtered.map(shop => `
+          <div class="shop-card" onclick="window.location.href='business-details.html?id=${shop.id}'">
+            <img src="${shop.storePhoto || 'https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400'}" class="shop-photo" onerror="this.src='https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400'">
+            <div class="shop-info">
+              <div class="shop-header">
+                ${shop.logoUrl ? `<img src="${shop.logoUrl}" class="shop-logo-img">` : `<div class="shop-logo-img" style="display:flex;align-items:center;justify-content:center;font-size:24px;">🏢</div>`}
+                <div>
+                  <div class="shop-name">${shop.shopName}</div>
+                  <div class="shop-category">${shop.category}</div>
+                </div>
+              </div>
+              <div class="shop-desc">${shop.description.substring(0, 100)}${shop.description.length > 100 ? '...' : ''}</div>
+              <div class="shop-details-link">View Details →</div>
             </div>
-        `;
-    }
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
 
-    function viewBusiness(id) {
-        window.location.href = `business-details.html?id=${id}`;
-    }
-
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            currentCategory = this.dataset.category;
-            displayShops();
-        });
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      currentCategory = this.dataset.category;
+      displayShops();
     });
+  });
 
-    document.getElementById('searchInput').addEventListener('keyup', () => {
-        currentSearch = document.getElementById('searchInput').value.toLowerCase();
-        displayShops();
-    });
+  document.getElementById('searchInput').addEventListener('keyup', () => {
+    currentSearch = document.getElementById('searchInput').value.toLowerCase();
+    displayShops();
+  });
 
-    function toggleMenu() {
-        document.getElementById('mobileMenu').classList.toggle('show');
-    }
-
-    loadShops();
+  loadShops();
 </script>
-
 </body>
 </html>
