@@ -1,1349 +1,985 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Crimson Owl - Ethiopian Business Directory</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --crimson: #8B0000;
-            --crimson-light: #a52a2a;
-            --crimson-glow: rgba(139, 0, 0, 0.3);
-            --text-dark: #1a1a1a;
-            --text-medium: #4a4a4a;
-            --text-light: #6c757d;
-            --bg-white: #ffffff;
-            --bg-off-white: #f8f9fa;
-            --border-light: #e9ecef;
-            --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 1rem 1.5rem rgba(0, 0, 0, 0.1);
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            font-family: var(--font-sans);
-            background-color: var(--bg-off-white);
-            color: var(--text-dark);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Parallax Container */
-        .parallax-container {
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Flying Owl Animation */
-        @keyframes flyOwl {
-            0% {
-                transform: translateX(-100px) translateY(0px) rotate(0deg);
-                opacity: 0;
-            }
-            20% {
-                opacity: 1;
-            }
-            80% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(calc(100vw + 200px)) translateY(-50px) rotate(15deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes flyOwl2 {
-            0% {
-                transform: translateX(calc(100vw + 200px)) translateY(0px) rotate(0deg);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.6;
-            }
-            80% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateX(-200px) translateY(80px) rotate(-10deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes floatCrown {
-            0% {
-                transform: translateY(0px) rotate(0deg);
-                opacity: 0.3;
-            }
-            50% {
-                transform: translateY(-20px) rotate(5deg);
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(0px) rotate(0deg);
-                opacity: 0.3;
-            }
-        }
-
-        @keyframes spinCrown {
-            0% {
-                transform: rotate(0deg) scale(1);
-                opacity: 0.15;
-            }
-            50% {
-                transform: rotate(180deg) scale(1.2);
-                opacity: 0.3;
-            }
-            100% {
-                transform: rotate(360deg) scale(1);
-                opacity: 0.15;
-            }
-        }
-
-        .flying-owl {
-            position: fixed;
-            top: 20%;
-            left: -100px;
-            z-index: 999;
-            pointer-events: none;
-            font-size: 48px;
-            filter: drop-shadow(0 5px 15px rgba(139, 0, 0, 0.5));
-            animation: flyOwl 12s ease-in-out infinite;
-        }
-
-        .flying-owl-2 {
-            position: fixed;
-            bottom: 15%;
-            right: -100px;
-            z-index: 999;
-            pointer-events: none;
-            font-size: 36px;
-            filter: drop-shadow(0 5px 15px rgba(139, 0, 0, 0.4));
-            animation: flyOwl2 15s ease-in-out infinite;
-            animation-delay: 3s;
-        }
-
-        .floating-crown {
-            position: fixed;
-            z-index: 998;
-            pointer-events: none;
-            font-size: 60px;
-            opacity: 0.15;
-            animation: floatCrown 8s ease-in-out infinite;
-        }
-
-        .floating-crown-1 {
-            top: 15%;
-            left: 5%;
-            animation-delay: 0s;
-        }
-
-        .floating-crown-2 {
-            bottom: 20%;
-            right: 8%;
-            font-size: 80px;
-            animation-delay: 2s;
-        }
-
-        .floating-crown-3 {
-            top: 40%;
-            right: 15%;
-            font-size: 40px;
-            animation-delay: 4s;
-        }
-
-        .floating-crown-4 {
-            bottom: 30%;
-            left: 10%;
-            font-size: 50px;
-            animation-delay: 1s;
-        }
-
-        .spinning-crown {
-            position: fixed;
-            bottom: 10%;
-            left: 15%;
-            z-index: 997;
-            pointer-events: none;
-            font-size: 35px;
-            opacity: 0.2;
-            animation: spinCrown 20s linear infinite;
-        }
-
-        /* Navigation */
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 0.75rem 1.5rem;
-            border-bottom: 1px solid var(--border-light);
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            padding: 0.5rem 1.5rem;
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: var(--shadow-md);
-        }
-
-        .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: transform 0.3s;
-        }
-
-        .nav-logo:hover {
-            transform: scale(1.05);
-        }
-
-        .nav-logo img {
-            height: 36px;
-            width: auto;
-        }
-
-        .nav-logo span {
-            color: var(--text-dark);
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-medium);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--crimson);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: var(--crimson);
-        }
-
-        .apply-nav {
-            background: var(--crimson);
-            color: white !important;
-            padding: 0.5rem 1.25rem;
-            border-radius: 2rem;
-        }
-
-        .apply-nav::after {
-            display: none;
-        }
-
-        .apply-nav:hover {
-            background: var(--crimson-light);
-            transform: translateY(-2px);
-        }
-
-        .menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-dark);
-        }
-
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 65px;
-            left: 0;
-            right: 0;
-            background: white;
-            z-index: 999;
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-light);
-            box-shadow: var(--shadow-md);
-        }
-
-        .mobile-menu.show {
-            display: block;
-        }
-
-        .mobile-menu a {
-            display: block;
-            color: var(--text-dark);
-            text-decoration: none;
-            padding: 0.75rem;
-            font-size: 1rem;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        /* Hero Section with Parallax */
-        .hero-section {
-            position: relative;
-            text-align: center;
-            padding: 5rem 1rem;
-            background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-off-white) 100%);
-            overflow: hidden;
-        }
-
-        .hero-bg-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--crimson);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: floatParticle 8s infinite;
-        }
-
-        @keyframes floatParticle {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.3;
-            }
-            90% {
-                opacity: 0.3;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            margin: 0 auto;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background-color: rgba(139, 0, 0, 0.1);
-            color: var(--crimson);
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 0.25rem 0.75rem;
-            border-radius: 2rem;
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.5px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        .hero-content h1 {
-            font-size: 3.2rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .highlight {
-            color: var(--crimson);
-            position: relative;
-            display: inline-block;
-        }
-
-        .highlight::before {
-            content: '';
-            position: absolute;
-            bottom: 5px;
-            left: 0;
-            width: 100%;
-            height: 8px;
-            background: rgba(139, 0, 0, 0.2);
-            z-index: -1;
-        }
-
-        .hero-description {
-            font-size: 1.1rem;
-            color: var(--text-medium);
-            max-width: 600px;
-            margin: 0 auto 2rem auto;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* Buttons with hover effects */
-        .btn-primary {
-            background-color: var(--crimson);
-            color: white;
-            padding: 0.75rem 1.75rem;
-            border-radius: 2.5rem;
-            font-weight: 500;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--crimson-light);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid var(--border-light);
-            color: var(--text-dark);
-            padding: 0.75rem 1.75rem;
-            border-radius: 2.5rem;
-            font-weight: 500;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s;
-        }
-
-        .btn-outline:hover {
-            border-color: var(--crimson);
-            background-color: rgba(139, 0, 0, 0.05);
-            color: var(--crimson);
-            transform: translateY(-2px);
-        }
-
-        /* Stats Section with Fade In */
-        .stats-section {
-            background: var(--bg-white);
-            padding: 3rem 1rem;
-            border-top: 1px solid var(--border-light);
-            border-bottom: 1px solid var(--border-light);
-            position: relative;
-        }
-
-        .stats-section.fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease-out;
-        }
-
-        .stats-section.fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .stat-card {
-            transition: transform 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--crimson);
-        }
-
-        .stat-label {
-            color: var(--text-light);
-            font-size: 0.85rem;
-            margin-top: 0.25rem;
-        }
-
-        /* Rating Section */
-        .rating-section {
-            text-align: center;
-            padding: 3rem 1rem;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease-out 0.2s;
-        }
-
-        .rating-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .stars {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .stars svg {
-            width: 2rem;
-            height: 2rem;
-            fill: #FFD700;
-            transition: transform 0.3s;
-        }
-
-        .stars svg:hover {
-            transform: scale(1.2);
-        }
-
-        /* Featured Section */
-        .featured-section {
-            background-color: var(--bg-off-white);
-            padding: 4rem 1rem;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease-out;
-        }
-
-        .section-header.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-header h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .section-header p {
-            color: var(--text-light);
-            font-size: 1rem;
-        }
-
-        .shops-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-
-        .shop-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-light);
-            border-radius: 1.5rem;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .shop-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .shop-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--shadow-hover);
-            border-color: transparent;
-        }
-
-        .featured-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-            padding: 0.25rem 0.75rem;
-            border-radius: 2rem;
-            font-size: 0.7rem;
-            font-weight: bold;
-            z-index: 2;
-            animation: pulse 2s infinite;
-        }
-
-        .shop-photo {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .shop-card:hover .shop-photo {
-            transform: scale(1.05);
-        }
-
-        .shop-info {
-            padding: 1.5rem;
-        }
-
-        .shop-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .shop-logo-img {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            object-fit: cover;
-        }
-
-        .shop-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 0.25rem;
-        }
-
-        .shop-category {
-            font-size: 0.75rem;
-            color: var(--text-light);
-        }
-
-        .shop-desc {
-            font-size: 0.85rem;
-            color: var(--text-medium);
-            line-height: 1.5;
-            margin-bottom: 1rem;
-        }
-
-        .shop-details-link {
-            color: var(--crimson);
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .shop-details-link:hover {
-            letter-spacing: 1px;
-        }
-
-        .view-all {
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        /* Wallet Section */
-        .wallet-section {
-            background: var(--bg-white);
-            padding: 4rem 1rem;
-            border-top: 1px solid var(--border-light);
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .wallet-title {
-            text-align: center;
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-        }
-
-        .wallet-container {
-            max-width: 500px;
-            margin: 0 auto;
-            perspective: 1000px;
-        }
-
-        .wallet {
-            position: relative;
-            width: 100%;
-            height: 280px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            transition: transform 0.4s;
-        }
-
-        .wallet:hover {
-            transform: translateY(-5px);
-        }
-
-        .wallet-back {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 220px;
-            background: #1a1a2e;
-            border-radius: 22px 22px 60px 60px;
-            z-index: 5;
-            box-shadow: inset 0 25px 35px rgba(0,0,0,0.4);
-        }
-
-        .card-item {
-            position: absolute;
-            width: 92%;
-            height: 160px;
-            left: 4%;
-            border-radius: 16px;
-            padding: 1rem;
-            color: white;
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .card-bybit {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            bottom: 100px;
-            z-index: 10;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .card-binance {
-            background: linear-gradient(135deg, #1e2a3a, #0f1724);
-            bottom: 70px;
-            z-index: 20;
-            border: 1px solid rgba(255,215,0,0.3);
-        }
-
-        .card-cbe {
-            background: linear-gradient(135deg, #0066b3, #004d8c);
-            bottom: 40px;
-            z-index: 30;
-        }
-
-        .card-inner {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-        }
-
-        .card-top {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .chip {
-            width: 32px;
-            height: 24px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 4px;
-        }
-
-        .card-number {
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            font-family: monospace;
-            margin: 0.5rem 0;
-        }
-
-        .card-bottom {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .label {
-            font-size: 0.6rem;
-            opacity: 0.7;
-        }
-
-        .value {
-            font-size: 0.7rem;
-            font-weight: 500;
-        }
-
-        .pocket-content {
-            position: absolute;
-            top: 50px;
-            width: 100%;
-            text-align: center;
-            z-index: 50;
-            color: #888;
-            font-size: 0.8rem;
-        }
-
-        .wallet:hover .card-bybit { transform: translateY(-75px) rotate(-3deg); }
-        .wallet:hover .card-binance { transform: translateY(-45px) rotate(2deg); }
-        .wallet:hover .card-cbe { transform: translateY(-10px); }
-
-        /* Feedback Section */
-        .feedback-section {
-            background: var(--bg-white);
-            padding: 4rem 1rem;
-        }
-
-        .feedback-section h3 {
-            text-align: center;
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-        }
-
-        .feedback-grid {
-            max-width: 600px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .feedback-textarea {
-            width: 100%;
-            padding: 1rem;
-            background: var(--bg-off-white);
-            border: 1px solid var(--border-light);
-            border-radius: 1rem;
-            font-family: inherit;
-            resize: vertical;
-            min-height: 120px;
-            transition: all 0.3s;
-        }
-
-        .feedback-textarea:focus {
-            outline: none;
-            border-color: var(--crimson);
-            box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
-        }
-
-        .feedback-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .feedback-btn {
-            background: var(--bg-off-white);
-            border: 1px solid var(--border-light);
-            border-radius: 3rem;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .feedback-btn:hover {
-            background: var(--crimson);
-            border-color: var(--crimson);
-            transform: translateY(-2px);
-        }
-
-        .feedback-btn:hover svg {
-            fill: white;
-        }
-
-        .send-btn {
-            background: var(--crimson);
-            color: white;
-            border: none;
-            padding: 0.75rem;
-            border-radius: 3rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .send-btn:hover {
-            background: var(--crimson-light);
-            transform: translateY(-2px);
-        }
-
-        /* Social Section */
-        .social-section {
-            background: var(--bg-off-white);
-            padding: 2rem 1rem;
-            text-align: center;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        .social-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--bg-white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .social-icon:hover {
-            background: var(--crimson);
-            transform: translateY(-5px) rotate(360deg);
-        }
-
-        .social-icon:hover svg {
-            fill: white;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--bg-white);
-            padding: 2rem 1rem;
-            text-align: center;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .footer p {
-            color: var(--text-light);
-            font-size: 0.8rem;
-        }
-
-        /* Scroll to Top Button */
-        .scroll-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--crimson);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .scroll-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .scroll-top:hover {
-            background: var(--crimson-light);
-            transform: translateY(-3px);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .menu-btn { display: block; }
-            .hero-content h1 { font-size: 2rem; }
-            .stats-grid { gap: 1rem; }
-            .stat-number { font-size: 1.8rem; }
-            .shops-grid { gap: 1rem; }
-            .hero-buttons { flex-direction: column; align-items: center; }
-            .floating-crown, .spinning-crown, .flying-owl, .flying-owl-2 { display: none; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crimson Owl — Ethiopia's Premier Business Directory</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --pure-white: #FFFFFF;
+    --off-white: #F5F5F0;
+    --light-gray: #E8E8E8;
+    --mid-gray: #AAAAAA;
+    --dark-gray: #333333;
+    --charcoal: #1A1A1A;
+    --black: #000000;
+    --near-black: #0A0A0A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: var(--black);
+    color: var(--off-white);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor - White/Black */
+  .cursor {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--pure-white);
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s, height 0.3s, background 0.3s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--pure-white);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, opacity 0.3s;
+    opacity: 0.6;
+  }
+
+  /* ─── NAV ─────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 60px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--pure-white);
+    letter-spacing: 0.06em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo .owl-icon {
+    width: 32px; height: 32px;
+    background: var(--pure-white);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    color: var(--black);
+  }
+  .nav-links {
+    display: flex; gap: 40px; list-style: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .nav-links a {
+    color: var(--mid-gray); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--pure-white); }
+  .nav-cta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--pure-white);
+    color: var(--black);
+    border: none; cursor: none;
+    padding: 10px 24px;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--light-gray); transform: translateY(-1px); }
+
+  /* ─── HERO ────────────────────────────────────────────── */
+  .hero {
+    height: 100vh;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(255,255,255,0.05) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 85% 80%, rgba(255,255,255,0.03) 0%, transparent 60%),
+      linear-gradient(165deg, #000000 0%, #111111 40%, #000000 100%);
+  }
+
+  .hero-grain {
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
+    opacity: 0.3; pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+  }
+
+  /* Floating circles - black/white */
+  .orb {
+    position: absolute; border-radius: 50%;
+    pointer-events: none; will-change: transform;
+  }
+  .orb-1 {
+    width: 500px; height: 500px;
+    top: -120px; right: -80px;
+    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+    animation: float1 8s ease-in-out infinite;
+  }
+  .orb-2 {
+    width: 300px; height: 300px;
+    bottom: 80px; left: 10%;
+    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+    animation: float2 10s ease-in-out infinite;
+  }
+  .orb-3 {
+    width: 200px; height: 200px;
+    top: 30%; right: 20%;
+    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+    animation: float1 6s ease-in-out infinite reverse;
+  }
+  @keyframes float1 {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+  @keyframes float2 {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+  }
+
+  /* Owl silhouette - white */
+  .hero-owl {
+    position: absolute; right: 8%; top: 50%;
+    transform: translateY(-50%);
+    width: 340px; height: 340px;
+    opacity: 0.04;
+    will-change: transform;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 0 20px;
+    max-width: 900px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--mid-gray);
+    margin-bottom: 32px;
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; width: 60px; height: 1px; background: var(--mid-gray); opacity: 0.5;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4rem, 9vw, 8rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    color: var(--pure-white);
+    margin-bottom: 8px;
+  }
+  .hero-title .crimson { color: var(--pure-white); text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+  .hero-title .italic { font-style: italic; color: var(--light-gray); }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-style: italic; font-weight: 300;
+    color: var(--mid-gray);
+    margin: 28px 0 48px;
+    letter-spacing: 0.03em;
+  }
+
+  .hero-pitch {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem; letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--off-white); opacity: 0.7;
+    margin-bottom: 56px;
+  }
+  .hero-pitch span { color: var(--pure-white); opacity: 1; }
+
+  .hero-ctas {
+    display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--pure-white);
+    color: var(--black);
+    border: none; padding: 16px 40px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: none; text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 4px 30px rgba(255,255,255,0.15);
+  }
+  .btn-primary:hover {
+    background: var(--light-gray);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 40px rgba(255,255,255,0.25);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--pure-white);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 16px 40px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: none; text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.3s, color 0.3s, transform 0.2s;
+  }
+  .btn-secondary:hover {
+    border-color: var(--pure-white);
+    color: var(--pure-white);
+    transform: translateY(-3px);
+  }
+
+  .scroll-indicator {
+    position: absolute; bottom: 40px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mid-gray); opacity: 0.5;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  .scroll-indicator::after {
+    content: ''; width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--mid-gray), transparent);
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ─── SECTION BASE ────────────────────────────────────── */
+  section { position: relative; overflow: hidden; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--mid-gray);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::before {
+    content: ''; width: 30px; height: 1px;
+    background: var(--mid-gray); opacity: 0.6;
+  }
+
+  /* ─── ABOUT ───────────────────────────────────────────── */
+  .about-section {
+    min-height: 100vh;
+    background: var(--black);
+    display: flex; align-items: center;
+    padding: 120px 60px;
+  }
+  .about-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
+  }
+  .about-text .big-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 400; line-height: 1.2;
+    color: var(--pure-white);
+    margin-bottom: 32px;
+  }
+  .about-text .big-quote em {
+    font-style: italic; color: var(--light-gray);
+  }
+  .about-text p {
+    font-size: 1.15rem; font-weight: 300; line-height: 1.9;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 20px;
+  }
+  .about-visual { position: relative; height: 480px; }
+  .card-stack { position: absolute; inset: 0; }
+  .stack-card {
+    position: absolute;
+    background: var(--charcoal);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 28px 32px;
+    width: 280px;
+    transition: transform 0.4s ease, box-shadow 0.4s;
+  }
+  .stack-card:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    border-color: rgba(255,255,255,0.3);
+  }
+  .stack-card-1 { top: 20px; left: 20px; transform: rotate(-3deg); }
+  .stack-card-2 { top: 80px; left: 80px; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
+  .stack-card-3 { top: 160px; left: 50px; transform: rotate(2deg); background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.08); }
+  .card-cat {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mid-gray); margin-bottom: 10px;
+  }
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--pure-white); margin-bottom: 6px;
+  }
+  .card-sub {
+    font-size: 0.85rem; color: var(--mid-gray); font-weight: 300;
+  }
+  .card-star { color: var(--pure-white); font-size: 0.75rem; margin-top: 10px; letter-spacing: 2px; }
+
+  /* ─── CATEGORIES ──────────────────────────────────────── */
+  .categories-section {
+    padding: 100px 60px;
+    background: linear-gradient(180deg, var(--black) 0%, #111111 50%, var(--black) 100%);
+  }
+  .categories-header {
+    max-width: 1200px; margin: 0 auto 70px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .categories-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.05; color: var(--pure-white);
+  }
+  .categories-title em { font-style: italic; color: var(--light-gray); }
+  .categories-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mid-gray); text-align: right;
+  }
+  .categories-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px;
+  }
+  .cat-tile {
+    aspect-ratio: 3/4;
+    position: relative; overflow: hidden;
+    background: var(--charcoal);
+    cursor: none;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cat-tile:hover { transform: scaleY(1.04); z-index: 2; }
+  .cat-tile:hover .cat-bg { opacity: 0.15; }
+  .cat-tile:hover .cat-label { transform: translateY(-6px); }
+  .cat-bg {
+    position: absolute; inset: 0;
+    background: var(--dark-gray);
+    opacity: 0.4;
+    transition: opacity 0.4s;
+  }
+  .cat-icon {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -60%);
+    font-size: 3.5rem; opacity: 0.15; filter: grayscale(1);
+  }
+  .cat-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 24px 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%);
+    transition: transform 0.4s;
+  }
+  .cat-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--pure-white);
+    margin-bottom: 4px;
+  }
+  .cat-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--mid-gray);
+  }
+
+  /* ─── PRICING ─────────────────────────────────────────── */
+  .pricing-section {
+    min-height: 100vh;
+    background: var(--black);
+    display: flex; align-items: center;
+    padding: 120px 60px;
+    position: relative;
+  }
+  .pricing-bg-text {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: 30vw; font-weight: 900;
+    color: rgba(255,255,255,0.02);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none; user-select: none;
+  }
+  .pricing-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .pricing-left .section-label { margin-bottom: 24px; }
+  .pricing-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1; color: var(--pure-white);
+    margin-bottom: 24px;
+  }
+  .pricing-headline em { font-style: italic; color: var(--light-gray); }
+  .pricing-desc {
+    font-size: 1.1rem; font-weight: 300; line-height: 1.9;
+    color: rgba(255,255,255,0.55); margin-bottom: 48px;
+  }
+
+  .pricing-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 50px 44px;
+    position: relative; overflow: hidden;
+  }
+  .pricing-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--pure-white), var(--mid-gray));
+  }
+  .pricing-card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--mid-gray); margin-bottom: 20px;
+  }
+  .pricing-amount {
+    display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px;
+  }
+  .pricing-currency {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; color: var(--pure-white); font-weight: 400;
+  }
+  .pricing-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem; line-height: 1;
+    color: var(--pure-white); font-weight: 900;
+  }
+  .pricing-period {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--mid-gray); align-self: flex-end; padding-bottom: 8px;
+  }
+  .pricing-sub {
+    font-size: 0.9rem; color: var(--mid-gray); font-weight: 300;
+    margin-bottom: 36px; font-style: italic;
+  }
+  .pricing-features {
+    list-style: none; margin-bottom: 36px;
+  }
+  .pricing-features li {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.95rem; color: rgba(255,255,255,0.7);
+  }
+  .pricing-features li::before {
+    content: '✦'; color: var(--pure-white); font-size: 0.6rem; flex-shrink: 0;
+  }
+
+  /* ─── HOW IT WORKS ────────────────────────────────────── */
+  .how-section {
+    padding: 140px 60px;
+    background: linear-gradient(180deg, var(--black) 0%, #0A0A0A 100%);
+  }
+  .how-inner { max-width: 1200px; margin: 0 auto; }
+  .how-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--pure-white); margin-bottom: 80px;
+    text-align: center;
+  }
+  .how-title em { font-style: italic; color: var(--light-gray); }
+  .steps {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
+  }
+  .step {
+    position: relative;
+    background: rgba(26,26,26,0.8);
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 50px 40px;
+    overflow: hidden;
+    transition: border-color 0.4s, background 0.4s;
+  }
+  .step:hover {
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(51,51,51,0.5);
+  }
+  .step:hover .step-num { color: var(--pure-white); }
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem; font-weight: 900; line-height: 1;
+    color: rgba(255,255,255,0.05);
+    margin-bottom: -10px;
+    transition: color 0.4s;
+  }
+  .step-icon { font-size: 2rem; margin-bottom: 20px; filter: grayscale(1); }
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; color: var(--pure-white); margin-bottom: 16px;
+  }
+  .step-desc {
+    font-size: 0.95rem; font-weight: 300; line-height: 1.8;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ─── TESTIMONIAL ─────────────────────────────────────── */
+  .testimonial-section {
+    padding: 140px 60px;
+    background: #0A0A0A;
+    position: relative; overflow: hidden;
+  }
+  .testimonial-section::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 60vw; font-weight: 900; line-height: 0.7;
+    color: rgba(255,255,255,0.02);
+    position: absolute; top: 0; left: -5%; pointer-events: none;
+    user-select: none;
+  }
+  .testimonial-inner {
+    max-width: 900px; margin: 0 auto;
+    position: relative; z-index: 1;
+    text-align: center;
+  }
+  .testimonial-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+    font-style: italic; font-weight: 400;
+    color: var(--pure-white); line-height: 1.4;
+    margin-bottom: 40px;
+  }
+  .testimonial-attr {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mid-gray);
+  }
+
+  /* ─── FINAL CTA ───────────────────────────────────────── */
+  .final-cta {
+    min-height: 70vh;
+    background: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    padding: 120px 60px;
+    position: relative; overflow: hidden;
+  }
+  .final-cta-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 70%);
+  }
+  .final-cta-inner { text-align: center; position: relative; z-index: 1; }
+  .final-cta-inner .section-label { justify-content: center; margin-bottom: 28px; }
+  .final-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 900; line-height: 0.95;
+    color: var(--pure-white); margin-bottom: 28px;
+  }
+  .final-headline em { font-style: italic; color: var(--light-gray); }
+  .final-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-style: italic; font-weight: 300;
+    color: var(--mid-gray); margin-bottom: 56px;
+    max-width: 600px; margin-left: auto; margin-right: auto;
+  }
+  .final-ctas { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 56px; }
+  .price-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mid-gray); opacity: 0.8;
+  }
+
+  /* ─── FOOTER ──────────────────────────────────────────── */
+  footer {
+    background: #050505;
+    padding: 60px 60px 40px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 40px;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700; color: var(--pure-white);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem; font-style: italic; color: var(--mid-gray);
+    margin-top: 4px;
+  }
+  .footer-links {
+    display: flex; gap: 36px; list-style: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .footer-links a { color: var(--mid-gray); text-decoration: none; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--pure-white); }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(158,158,158,0.4);
+  }
+
+  /* ─── SCROLL REVEAL ───────────────────────────────────── */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav { padding: 20px 30px; }
+    .nav-links { display: none; }
+    .about-inner, .pricing-inner { grid-template-columns: 1fr; gap: 60px; }
+    .about-visual { display: none; }
+    .categories-grid { grid-template-columns: repeat(3, 1fr); }
+    .steps { grid-template-columns: 1fr; }
+    .categories-header { flex-direction: column; gap: 20px; align-items: flex-start; }
+    .footer-inner { flex-direction: column; gap: 30px; text-align: center; }
+    .footer-bottom { flex-direction: column; gap: 10px; }
+    section { padding-left: 30px; padding-right: 30px; }
+    .hero-content { padding: 0 20px; }
+    .hero-owl { display: none; }
+  }
+</style>
 </head>
 <body>
 
-<div class="parallax-container">
-    <!-- Flying Owl Animations -->
-    <div class="flying-owl">🦉</div>
-    <div class="flying-owl-2">🦉</div>
-    
-    <!-- Floating Crowns -->
-    <div class="floating-crown floating-crown-1">👑</div>
-    <div class="floating-crown floating-crown-2">👑</div>
-    <div class="floating-crown floating-crown-3">👑</div>
-    <div class="floating-crown floating-crown-4">👑</div>
-    <div class="spinning-crown">👑</div>
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-    <!-- Navigation -->
-    <div class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <img src="images/logo.png" alt="Crimson Owl Logo" onerror="this.src='https://placehold.co/36x36/8B0000/white?text=CO'">
-                <span>CRIMSON OWL</span>
-            </div>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="browse-shops.html">Businesses</a>
-                <a href="apply.html" class="apply-nav">List Your Business</a>
-                <a href="admin.html">Admin</a>
-            </div>
-            <button class="menu-btn" onclick="toggleMenu()">☰</button>
-        </div>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="owl-icon">🦉</div>
+    Crimson Owl
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#categories">Browse</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#how">How It Works</a></li>
+  </ul>
+  <button class="nav-cta" onclick="window.location.href='apply.html'">List Your Business</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <svg class="hero-owl parallax-layer" id="owlParallax" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="100" cy="130" rx="55" ry="65" fill="white"/>
+    <circle cx="78" cy="90" r="22" fill="white"/>
+    <circle cx="122" cy="90" r="22" fill="white"/>
+    <circle cx="78" cy="90" r="14" fill="#1A0A08"/>
+    <circle cx="122" cy="90" r="14" fill="#1A0A08"/>
+    <circle cx="83" cy="85" r="5" fill="white"/>
+    <circle cx="127" cy="85" r="5" fill="white"/>
+    <polygon points="100,108 93,120 107,120" fill="white"/>
+    <polygon points="60,70 50,50 72,68" fill="white"/>
+    <polygon points="140,70 150,50 128,68" fill="white"/>
+    <ellipse cx="100" cy="160" rx="30" ry="12" fill="rgba(255,255,255,0.3)"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Ethiopia's Premier Business Directory</div>
+    <h1 class="hero-title">
+      <span class="crimson">Crimson</span><br>
+      <span class="italic">Owl</span>
+    </h1>
+    <p class="hero-tagline">Discover Ethiopia's Best Local Businesses</p>
+    <p class="hero-pitch">
+      <span>List your business.</span> &nbsp;·&nbsp; <span>Get customers.</span> &nbsp;·&nbsp; <span>Pay monthly rent.</span>
+    </p>
+    <div class="hero-ctas">
+      <a href="#pricing" class="btn-primary">List My Business — 1,500 ETB/mo</a>
+      <a href="#categories" class="btn-secondary">Explore Businesses</a>
     </div>
+  </div>
 
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="index.html">Home</a>
-        <a href="browse-shops.html">Businesses</a>
-        <a href="apply.html">List Your Business</a>
-        <a href="admin.html">Admin</a>
+  <div class="scroll-indicator">Scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-text">
+      <div class="section-label reveal">What We Do</div>
+      <div class="big-quote reveal reveal-delay-1">
+        Where Ethiopian businesses <em>meet</em> their customers.
+      </div>
+      <p class="reveal reveal-delay-2">
+        Crimson Owl is Ethiopia's dedicated business directory — a curated space where local entrepreneurs and established enterprises alike make themselves discoverable to thousands of customers across the country.
+      </p>
+      <p class="reveal reveal-delay-3">
+        From hidden gems in Addis Ababa to standout regional businesses, we connect the people looking with the places worth finding.
+      </p>
     </div>
-
-    <!-- Hero Section with Particles -->
-    <section class="hero-section">
-        <div class="hero-bg-particles" id="particles"></div>
-        <div class="hero-content">
-            <span class="hero-badge">Ethiopia's Premier Directory</span>
-            <h1>Find the <span class="highlight">Best Local Businesses</span> in Ethiopia</h1>
-            <p class="hero-description">Discover and connect with thousands of trusted hotels, cafes, shops, and services across the country. Your journey to supporting local starts here.</p>
-            <div class="hero-buttons">
-                <a href="browse-shops.html" class="btn-primary">Explore Businesses →</a>
-                <a href="apply.html" class="btn-outline">List Your Business</a>
-            </div>
+    <div class="about-visual reveal reveal-delay-2">
+      <div class="card-stack">
+        <div class="stack-card stack-card-1">
+          <div class="card-cat">Hotels</div>
+          <div class="card-name">Skyline Addis</div>
+          <div class="card-sub">Bole, Addis Ababa</div>
+          <div class="card-star">★★★★★</div>
         </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats-section fade-in">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number" id="shopCount">--</div>
-                <div class="stat-label">Listed Businesses</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">1,500 ETB</div>
-                <div class="stat-label">Monthly Rent</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">24h</div>
-                <div class="stat-label">Setup Time</div>
-            </div>
+        <div class="stack-card stack-card-2">
+          <div class="card-cat">Café</div>
+          <div class="card-name">Yirgacheffe House</div>
+          <div class="card-sub">Piassa, Addis Ababa</div>
+          <div class="card-star">★★★★☆</div>
         </div>
-    </section>
-
-    <!-- Rating Section -->
-    <section class="rating-section">
-        <div class="stars">
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <div class="stack-card stack-card-3">
+          <div class="card-cat">Restaurant</div>
+          <div class="card-name">Habesha Kitchen</div>
+          <div class="card-sub">Kazanchis, Addis Ababa</div>
+          <div class="card-star">★★★★★</div>
         </div>
-        <div class="rating-text">Trusted by businesses and customers across Ethiopia</div>
-    </section>
-
-    <!-- Featured Businesses -->
-    <section class="featured-section">
-        <div class="section-header">
-            <h2>Featured Businesses</h2>
-            <p>Premium businesses on Crimson Owl</p>
-        </div>
-        <div id="featuredShops" class="shops-grid"></div>
-        <div class="view-all">
-            <a href="browse-shops.html" class="btn-outline">View All Businesses →</a>
-        </div>
-    </section>
-
-    <!-- Payment Methods -->
-    <section class="wallet-section">
-        <h2 class="wallet-title">💳 Payment Methods</h2>
-        <div class="wallet-container">
-            <div class="wallet">
-                <div class="wallet-back"></div>
-                <div class="card-item card-bybit">
-                    <div class="card-inner">
-                        <div class="card-top"><span>BYBIT</span><div class="chip"></div></div>
-                        <div class="card-number">**** **** **** 8888</div>
-                        <div class="card-bottom"><div><span class="label">Card Holder</span><span class="value">CRIMSON OWL</span></div><div><span class="label">Expires</span><span class="value">12/28</span></div></div>
-                    </div>
-                </div>
-                <div class="card-item card-binance">
-                    <div class="card-inner">
-                        <div class="card-top"><span style="color:#F0B90B;">BINANCE</span><div class="chip"></div></div>
-                        <div class="card-number">**** **** **** 7777</div>
-                        <div class="card-bottom"><div><span class="label">Card Holder</span><span class="value">CRIMSON OWL</span></div><div><span class="label">Expires</span><span class="value">12/28</span></div></div>
-                    </div>
-                </div>
-                <div class="card-item card-cbe">
-                    <div class="card-inner">
-                        <div class="card-top"><span>CBE</span><div class="chip"></div></div>
-                        <div class="card-number">**** **** **** 5555</div>
-                        <div class="card-bottom"><div><span class="label">Card Holder</span><span class="value">CRIMSON OWL</span></div><div><span class="label">Expires</span><span class="value">12/28</span></div></div>
-                    </div>
-                </div>
-                <div class="pocket-content">💳 Hover to see cards</div>
-            </div>
-        </div>
-        <div class="payment-methods" style="text-align: center; margin-top: 2rem; color: var(--text-light); font-size: 0.85rem;">
-            ✅ Accepting: Telebirr | Chapa | Bank Transfer | Credit Card
-        </div>
-    </section>
-
-    <!-- Feedback Section -->
-    <section class="feedback-section">
-        <h3>📝 Send Feedback</h3>
-        <div id="feedbackSuccess" class="success-message" style="display:none; background:rgba(0,255,0,0.1); border:1px solid #00ff00; color:#00ff00; padding:0.75rem; border-radius:1rem; text-align:center; margin-bottom:1rem;">✅ Thank you! Your feedback has been sent.</div>
-        <form id="feedbackForm">
-            <div class="feedback-grid">
-                <textarea name="message" placeholder="Your feedback..." class="feedback-textarea" id="feedbackText" required></textarea>
-                <div class="feedback-buttons">
-                    <button type="button" class="feedback-btn" onclick="setFeedback('happy')">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 512 512" fill="#6c757d"><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
-                    </button>
-                    <button type="button" class="feedback-btn" onclick="setFeedback('sad')">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 512 512" fill="#6c757d"><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM174.6 384.1c-4.5 12.5-18.2 18.9-30.7 14.4s-18.9-18.2-14.4-30.7C146.9 319.4 198.9 288 256 288s109.1 31.4 126.6 79.9c4.5 12.5-2 26.2-14.4 30.7s-26.2-2-30.7-14.4C328.2 358.5 297.2 336 256 336s-72.2 22.5-81.4 48.1zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
-                    </button>
-                    <button type="submit" class="send-btn">Send Feedback</button>
-                </div>
-            </div>
-        </form>
-    </section>
-
-    <!-- Social Section -->
-    <section class="social-section">
-        <div class="social-icons">
-            <div class="social-icon" onclick="window.open('https://www.instagram.com', '_blank')">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="#6c757d"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
-            </div>
-            <div class="social-icon" onclick="window.open('https://www.twitter.com', '_blank')">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="#6c757d"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 0021.913-5.466c.299-.777.526-1.582.67-2.403.024-.13.048-.261.07-.393a4.96 4.96 0 002.03-1.35z"/></svg>
-            </div>
-            <div class="social-icon" onclick="window.open('https://www.facebook.com', '_blank')">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="#6c757d"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </div>
-            <div class="social-icon" onclick="window.open('https://t.me/crimsonowl', '_blank')">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="#6c757d"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.08-.2-.09-.06-.22-.04-.31-.02-.13.02-2.18 1.38-3.16 2-.2.13-.38.19-.54.19-.18 0-.36-.06-.52-.12-.3-.12-.53-.21-.51-.44.01-.13.09-.26.26-.39.53-.34 2.36-1.45 3.79-2.11 1.83-.85 2.48-1.01 2.9-1.01.15 0 .49.03.71.22.19.16.24.38.26.6-.02.13-.07.4-.12.69z"/></svg>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <div class="footer">
-        <p>© 2026 Crimson Owl | Ethiopian Business Directory</p>
-        <p style="margin-top: 0.5rem;">📧 For custom websites: ignivolatusapk@gmail.com</p>
+      </div>
     </div>
+  </div>
+</section>
 
-    <!-- Scroll to Top Button -->
-    <div class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</div>
-</div>
+<!-- CATEGORIES -->
+<section class="categories-section" id="categories">
+  <div class="categories-header">
+    <div>
+      <div class="section-label reveal">Browse By Category</div>
+      <h2 class="categories-title reveal reveal-delay-1">Find. <em>Connect.</em><br>Grow.</h2>
+    </div>
+    <div class="categories-count reveal reveal-delay-2">
+      Hundreds of<br>businesses listed
+    </div>
+  </div>
+  <div class="categories-grid">
+    <div class="cat-tile reveal">
+      <div class="cat-bg"></div>
+      <div class="cat-icon">🏨</div>
+      <div class="cat-label">
+        <div class="cat-name">Hotels</div>
+        <div class="cat-count">Stay & relax</div>
+      </div>
+    </div>
+    <div class="cat-tile reveal reveal-delay-1">
+      <div class="cat-bg"></div>
+      <div class="cat-icon">☕</div>
+      <div class="cat-label">
+        <div class="cat-name">Cafés</div>
+        <div class="cat-count">Coffee & culture</div>
+      </div>
+    </div>
+    <div class="cat-tile reveal reveal-delay-2">
+      <div class="cat-bg"></div>
+      <div class="cat-icon">🍽</div>
+      <div class="cat-label">
+        <div class="cat-name">Restaurants</div>
+        <div class="cat-count">Taste Ethiopia</div>
+      </div>
+    </div>
+    <div class="cat-tile reveal reveal-delay-3">
+      <div class="cat-bg"></div>
+      <div class="cat-icon">🛍</div>
+      <div class="cat-label">
+        <div class="cat-name">Shops</div>
+        <div class="cat-count">Discover local</div>
+      </div>
+    </div>
+    <div class="cat-tile reveal reveal-delay-4">
+      <div class="cat-bg"></div>
+      <div class="cat-icon">✦</div>
+      <div class="cat-label">
+        <div class="cat-name">& More</div>
+        <div class="cat-count">All categories</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-bg-text">1500</div>
+  <div class="pricing-inner">
+    <div class="pricing-left">
+      <div class="section-label reveal">Simple Pricing</div>
+      <h2 class="pricing-headline reveal reveal-delay-1">One flat rate.<br><em>Unlimited reach.</em></h2>
+      <p class="pricing-desc reveal reveal-delay-2">
+        No hidden fees. No commissions. No complexity. Just a single monthly listing fee that puts your business in front of every customer searching in Ethiopia.
+      </p>
+      <a href="apply.html" class="btn-primary reveal reveal-delay-3">Get Listed Today</a>
+    </div>
+    <div class="pricing-card reveal reveal-delay-2">
+      <div class="pricing-card-label">Monthly Listing</div>
+      <div class="pricing-amount">
+        <span class="pricing-currency">ETB</span>
+        <span class="pricing-number">1,500</span>
+        <span class="pricing-period">/ month</span>
+      </div>
+      <p class="pricing-sub">Everything you need. Nothing you don't.</p>
+      <ul class="pricing-features">
+        <li>Full business profile page</li>
+        <li>Appear in category searches</li>
+        <li>Photos, hours & contact info</li>
+        <li>Customer reviews & ratings</li>
+        <li>Featured in city listings</li>
+        <li>Mobile-optimized presence</li>
+        <li>Cancel anytime</li>
+      </ul>
+      <a href="apply.html" class="btn-primary" style="width:100%; text-align:center; display:block;">List My Business</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="how-inner">
+    <h2 class="how-title reveal">Three steps to <em>visibility</em>.</h2>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-icon">📋</div>
+        <div class="step-title">List Your Business</div>
+        <p class="step-desc">Submit your business details — name, category, location, hours, photos, and contact info. We review and publish within 24 hours.</p>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-num">02</div>
+        <div class="step-icon">💰</div>
+        <div class="step-title">Pay Monthly Rent</div>
+        <p class="step-desc">One simple payment of 1,500 ETB per month. No commissions, no surprises. Cancel whenever you like — no contracts.</p>
+      </div>
+      <div class="step reveal reveal-delay-4">
+        <div class="step-num">03</div>
+        <div class="step-icon">🤝</div>
+        <div class="step-title">Get Customers</div>
+        <p class="step-desc">Customers searching for hotels, cafes, restaurants, and shops find you. Your profile drives foot traffic and new business every day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section">
+  <div class="testimonial-inner">
+    <div class="section-label reveal" style="justify-content:center">What Businesses Say</div>
+    <p class="testimonial-text reveal reveal-delay-1">
+      "Within two weeks of listing on Crimson Owl, our café had new regulars finding us through the directory. The investment pays for itself."
+    </p>
+    <p class="testimonial-attr reveal reveal-delay-2">— Owner, Yirgacheffe House Café · Addis Ababa</p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-bg"></div>
+  <div class="final-cta-inner">
+    <div class="section-label reveal">Ready to Grow?</div>
+    <h2 class="final-headline reveal reveal-delay-1">
+      Your next<br>customer is<br><em>searching now.</em>
+    </h2>
+    <p class="final-sub reveal reveal-delay-2">
+      Join hundreds of Ethiopian businesses already on Crimson Owl.
+    </p>
+    <div class="final-ctas reveal reveal-delay-3">
+      <a href="apply.html" class="btn-primary">List My Business</a>
+      <a href="#categories" class="btn-secondary">Browse Directory</a>
+    </div>
+    <div class="price-badge reveal reveal-delay-4">Starting at 1,500 ETB · Monthly · Cancel anytime</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">🦉 Crimson Owl</div>
+      <div class="footer-tagline">Discover Ethiopia's Best Local Businesses</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="apply.html">List Business</a></li>
+      <li><a href="browse-shops.html">Browse</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Crimson Owl. All rights reserved.</span>
+    <span>Ethiopia's Premier Business Directory</span>
+  </div>
+</footer>
 
 <script>
-    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
-    const FORMSPREE_ID = 'mlgzlbak';
-
-    // Create particles
-    function createParticles() {
-        const container = document.getElementById('particles');
-        if (!container) return;
-        for (let i = 0; i < 50; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 8 + 's';
-            particle.style.animationDuration = 5 + Math.random() * 5 + 's';
-            particle.style.width = Math.random() * 6 + 2 + 'px';
-            particle.style.height = particle.style.width;
-            container.appendChild(particle);
-        }
-    }
-
-    // Scroll animations with Intersection Observer
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-in, .rating-section, .section-header, .shop-card').forEach(el => {
-        observer.observe(el);
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  
+  document.querySelectorAll('a, button, .cat-tile, .step, .stack-card, .btn-primary, .btn-secondary').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '24px'; cursor.style.height = '24px';
+      ring.style.opacity = '1'; ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
     });
-
-    // Navbar scroll effect
-    window.addEventListener('scroll', () => {
-        const navbar = document.getElementById('navbar');
-        const scrollTop = document.getElementById('scrollTop');
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-            scrollTop.classList.add('visible');
-        } else {
-            navbar.classList.remove('scrolled');
-            scrollTop.classList.remove('visible');
-        }
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '12px'; cursor.style.height = '12px';
+      ring.style.opacity = '0.6'; ring.style.transform = 'translate(-50%,-50%) scale(1)';
     });
+  });
 
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  // Parallax: Hero Owl and Elements
+  const owl = document.getElementById('owlParallax');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (owl) owl.style.transform = `translateY(calc(-50% + ${y * 0.35}px))`;
+    document.querySelectorAll('.orb-1').forEach(o => o.style.transform = `translateY(${y * 0.2}px)`);
+    document.querySelectorAll('.orb-2').forEach(o => o.style.transform = `translateY(${-y * 0.15}px)`);
+    document.querySelectorAll('.orb-3').forEach(o => o.style.transform = `translateY(${y * 0.1}px)`);
+    const grid = document.querySelector('.hero-grid');
+    if (grid) grid.style.transform = `translateY(${y * 0.08}px)`;
+  });
 
-    async function loadFeaturedShops() {
-        try {
-            const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
-            if (!response.ok) throw new Error();
-            const data = await response.json();
-            const activeShops = data.shops.filter(s => s.status === 'active');
-            const featuredShops = activeShops.filter(s => s.featured === true);
-            
-            document.getElementById('shopCount').innerText = activeShops.length;
-            
-            const container = document.getElementById('featuredShops');
-            if (featuredShops.length === 0) {
-                container.innerHTML = '<div style="text-align: center; color: #6c757d; grid-column: 1/-1; padding: 3rem;">No featured businesses yet. Check back soon!</div>';
-                return;
-            }
-            
-            container.innerHTML = featuredShops.map((shop, index) => `
-                <div class="shop-card" onclick="window.open('${shop.shopUrl}', '_blank')" style="transition-delay: ${index * 0.1}s">
-                    <div class="featured-badge">⭐ FEATURED</div>
-                    <img src="${shop.storePhoto || 'https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400'}" class="shop-photo" onerror="this.src='https://images.unsplash.com/photo-1441984904996-e0b6ba067e0b?w=400'">
-                    <div class="shop-info">
-                        <div class="shop-header">
-                            ${shop.logoUrl ? `<img src="${shop.logoUrl}" class="shop-logo-img">` : `<div class="shop-logo-img" style="display:flex;align-items:center;justify-content:center;font-size:24px;">🏢</div>`}
-                            <div>
-                                <div class="shop-name">${shop.shopName}</div>
-                                <div class="shop-category">${shop.category}</div>
-                            </div>
-                        </div>
-                        <div class="shop-desc">${shop.description.substring(0, 100)}${shop.description.length > 100 ? '...' : ''}</div>
-                        <div class="shop-details-link">View Details →</div>
-                    </div>
-                </div>
-            `).join('');
-            
-            // Observe new shop cards
-            document.querySelectorAll('.shop-card').forEach(el => observer.observe(el));
-        } catch (error) {
-            document.getElementById('featuredShops').innerHTML = '<div style="text-align: center; color: #6c757d; grid-column: 1/-1; padding: 3rem;">Unable to load businesses.</div>';
-            document.getElementById('shopCount').innerText = '0';
-        }
-    }
-
-    function toggleMenu() {
-        document.getElementById('mobileMenu').classList.toggle('show');
-    }
-
-    function setFeedback(type) {
-        const textarea = document.getElementById('feedbackText');
-        if (type === 'happy') {
-            textarea.value = '😊 I love this platform! ';
-            textarea.focus();
-        } else {
-            textarea.value = '😔 I have a suggestion: ';
-            textarea.focus();
-        }
-    }
-
-    document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const feedbackText = document.getElementById('feedbackText').value;
-        if (!feedbackText.trim()) {
-            alert('Please enter your feedback.');
-            return;
-        }
-        
-        const formData = new FormData();
-        formData.append('_subject', 'Crimson Owl - Feedback');
-        formData.append('message', feedbackText);
-        
-        try {
-            const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            });
-            if (response.ok) {
-                const successDiv = document.getElementById('feedbackSuccess');
-                successDiv.style.display = 'block';
-                document.getElementById('feedbackText').value = '';
-                setTimeout(() => {
-                    successDiv.style.display = 'none';
-                }, 3000);
-            } else {
-                throw new Error();
-            }
-        } catch(e) {
-            alert('Failed to send feedback. Please try again.');
-        }
-    });
-
-    createParticles();
-    loadFeaturedShops();
+  // Scroll Reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
 </script>
-
 </body>
 </html>
