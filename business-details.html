@@ -1,606 +1,579 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Business Details - Crimson Owl</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Business Details - Crimson Owl</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        :root {
-            --crimson: #8B0000;
-            --crimson-light: #a52a2a;
-            --text-dark: #1a1a1a;
-            --text-medium: #4a4a4a;
-            --text-light: #6c757d;
-            --bg-white: #ffffff;
-            --bg-off-white: #f8f9fa;
-            --border-light: #e9ecef;
-            --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 1rem 1.5rem rgba(0, 0, 0, 0.1);
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+  :root {
+    --crimson: #8B0000;
+    --crimson-dark: #5A0000;
+    --crimson-light: #A52A2A;
+    --pure-white: #FFFFFF;
+    --off-white: #F5F5F0;
+    --light-gray: #E8E8E8;
+    --mid-gray: #AAAAAA;
+    --dark-gray: #333333;
+    --charcoal: #1A1A1A;
+    --black: #000000;
+    --near-black: #0A0A0A;
+  }
 
-        body {
-            font-family: var(--font-sans);
-            background-color: var(--bg-off-white);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
+  html { scroll-behavior: smooth; }
 
-        .navbar {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 0.75rem 1.5rem;
-            border-bottom: 1px solid var(--border-light);
-        }
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: var(--black);
+    color: var(--off-white);
+    overflow-x: hidden;
+    cursor: none;
+  }
 
-        .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  /* Custom Cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--crimson);
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s, height 0.3s;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--crimson);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, opacity 0.3s;
+    opacity: 0.6;
+  }
 
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 60px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--pure-white);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo img { height: 36px; width: auto; }
+  .back-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    background: rgba(139,0,0,0.3);
+    color: var(--pure-white);
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 30px;
+    transition: background 0.3s;
+  }
+  .back-btn:hover { background: var(--crimson); }
 
-        .nav-logo img {
-            height: 36px;
-            width: auto;
-        }
+  /* Container */
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 140px 24px 60px;
+  }
 
-        .nav-logo span {
-            color: var(--text-dark);
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
+  /* Loading */
+  .loading { text-align: center; padding: 60px; color: var(--mid-gray); }
 
-        .back-btn {
-            color: var(--text-dark);
-            text-decoration: none;
-            background: var(--bg-white);
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            font-size: 0.85rem;
-            border: 1px solid var(--border-light);
-        }
+  /* Business Header */
+  .business-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 40px;
+    background: var(--charcoal);
+    border-radius: 24px;
+    padding: 40px;
+    margin-bottom: 40px;
+    border: 1px solid rgba(139,0,0,0.2);
+  }
+  .business-logo-large {
+    width: 140px; height: 140px;
+    border-radius: 20px;
+    object-fit: cover;
+    background: var(--dark-gray);
+  }
+  .business-title h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem; color: var(--pure-white);
+    margin-bottom: 12px;
+  }
+  .business-category {
+    display: inline-block;
+    background: rgba(139,0,0,0.2);
+    color: var(--crimson);
+    padding: 4px 14px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-family: 'Space Mono', monospace;
+    margin-right: 12px;
+  }
+  .featured-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #000;
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 0.7rem;
+    font-weight: bold;
+  }
+  .business-rating {
+    display: flex; align-items: center;
+    gap: 10px; margin-top: 16px;
+  }
+  .stars { display: flex; gap: 4px; }
+  .stars svg { width: 18px; height: 18px; fill: #FFD700; }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
+  /* Info Grid */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .info-card {
+    background: var(--charcoal);
+    border-radius: 20px;
+    padding: 24px;
+    border: 1px solid rgba(139,0,0,0.2);
+  }
+  .info-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .contact-item {
+    display: flex; align-items: center;
+    gap: 14px; padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .contact-icon {
+    width: 40px; height: 40px;
+    background: rgba(139,0,0,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+  .contact-label { font-size: 0.7rem; color: var(--mid-gray); }
+  .contact-value {
+    color: var(--pure-white); font-size: 0.85rem;
+    text-decoration: none;
+  }
+  .hours-list { list-style: none; }
+  .hours-list li {
+    display: flex; justify-content: space-between;
+    padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.85rem;
+  }
 
-        .loading {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-light);
-        }
+  /* Gallery */
+  .photo-gallery { margin-bottom: 40px; }
+  .photo-gallery h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; margin-bottom: 20px;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .gallery-item {
+    aspect-ratio: 1;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .gallery-item:hover { transform: scale(1.02); }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        .business-header {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 2rem;
-            background: var(--bg-white);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid var(--border-light);
-        }
+  /* Description */
+  .description-section {
+    background: var(--charcoal);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 40px;
+    border: 1px solid rgba(139,0,0,0.2);
+  }
+  .description-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; margin-bottom: 16px;
+  }
+  .description-section p {
+    font-size: 1rem; line-height: 1.7;
+    color: rgba(255,255,255,0.7);
+  }
 
-        .business-logo-large {
-            width: 120px;
-            height: 120px;
-            border-radius: 1rem;
-            object-fit: cover;
-        }
+  /* Reviews */
+  .reviews-section {
+    background: var(--charcoal);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 40px;
+    border: 1px solid rgba(139,0,0,0.2);
+  }
+  .reviews-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; margin-bottom: 20px;
+  }
+  .review-item {
+    background: rgba(0,0,0,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .review-header {
+    display: flex; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .reviewer-name { font-weight: 600; color: var(--pure-white); }
+  .review-date { font-size: 0.7rem; color: var(--mid-gray); }
+  .review-stars { display: flex; gap: 3px; margin-bottom: 10px; }
+  .review-stars svg { width: 14px; height: 14px; fill: #FFD700; }
+  .review-text { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
 
-        .business-title h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
+  /* Write Review */
+  .write-review { margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .write-review h4 { font-family: 'Playfair Display', serif; margin-bottom: 16px; }
+  .write-review input, .write-review select, .write-review textarea {
+    width: 100%; padding: 12px;
+    margin-bottom: 12px;
+    background: var(--near-black);
+    border: 1px solid rgba(139,0,0,0.3);
+    border-radius: 12px;
+    color: var(--pure-white);
+    font-family: inherit;
+  }
+  .write-review input:focus, .write-review select:focus, .write-review textarea:focus {
+    outline: none; border-color: var(--crimson);
+  }
+  .submit-review {
+    background: var(--crimson);
+    color: white; border: none;
+    padding: 12px 24px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    transition: background 0.3s;
+  }
+  .submit-review:hover { background: var(--crimson-light); }
 
-        .business-category {
-            display: inline-block;
-            background: rgba(139, 0, 0, 0.1);
-            color: var(--crimson);
-            padding: 0.25rem 0.75rem;
-            border-radius: 2rem;
-            font-size: 0.8rem;
-            margin-right: 0.5rem;
-        }
+  /* Action Buttons */
+  .action-buttons {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .action-btn {
+    flex: 1; padding: 14px;
+    border-radius: 40px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  .action-btn.website {
+    background: var(--crimson);
+    color: white;
+  }
+  .action-btn.website:hover { background: var(--crimson-light); transform: translateY(-2px); }
+  .action-btn.call {
+    background: transparent;
+    border: 1px solid var(--crimson);
+    color: white;
+  }
+  .action-btn.call:hover { background: var(--crimson); transform: translateY(-2px); }
+  .action-btn.direction {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+  }
+  .action-btn.direction:hover { border-color: var(--crimson); color: var(--crimson); transform: translateY(-2px); }
 
-        .featured-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-            padding: 0.25rem 0.75rem;
-            border-radius: 2rem;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
+  /* Footer */
+  footer {
+    background: #050505;
+    padding: 40px 60px 30px;
+    border-top: 1px solid rgba(139,0,0,0.2);
+    margin-top: 60px;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 20px;
+  }
+  .footer-logo { display: flex; align-items: center; gap: 10px; }
+  .footer-logo img { height: 32px; }
+  .footer-logo span {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--pure-white);
+  }
+  .footer-links { display: flex; gap: 30px; list-style: none; flex-wrap: wrap; }
+  .footer-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem; color: var(--mid-gray); text-decoration: none;
+  }
+  .footer-links a:hover { color: var(--crimson); }
+  .footer-bottom {
+    max-width: 1200px; margin: 30px auto 0;
+    padding-top: 20px; border-top: 1px solid rgba(139,0,0,0.2);
+    display: flex; justify-content: space-between;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem; color: rgba(158,158,158,0.4);
+    flex-wrap: wrap; gap: 10px;
+  }
 
-        .business-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .stars {
-            display: flex;
-            gap: 0.25rem;
-        }
-
-        .stars svg {
-            width: 18px;
-            height: 18px;
-            fill: #FFD700;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .info-card {
-            background: var(--bg-white);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            border: 1px solid var(--border-light);
-        }
-
-        .info-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .contact-icon {
-            width: 36px;
-            height: 36px;
-            background: rgba(139, 0, 0, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-        }
-
-        .contact-label {
-            font-size: 0.7rem;
-            color: var(--text-light);
-        }
-
-        .contact-value {
-            color: var(--text-dark);
-            font-size: 0.85rem;
-            text-decoration: none;
-        }
-
-        .hours-list {
-            list-style: none;
-        }
-
-        .hours-list li {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid var(--border-light);
-            font-size: 0.85rem;
-        }
-
-        .hours-list li span:first-child {
-            color: var(--text-medium);
-        }
-
-        .photo-gallery {
-            margin-bottom: 2rem;
-        }
-
-        .photo-gallery h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 1rem;
-        }
-
-        .gallery-item {
-            aspect-ratio: 1;
-            border-radius: 1rem;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .description-section {
-            background: var(--bg-white);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid var(--border-light);
-        }
-
-        .description-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .description-section p {
-            color: var(--text-medium);
-            line-height: 1.6;
-        }
-
-        .reviews-section {
-            background: var(--bg-white);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid var(--border-light);
-        }
-
-        .reviews-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .review-item {
-            background: var(--bg-off-white);
-            border-radius: 1rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .reviewer-name {
-            font-weight: 600;
-        }
-
-        .review-date {
-            font-size: 0.7rem;
-            color: var(--text-light);
-        }
-
-        .review-stars {
-            display: flex;
-            gap: 0.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .review-stars svg {
-            width: 14px;
-            height: 14px;
-            fill: #FFD700;
-        }
-
-        .review-text {
-            font-size: 0.85rem;
-            color: var(--text-medium);
-        }
-
-        .write-review {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .write-review input, .write-review select, .write-review textarea {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--bg-off-white);
-            border: 1px solid var(--border-light);
-            border-radius: 0.75rem;
-            margin-bottom: 1rem;
-            font-family: inherit;
-        }
-
-        .submit-review {
-            background: var(--crimson);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 2rem;
-            cursor: pointer;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 0.75rem;
-            border-radius: 2rem;
-            text-align: center;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .action-btn.website {
-            background: var(--crimson);
-            color: white;
-        }
-
-        .action-btn.call {
-            background: transparent;
-            border: 1px solid var(--crimson);
-            color: var(--crimson);
-        }
-
-        .action-btn.direction {
-            background: transparent;
-            border: 1px solid var(--border-light);
-            color: var(--text-dark);
-        }
-
-        .footer {
-            background: var(--bg-white);
-            padding: 2rem 1rem;
-            text-align: center;
-            border-top: 1px solid var(--border-light);
-            margin-top: 2rem;
-        }
-
-        .footer p {
-            color: var(--text-light);
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 768px) {
-            .business-header {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .business-logo-large {
-                margin: 0 auto;
-            }
-            .business-rating {
-                justify-content: center;
-            }
-            .action-buttons {
-                flex-direction: column;
-            }
-            .container {
-                padding: 1rem;
-            }
-        }
-    </style>
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .container { padding: 120px 16px 40px; }
+    .business-header { grid-template-columns: 1fr; text-align: center; padding: 24px; }
+    .business-logo-large { margin: 0 auto; }
+    .business-rating { justify-content: center; }
+    .business-title h1 { font-size: 1.8rem; }
+    .action-buttons { flex-direction: column; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>
 </head>
 <body>
 
-<div class="navbar">
-    <div class="nav-container">
-        <div class="nav-logo">
-            <img src="images/logo.png" alt="Crimson Owl Logo">
-            <span>CRIMSON OWL</span>
-        </div>
-        <a href="javascript:history.back()" class="back-btn">← Back</a>
-    </div>
-</div>
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="images/logo.png" alt="Crimson Owl Logo" onerror="this.src='https://placehold.co/36x36/8B0000/white?text=CO'">
+    <span>Crimson Owl</span>
+  </div>
+  <a href="javascript:history.back()" class="back-btn">← Back</a>
+</nav>
 
 <div class="container" id="businessDetails">
-    <div class="loading">Loading business details...</div>
+  <div class="loading">Loading business details...</div>
 </div>
 
-<div class="footer">
-    <p>© 2026 Crimson Owl | Ethiopian Business Directory</p>
-</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="images/logo.png" alt="Crimson Owl Logo">
+      <span>Crimson Owl</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="apply.html">List Business</a></li>
+      <li><a href="browse-shops.html">Browse</a></li>
+      <li><a href="index.html#featured">Featured</a></li>
+      <li><a href="mailto:ignivolatusapk@gmail.com">Contact</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Crimson Owl. All rights reserved.</span>
+    <span>Ethiopia's Premier Business Directory</span>
+  </div>
+</footer>
 
 <script>
-    const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
-    const urlParams = new URLSearchParams(window.location.search);
-    const businessId = parseInt(urlParams.get('id'));
+  const GITHUB_SHOPS_URL = 'https://raw.githubusercontent.com/ignivolatusapk/crimson-owl/main/shops.json';
+  const urlParams = new URLSearchParams(window.location.search);
+  const businessId = parseInt(urlParams.get('id'));
 
-    function getStarRating(rating, size=18) {
-        const full = Math.floor(rating);
-        let stars = '';
-        for(let i = 0; i < full; i++) {
-            stars += `<svg width="${size}" height="${size}" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
-        }
-        for(let i = stars.length / size; i < 5; i++) {
-            stars += `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#ccc"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
-        }
-        return stars;
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  function getStarRating(rating, size=18) {
+    const full = Math.floor(rating);
+    let stars = '';
+    for(let i = 0; i < full; i++) {
+      stars += `<svg width="${size}" height="${size}" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
     }
+    for(let i = stars.length / size; i < 5; i++) {
+      stars += `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#555"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
+    }
+    return stars;
+  }
 
-    async function loadBusiness() {
-        try {
-            const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
-            const data = await response.json();
-            const business = data.shops.find(s => s.id === businessId && s.status === 'active');
-            
-            if (!business) {
-                document.getElementById('businessDetails').innerHTML = '<div class="loading">Business not found</div>';
-                return;
+  async function loadBusiness() {
+    try {
+      const response = await fetch(GITHUB_SHOPS_URL + '?t=' + Date.now());
+      const data = await response.json();
+      const business = data.shops.find(s => s.id === businessId && s.status === 'active');
+      
+      if (!business) {
+        document.getElementById('businessDetails').innerHTML = '<div class="loading">Business not found</div>';
+        return;
+      }
+
+      // Track view
+      let views = parseInt(localStorage.getItem(`views_${businessId}`) || '0');
+      views++;
+      localStorage.setItem(`views_${businessId}`, views);
+      
+      const today = new Date().toDateString();
+      let dailyViews = JSON.parse(localStorage.getItem('crimsonowl_views') || '{}');
+      dailyViews[today] = (dailyViews[today] || 0) + 1;
+      localStorage.setItem('crimsonowl_views', JSON.stringify(dailyViews));
+
+      // Load reviews
+      const reviews = JSON.parse(localStorage.getItem(`reviews_${businessId}`) || '[]');
+
+      const hoursHtml = business.hours ? 
+        `<li><span>Monday</span><span>${business.hours.monday || 'Closed'}</span></li>
+         <li><span>Tuesday</span><span>${business.hours.tuesday || 'Closed'}</span></li>
+         <li><span>Wednesday</span><span>${business.hours.wednesday || 'Closed'}</span></li>
+         <li><span>Thursday</span><span>${business.hours.thursday || 'Closed'}</span></li>
+         <li><span>Friday</span><span>${business.hours.friday || 'Closed'}</span></li>
+         <li><span>Saturday</span><span>${business.hours.saturday || 'Closed'}</span></li>
+         <li><span>Sunday</span><span>${business.hours.sunday || 'Closed'}</span></li>` :
+        '<li>Hours not available</li>';
+
+      const galleryHtml = business.gallery && business.gallery.length ? 
+        business.gallery.map(p => `<div class="gallery-item" onclick="window.open('${p}','_blank')"><img src="${p}"></div>`).join('') :
+        '<p style="color:#666; grid-column:1/-1;">No photos available</p>';
+
+      const reviewsHtml = reviews.map(r => `
+        <div class="review-item">
+          <div class="review-header">
+            <span class="reviewer-name">${r.name}</span>
+            <span class="review-date">${r.date}</span>
+          </div>
+          <div class="review-stars">${getStarRating(r.rating, 14)}</div>
+          <div class="review-text">${r.comment}</div>
+        </div>
+      `).join('');
+
+      const html = `
+        <div class="business-header">
+          <div>
+            ${business.logoUrl ? 
+              `<img src="${business.logoUrl}" class="business-logo-large">` : 
+              `<div class="business-logo-large" style="display:flex;align-items:center;justify-content:center;font-size:48px;">🏢</div>`
             }
+          </div>
+          <div class="business-title">
+            <div>
+              <span class="business-category">${business.category}</span>
+              ${business.featured ? '<span class="featured-badge">⭐ FEATURED</span>' : ''}
+            </div>
+            <h1>${business.shopName}</h1>
+            <div class="business-rating">
+              <div class="stars">${getStarRating(business.rating || 0)}</div>
+              <span>${business.rating || 0} (${business.reviews || 0} reviews)</span>
+            </div>
+          </div>
+        </div>
 
-            // Track view
-            let views = parseInt(localStorage.getItem(`views_${businessId}`) || '0');
-            views++;
-            localStorage.setItem(`views_${businessId}`, views);
-            
-            const today = new Date().toDateString();
-            let dailyViews = JSON.parse(localStorage.getItem('crimsonowl_views') || '{}');
-            dailyViews[today] = (dailyViews[today] || 0) + 1;
-            localStorage.setItem('crimsonowl_views', JSON.stringify(dailyViews));
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>📞 Contact</h3>
+            <div class="contact-item">
+              <div class="contact-icon">📱</div>
+              <div><div class="contact-label">Phone</div><a href="tel:${business.phone}" class="contact-value">${business.phone}</a></div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">✉️</div>
+              <div><div class="contact-label">Email</div><a href="mailto:${business.email}" class="contact-value">${business.email}</a></div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📍</div>
+              <div><div class="contact-label">Address</div><div class="contact-value">${business.address}</div></div>
+            </div>
+          </div>
+          <div class="info-card">
+            <h3>🕒 Hours</h3>
+            <ul class="hours-list">${hoursHtml}</ul>
+          </div>
+        </div>
 
-            // Load reviews
-            const reviews = JSON.parse(localStorage.getItem(`reviews_${businessId}`) || '[]');
+        <div class="photo-gallery">
+          <h3>📸 Photo Gallery</h3>
+          <div class="gallery-grid">${galleryHtml}</div>
+        </div>
 
-            const hoursHtml = business.hours ? 
-                `<li><span>Monday</span><span>${business.hours.monday || 'Closed'}</span></li>
-                 <li><span>Tuesday</span><span>${business.hours.tuesday || 'Closed'}</span></li>
-                 <li><span>Wednesday</span><span>${business.hours.wednesday || 'Closed'}</span></li>
-                 <li><span>Thursday</span><span>${business.hours.thursday || 'Closed'}</span></li>
-                 <li><span>Friday</span><span>${business.hours.friday || 'Closed'}</span></li>
-                 <li><span>Saturday</span><span>${business.hours.saturday || 'Closed'}</span></li>
-                 <li><span>Sunday</span><span>${business.hours.sunday || 'Closed'}</span></li>` :
-                '<li>Hours not available</li>';
+        <div class="description-section">
+          <h3>📖 About ${business.shopName}</h3>
+          <p>${business.fullDescription || business.description}</p>
+        </div>
 
-            const galleryHtml = business.gallery && business.gallery.length ? 
-                business.gallery.map(p => `<div class="gallery-item" onclick="window.open('${p}','_blank')"><img src="${p}"></div>`).join('') :
-                '<p>No photos available</p>';
+        <div class="reviews-section">
+          <h3>⭐ Reviews</h3>
+          <div id="reviewsList">${reviewsHtml || '<p>No reviews yet. Be the first to review!</p>'}</div>
+          <div class="write-review">
+            <h4>Write a Review</h4>
+            <input type="text" id="reviewerName" placeholder="Your Name">
+            <select id="reviewRating">
+              <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
+              <option value="4">⭐⭐⭐⭐ - Good</option>
+              <option value="3">⭐⭐⭐ - Average</option>
+              <option value="2">⭐⭐ - Poor</option>
+              <option value="1">⭐ - Terrible</option>
+            </select>
+            <textarea id="reviewComment" rows="3" placeholder="Your review..."></textarea>
+            <button class="submit-review" onclick="submitReview(${business.id})">Submit Review</button>
+          </div>
+        </div>
 
-            const reviewsHtml = reviews.map(r => `
-                <div class="review-item">
-                    <div class="review-header">
-                        <span class="reviewer-name">${r.name}</span>
-                        <span class="review-date">${r.date}</span>
-                    </div>
-                    <div class="review-stars">${getStarRating(r.rating, 14)}</div>
-                    <div class="review-text">${r.comment}</div>
-                </div>
-            `).join('');
+        <div class="action-buttons">
+          <a href="${business.shopUrl}" target="_blank" class="action-btn website">🌐 Visit Website</a>
+          <a href="tel:${business.phone}" class="action-btn call">📞 Call Now</a>
+          <a href="https://maps.google.com/?q=${encodeURIComponent(business.address)}" target="_blank" class="action-btn direction">🗺️ Get Directions</a>
+        </div>
+      `;
 
-            const html = `
-                <div class="business-header">
-                    <div>
-                        ${business.logoUrl ? 
-                            `<img src="${business.logoUrl}" class="business-logo-large">` : 
-                            `<div class="business-logo-large" style="display:flex;align-items:center;justify-content:center;background:#f0f0f0;font-size:48px;">🏢</div>`
-                        }
-                    </div>
-                    <div class="business-title">
-                        <div>
-                            <span class="business-category">${business.category}</span>
-                            ${business.featured ? '<span class="featured-badge">⭐ FEATURED</span>' : ''}
-                        </div>
-                        <h1>${business.shopName}</h1>
-                        <div class="business-rating">
-                            <div class="stars">${getStarRating(business.rating || 0)}</div>
-                            <span>${business.rating || 0} (${business.reviews || 0} reviews)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="info-grid">
-                    <div class="info-card">
-                        <h3>📞 Contact</h3>
-                        <div class="contact-item">
-                            <div class="contact-icon">📱</div>
-                            <div><div class="contact-label">Phone</div><a href="tel:${business.phone}" class="contact-value">${business.phone}</a></div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">✉️</div>
-                            <div><div class="contact-label">Email</div><a href="mailto:${business.email}" class="contact-value">${business.email}</a></div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">📍</div>
-                            <div><div class="contact-label">Address</div><div class="contact-value">${business.address}</div></div>
-                        </div>
-                    </div>
-                    <div class="info-card">
-                        <h3>🕒 Hours</h3>
-                        <ul class="hours-list">${hoursHtml}</ul>
-                    </div>
-                </div>
-
-                <div class="photo-gallery">
-                    <h3>📸 Photo Gallery</h3>
-                    <div class="gallery-grid">${galleryHtml}</div>
-                </div>
-
-                <div class="description-section">
-                    <h3>📖 About ${business.shopName}</h3>
-                    <p>${business.fullDescription || business.description}</p>
-                </div>
-
-                <div class="reviews-section">
-                    <h3>⭐ Reviews</h3>
-                    <div id="reviewsList">${reviewsHtml || '<p>No reviews yet. Be the first to review!</p>'}</div>
-                    <div class="write-review">
-                        <h4 style="margin-bottom: 1rem;">Write a Review</h4>
-                        <input type="text" id="reviewerName" placeholder="Your Name">
-                        <select id="reviewRating">
-                            <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
-                            <option value="4">⭐⭐⭐⭐ - Good</option>
-                            <option value="3">⭐⭐⭐ - Average</option>
-                            <option value="2">⭐⭐ - Poor</option>
-                            <option value="1">⭐ - Terrible</option>
-                        </select>
-                        <textarea id="reviewComment" rows="3" placeholder="Your review..."></textarea>
-                        <button class="submit-review" onclick="submitReview(${business.id})">Submit Review</button>
-                    </div>
-                </div>
-
-                <div class="action-buttons">
-                    <a href="${business.shopUrl}" target="_blank" class="action-btn website">🌐 Visit Website</a>
-                    <a href="tel:${business.phone}" class="action-btn call">📞 Call Now</a>
-                    <a href="https://maps.google.com/?q=${encodeURIComponent(business.address)}" target="_blank" class="action-btn direction">🗺️ Get Directions</a>
-                </div>
-            `;
-
-            document.getElementById('businessDetails').innerHTML = html;
-        } catch(e) {
-            document.getElementById('businessDetails').innerHTML = '<div class="loading">Error loading business details</div>';
-        }
+      document.getElementById('businessDetails').innerHTML = html;
+    } catch(e) {
+      document.getElementById('businessDetails').innerHTML = '<div class="loading">Error loading business details</div>';
     }
+  }
 
-    function submitReview(businessId) {
-        const name = document.getElementById('reviewerName')?.value;
-        const rating = document.getElementById('reviewRating')?.value;
-        const comment = document.getElementById('reviewComment')?.value;
-        
-        if (!name || !comment) {
-            alert('Please enter your name and review');
-            return;
-        }
-        
-        const reviews = JSON.parse(localStorage.getItem(`reviews_${businessId}`) || '[]');
-        reviews.unshift({
-            name: name,
-            rating: parseInt(rating),
-            comment: comment,
-            date: new Date().toLocaleDateString()
-        });
-        localStorage.setItem(`reviews_${businessId}`, JSON.stringify(reviews));
-        loadBusiness();
+  function submitReview(businessId) {
+    const name = document.getElementById('reviewerName')?.value;
+    const rating = document.getElementById('reviewRating')?.value;
+    const comment = document.getElementById('reviewComment')?.value;
+    
+    if (!name || !comment) {
+      alert('Please enter your name and review');
+      return;
     }
-
+    
+    const reviews = JSON.parse(localStorage.getItem(`reviews_${businessId}`) || '[]');
+    reviews.unshift({
+      name: name,
+      rating: parseInt(rating),
+      comment: comment,
+      date: new Date().toLocaleDateString()
+    });
+    localStorage.setItem(`reviews_${businessId}`, JSON.stringify(reviews));
     loadBusiness();
-</script>
+  }
 
+  loadBusiness();
+</script>
 </body>
 </html>
